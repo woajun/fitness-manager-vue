@@ -1,25 +1,23 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import Timer from '../../components/timer';
+import { ref } from 'vue';
+import StopWatch from '../../components/stopWatch';
 
-const milliSeconds = ref(0);
-const timer = new Timer(milliSeconds);
+const timeText = ref('');
+const sw = new StopWatch(timeText);
 
-const sec = computed(() => timer.getMinutes());
 </script>
 <template>
   <div>
-    {{ sec }} :
-    {{ milliSeconds }}
+    {{ timeText }}
     <label>Fitness Manager</label>
     <div>
-      <button @click="timer.start">
+      <button @click="sw.start">
         Start
       </button>
-      <button @click="timer.stop">
+      <button @click="sw.stop">
         Stop
       </button>
-      <button @click="timer.reset">
+      <button @click="sw.reset">
         Reset
       </button>
     </div>

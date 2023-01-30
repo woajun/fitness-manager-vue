@@ -25,7 +25,6 @@ function reset() {
 <template>
   <div>
     <div class="text-center">
-      {{ isRun }}
       <span>Total </span>
       <span class="text-3xl">
         {{ timeText }}
@@ -55,15 +54,15 @@ function reset() {
       <span class="font-semibold">90 sec</span>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
-      <button class="font-semibold rounded-lg bg-fuchsia-500 h-12" @click="isRun ? record() : start()">
+      <button class="font-semibold rounded-lg bg-fuchsia-500 h-14" @click="isRun ? record() : start()">
         {{ isRun ? '기록' : '시작' }}
       </button>
-      <button class="font-semibold rounded-lg bg-fuchsia-500 h-12" @click="isRun ? stop() : reset()">
+      <button class="font-semibold rounded-lg bg-fuchsia-500 h-14" @click="isRun ? stop() : reset()">
         {{ isRun ? '정지' : '초기화' }}
       </button>
     </div>
-    <div class="grid">
-      <button class="font-semibold rounded-lg bg-fuchsia-500 h-12">
+    <div class="grid pt-10">
+      <button class="font-semibold rounded-lg bg-fuchsia-500 h-20">
         다음운동
       </button>
     </div>

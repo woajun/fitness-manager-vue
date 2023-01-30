@@ -6,7 +6,7 @@ import { to00 } from './helper';
 class StopWatch {
   timeText: Ref<string>;
 
-  sTime: Date;
+  recentStartTime: number;
 
   intervalID: number;
 
@@ -18,17 +18,17 @@ class StopWatch {
 
   constructor(timeText: Ref<string>, isRun: Ref<boolean>) {
     this.timeText = timeText;
+    this.isRun = isRun;
     this.timeText.value = '00:00:00';
-    this.sTime = new Date();
+    this.recentStartTime = new Date().getTime();
     this.intervalID = 0;
     this.keepDuration = 0;
-    this.isRun = isRun;
     this.now = new Date().getTime();
   }
 
   getMs() {
     this.now = new Date().getTime();
-    return this.now - this.sTime.getTime() + this.keepDuration;
+    return this.keepDuration + (this.now - this.recentStartTime);
   }
 
   #doTimer = () => {
@@ -36,10 +36,9 @@ class StopWatch {
   };
 
   start() {
-    console.log('aaa');
     if (this.isRun.value) return;
     clearInterval(this.intervalID);
-    this.sTime = new Date();
+    this.recentStartTime = new Date().getTime();
     this.intervalID = setInterval(this.#doTimer, 10);
     this.isRun.value = true;
   }
@@ -54,7 +53,6 @@ class StopWatch {
   reset() {
     clearInterval(this.intervalID);
     this.timeText.value = '00:00:00';
-    this.sTime = new Date();
     this.keepDuration = 0;
     this.isRun.value = false;
   }

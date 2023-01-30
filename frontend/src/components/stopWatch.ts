@@ -1,9 +1,7 @@
 import type { Ref } from 'vue';
+import { to00 } from './helper';
 
 /* eslint-disable no-plusplus */
-function to00(r: number) {
-  return r < 10 ? `0${r}` : `${r}`;
-}
 
 class StopWatch {
   timeText: Ref<string>;

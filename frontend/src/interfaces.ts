@@ -15,5 +15,6 @@ type Set = {
 export type SaveRequestDTO = {
   memberID: number;
   startDate: Date;
+  totalTime: number;
   sets: Set[]
 };

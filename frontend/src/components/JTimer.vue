@@ -1,17 +1,23 @@
+<!-- eslint-disable no-spaced-func -->
+<!-- eslint-disable no-trailing-spaces -->
 <!-- eslint-disable no-plusplus -->
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const seconds = ref(0);
-const tens = ref(0);
+const props = defineProps<{
+  modelValue: number;
+}>();
+
+const emits = defineEmits<{
+  (e:'update:modelValue', value: number): void 
+}>();
+
+const milliSeconds = ref(props.modelValue);
 const Interval = ref(0);
 
 function startTimer() {
-  tens.value++;
-  if (tens.value > 99) {
-    seconds.value++;
-    tens.value = 0;
-  }
+  milliSeconds.value++;
+  emits('update:modelValue', milliSeconds.value);
 }
 
 function start() {
@@ -25,13 +31,12 @@ function stop() {
 
 function reset() {
   clearInterval(Interval.value);
-  tens.value = 0;
-  seconds.value = 0;
+  milliSeconds.value = 0;
+  emits('update:modelValue', milliSeconds.value);
 }
 </script>
 <template>
   <div>
-    <input v-model="seconds" />:<input v-model="tens" />
     <button @click="start">
       Start
     </button>

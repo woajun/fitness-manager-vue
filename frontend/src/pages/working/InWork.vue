@@ -2,11 +2,12 @@
 import { ref } from 'vue';
 import JTimer from '@/components/JTimer.vue';
 
-const seconds = ref(0);
+const milliSeconds = ref(0);
 </script>
 <template>
   <div>
+    {{ milliSeconds }}
     <label>Fitness Manager</label>
-    <JTimer v-model="seconds" />
+    <JTimer v-model="milliSeconds" />
   </div>
 </template>

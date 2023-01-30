@@ -12,17 +12,17 @@ class StopWatch {
 
   keepDuration: number;
 
-  isRun: boolean;
+  isRun: Ref<boolean>;
 
   now: number;
 
-  constructor(timeText: Ref<string>) {
+  constructor(timeText: Ref<string>, isRun: Ref<boolean>) {
     this.timeText = timeText;
     this.timeText.value = '00:00:00';
     this.sTime = new Date();
     this.intervalID = 0;
     this.keepDuration = 0;
-    this.isRun = false;
+    this.isRun = isRun;
     this.now = new Date().getTime();
   }
 
@@ -36,18 +36,19 @@ class StopWatch {
   };
 
   start() {
-    if (this.isRun) return;
+    console.log('aaa');
+    if (this.isRun.value) return;
     clearInterval(this.intervalID);
     this.sTime = new Date();
     this.intervalID = setInterval(this.#doTimer, 10);
-    this.isRun = true;
+    this.isRun.value = true;
   }
 
   stop() {
-    if (!this.isRun) return;
+    if (!this.isRun.value) return;
     clearInterval(this.intervalID);
     this.keepDuration = this.getMs();
-    this.isRun = false;
+    this.isRun.value = false;
   }
 
   reset() {
@@ -55,7 +56,7 @@ class StopWatch {
     this.timeText.value = '00:00:00';
     this.sTime = new Date();
     this.keepDuration = 0;
-    this.isRun = false;
+    this.isRun.value = false;
   }
 
   setTimeText(ms: number) {

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import JTimer from './components/JTimer.vue';
-</script>
+import InWork from './pages/working/InWork.vue';
 
+</script>
 <template>
   <div>
-    <label>Fitness Manager</label>
-    <JTimer />
+    <InWork />
   </div>
 </template>

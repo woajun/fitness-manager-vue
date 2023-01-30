@@ -4,11 +4,10 @@ import { ref } from 'vue';
 
 const seconds = ref(0);
 const tens = ref(0);
-let Interval = 0;
+const Interval = ref(0);
 
 function startTimer() {
   tens.value++;
-
   if (tens.value > 99) {
     seconds.value++;
     tens.value = 0;
@@ -16,23 +15,23 @@ function startTimer() {
 }
 
 function start() {
-  clearInterval(Interval);
-  Interval = setInterval(startTimer, 10);
+  clearInterval(Interval.value);
+  Interval.value = setInterval(startTimer, 10);
 }
 
 function stop() {
-  clearInterval(Interval);
+  clearInterval(Interval.value);
 }
 
 function reset() {
-  clearInterval(Interval);
+  clearInterval(Interval.value);
   tens.value = 0;
   seconds.value = 0;
 }
 </script>
 <template>
   <div>
-    <p><input v-model="seconds" />:<input v-model="tens" /></p>
+    <input v-model="seconds" />:<input v-model="tens" />
     <button @click="start">
       Start
     </button>

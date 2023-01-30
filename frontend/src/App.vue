@@ -1,5 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import JTimer from './components/JTimer.vue';
+</script>
 
 <template>
-  <div>Fitness Manager</div>
+  <div>
+    <label>Fitness Manager</label>
+    <JTimer />
+  </div>
 </template>

@@ -1,17 +1,32 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
+import JChart from '../../components/JChart.vue';
 
 const timeText = ref('');
 const isRun = ref(false);
 const stopWatch = new StopWatch(timeText, isRun);
+
+type ChartData = {
+  value: number,
+};
+
+const chartData = ref<ChartData[]>([]);
 
 function start() {
   stopWatch.start();
 }
 
 function record() {
-  console.log('기록');
+  let value = 0;
+  const num = stopWatch.getMs();
+
+  if (num < 10000) {
+    value = Math.floor(num / 100) / 10;
+  } else {
+    value = Math.floor(num / 1000);
+  }
+  chartData.value.push({ value });
 }
 
 function stop() {
@@ -42,8 +57,9 @@ function reset() {
       </p>
     </div>
 
-    <div class="text-center py-20 my-10 bg-slate-400 h-60">
-      GRAPH
+    <div>
+      {{ chartData }}
+      <JChart :data="chartData" />
     </div>
 
     <div class="text-center text-4xl">

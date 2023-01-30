@@ -3,6 +3,16 @@ import { to00 } from './helper';
 
 /* eslint-disable no-plusplus */
 
+function msToTimeText(ms: number) {
+  const rawH = ms / 1000 / 60 / 60;
+  const h = Math.floor(rawH);
+  const m = Math.floor((rawH - h) * 60);
+  const s = Math.floor(((rawH - h) * 60 - m) * 60);
+  const mSec = Math.floor((ms % 1000) / 10);
+
+  return rawH >= 1 ? `${to00(h)}:${to00(m)}:${to00(s)}`
+    : `${to00(m)}:${to00(s)}:${to00(mSec)}`;
+}
 class StopWatch {
   timeText: Ref<string>;
 
@@ -32,7 +42,7 @@ class StopWatch {
   }
 
   #doTimer = () => {
-    this.setTimeText(this.getMs());
+    this.timeText.value = this.getTimeText();
   };
 
   start() {
@@ -57,18 +67,8 @@ class StopWatch {
     this.isRun.value = false;
   }
 
-  setTimeText(ms: number) {
-    const rawH = ms / 1000 / 60 / 60;
-    const h = Math.floor(rawH);
-    const m = Math.floor((rawH - h) * 60);
-    const s = Math.floor(((rawH - h) * 60 - m) * 60);
-    const mSec = Math.floor((ms % 1000) / 10);
-
-    if (rawH >= 1) {
-      this.timeText.value = `${to00(h)}:${to00(m)}:${to00(s)}`;
-    } else {
-      this.timeText.value = `${to00(m)}:${to00(s)}:${to00(mSec)}`;
-    }
+  getTimeText() {
+    return msToTimeText(this.getMs());
   }
 }
 

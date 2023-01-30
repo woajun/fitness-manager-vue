@@ -1,4 +1,4 @@
-type Rep = {
+export type WorkingRep = {
   times: number;
   weight: number;
   breakTime: number;
@@ -6,15 +6,15 @@ type Rep = {
   order: number;
 };
 
-type Set = {
+export type WorkingSet = {
   excerciseID: number;
   order: number;
-  reps: Rep[];
+  reps: WorkingRep[];
 };
 
 export type SaveRequestDTO = {
   memberID: number;
   startDate: Date;
   totalTime: number;
-  sets: Set[]
+  sets: WorkingSet[]
 };

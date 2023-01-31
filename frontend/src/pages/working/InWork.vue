@@ -1,16 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
-import Timer from '../../components/timer';
 import JChart from '../../components/JChart.vue';
 
 const timeText = ref('');
 const isRun = ref(false);
 const totalStopWatch = new StopWatch(timeText, isRun);
-
-const restSec = ref(90);
-const isTimeout = ref(false);
-const timer = new Timer(restSec, isRun, isTimeout);
 
 type ChartData = {
   value: number,
@@ -20,22 +15,18 @@ const chartData = ref<ChartData[]>([]);
 
 function start() {
   totalStopWatch.start();
-  timer.start();
 }
 
 function record() {
   chartData.value.push({ value: totalStopWatch.getMs() / 1000 });
-  timer.reset();
 }
 
 function stop() {
   totalStopWatch.stop();
-  timer.stop();
 }
 
 function reset() {
   totalStopWatch.reset();
-  timer.reset();
 }
 </script>
 <template>

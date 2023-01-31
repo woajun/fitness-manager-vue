@@ -18,15 +18,7 @@ function start() {
 }
 
 function record() {
-  let value = 0;
-  const num = stopWatch.getMs();
-
-  if (num < 10000) {
-    value = Math.floor(num / 100) / 10;
-  } else {
-    value = Math.floor(num / 1000);
-  }
-  chartData.value.push({ value });
+  chartData.value.push({ value: stopWatch.getMs() / 1000 });
 }
 
 function stop() {
@@ -40,13 +32,13 @@ function reset() {
 <template>
   <div>
     <div class="text-center">
-      <span>운동시간 </span>
+      <span>운동 시간 </span>
       <span class="text-3xl">
         {{ timeText }}
       </span>
     </div>
     <div class="text-center pt-3">
-      <span>쉬는시간 </span>
+      <span>쉬는 시간 </span>
       <span class="text-4xl">
         {{ timeText }}
       </span>
@@ -58,7 +50,6 @@ function reset() {
     </div>
 
     <div>
-      {{ chartData }}
       <JChart :data="chartData" />
     </div>
 

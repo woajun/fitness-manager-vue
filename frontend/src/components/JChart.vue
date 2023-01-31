@@ -34,7 +34,7 @@ function toData(data: Record<string, number>[]): number[] {
 function toLabel(num: number) {
   const result = [];
   for (let i = 1; i <= num; i += 1) {
-    result.push(`${i}회`);
+    result.push(`${i}set`);
   }
   return result;
 }

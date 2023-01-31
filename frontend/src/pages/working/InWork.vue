@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
+import JModal from '../../components/JModal.vue';
 import { msToTimeText, secondsToMs } from '../../components/helper';
 
 type ChartData = {
@@ -55,6 +56,9 @@ function reset() {
   timer.reset();
   chartData.value = [];
 }
+
+const showModal = ref(false);
+
 </script>
 <template>
   <div class="h-screen px-4 py-4 background" :class="secondsToMs(restSeconds) - timer.getMs() < 0 ? 'red-mode' : ''">
@@ -99,6 +103,18 @@ function reset() {
         다음운동
       </button>
     </div>
+
+    <button id="show-modal" @click="showModal = true">
+      Show Modal
+    </button>
+    <Teleport to="body">
+      <!-- use the modal component, pass in the prop -->
+      <JModal :show="showModal" @close="showModal = false">
+        <template #header>
+          <h3>custom header</h3>
+        </template>
+      </JModal>
+    </Teleport>
   </div>
 </template>
 <style>

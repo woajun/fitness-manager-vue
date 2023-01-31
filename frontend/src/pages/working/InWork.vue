@@ -4,6 +4,10 @@ import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
 import { msToTimeText, secondsToMs } from '../../components/helper';
 
+type ChartData = {
+  seconds: number,
+};
+
 const timeText = ref('');
 const isRun = ref(false);
 
@@ -24,15 +28,11 @@ const chartData = ref<ChartData[]>([]);
 function setTimerText(ms: number) {
   timerText.value = msToTimeText(secondsToMs(restSeconds.value) - ms);
   if (chartData.value.length > 1) {
-    chartData.value[chartData.value.length - 1] = { value: ms / 1000 };
+    chartData.value[chartData.value.length - 1] = { seconds: ms / 1000 };
   }
 }
 
 const timer = new StopWatch(setTimerText, setIsRun);
-
-type ChartData = {
-  value: number,
-};
 
 function start() {
   totalStopWatch.start();
@@ -40,7 +40,7 @@ function start() {
 }
 
 function record() {
-  chartData.value.push({ value: timer.getMs() / 1000 });
+  chartData.value.push({ seconds: timer.getMs() / 1000 });
   timer.reset();
   timer.start();
 }

@@ -11,6 +11,10 @@ import {
 } from 'chart.js';
 import { onMounted, watch } from 'vue';
 
+type ChartData = {
+  seconds: number,
+};
+
 Chart.register(
   Title,
   Tooltip,
@@ -24,11 +28,11 @@ Chart.register(
 );
 
 const props = defineProps<{
-  data: Record<string, number>[]
+  data: ChartData[]
 }>();
 
-function toData(data: Record<string, number>[]): number[] {
-  return data.map((e) => e.value);
+function toData(data: ChartData[]): number[] {
+  return data.map((e) => e.seconds);
 }
 
 function toLabel(num: number) {
@@ -39,11 +43,11 @@ function toLabel(num: number) {
   return result;
 }
 
-function getMax(data: Record<string, number>[]) {
+function getMax(data: ChartData[]) {
   if (data.length < 1) {
     return 0;
   }
-  return Math.max(...data.map((e) => e.value));
+  return Math.max(...data.map((e) => e.seconds));
 }
 
 const canvasId = crypto.randomUUID();

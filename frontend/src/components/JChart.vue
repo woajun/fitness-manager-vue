@@ -77,10 +77,13 @@ onMounted(() => {
           ticks: {
             callback(value) {
               const second = value as number;
+              if (second === 0) {
+                return '';
+              }
               if (second < 10) {
                 return `${second.toFixed(1)} 초`;
               }
-              return `${Math.floor(second)}초`;
+              return `${Math.floor(second)} 초`;
             },
           },
           weight: 0,

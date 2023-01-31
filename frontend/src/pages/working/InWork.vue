@@ -22,7 +22,7 @@ function setIsRun(bool: boolean) {
 const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 
 const timerText = ref('');
-const restSeconds = ref(90);
+const restSeconds = ref(3);
 const chartData = ref<ChartData[]>([]);
 
 function setTimerText(ms: number) {
@@ -57,35 +57,34 @@ function reset() {
 }
 </script>
 <template>
-  <div>
-    <div class="text-center">
-      <span>운동 시간 </span>
-      <span class="text-3xl">
-        {{ timeText }}
-      </span>
+  <div class="h-screen px-4 py-4 background" :class="secondsToMs(restSeconds) - timer.getMs() < 0 ? 'active' : ''">
+    <div class="text-center pt-3">
+      <p class="text-4xl font-semibold">
+        {{ secondsToMs(restSeconds) - timer.getMs() < 0 ? 'Let\'s work out!' : 'Take a breath!' }}
+      </p>
     </div>
     <div class="text-center pt-3">
-      <span>쉬는 시간 </span>
-      <span class="text-4xl">
+      <span class="text-5xl">
         {{ timerText }}
       </span>
     </div>
-    <div class="text-center pt-6">
-      <p class="text-4xl font-semibold">
-        플랫 벤치 프레스
-      </p>
+    <div class="text-center">
+      <span class="text-3xl font-semibold text-gray-500">
+        ( {{ timeText }} )
+      </span>
     </div>
 
-    <div>
+    <div class="pt-5">
       <JChart :data="chartData" />
     </div>
 
-    <div class="text-center text-4xl">
-      <span class="font-semibold">60kg</span>
-      <span class="font-semibold"> 15rep</span>
+    <div class="text-center text-3xl pt-3">
+      <span class="font-semibold">스쿼트 </span>
     </div>
-    <div class="text-center text-4xl pt-5">
-      <span class="font-semibold">90 sec</span>
+    <div class="text-center text-3xl pt-5">
+      <span class="font-semibold">60kg </span>
+      <span class="font-semibold"> 15rep </span>
+      <span class="font-semibold"> 3sec</span>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
       <button class="font-semibold rounded-lg bg-fuchsia-500 h-14" @click="isRun ? record() : start()">
@@ -95,10 +94,31 @@ function reset() {
         {{ isRun ? '정지' : '운동종료' }}
       </button>
     </div>
-    <div class="grid pt-10">
-      <button class="font-semibold rounded-lg bg-fuchsia-500 h-20">
+    <div class="grid pt-5">
+      <button class="font-semibold rounded-lg bg-fuchsia-500 h-14">
         다음운동
       </button>
     </div>
   </div>
 </template>
+<style>
+.background {
+  position: relative;
+  z-index: 0;
+}
+.background::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(153 27 27);;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.active.background::before {
+  opacity: 1;
+}
+</style>

@@ -1,19 +1,5 @@
-import { to00 } from './helper';
-
-/* eslint-disable no-plusplus */
-
-function msToTimeText(ms: number) {
-  const rawH = ms / 1000 / 60 / 60;
-  const h = Math.floor(rawH);
-  const m = Math.floor((rawH - h) * 60);
-  const s = Math.floor(((rawH - h) * 60 - m) * 60);
-  const mSec = Math.floor((ms % 1000) / 10);
-
-  return rawH >= 1 ? `${to00(h)}:${to00(m)}:${to00(s)}`
-    : `${to00(m)}:${to00(s)}:${to00(mSec)}`;
-}
 class StopWatch {
-  setTimeText: (t: string) => void;
+  setTimeText: (t: number) => void;
 
   recentStartTime: number;
 
@@ -28,14 +14,14 @@ class StopWatch {
   now: number;
 
   constructor(
-    setTimeText: (t: string) => void,
+    setTimeText: (t: number) => void,
     setIsRun: (b: boolean) => void,
     getIsRun: () => boolean,
   ) {
     this.setTimeText = setTimeText;
     this.setIsRun = setIsRun;
     this.getIsRun = getIsRun;
-    this.setTimeText('00:00:00');
+    this.setTimeText(0);
     this.recentStartTime = new Date().getTime();
     this.intervalID = 0;
     this.keepDuration = 0;
@@ -48,7 +34,7 @@ class StopWatch {
   }
 
   #doTimer = () => {
-    this.setTimeText(this.getTimeText());
+    this.setTimeText(this.getMs());
   };
 
   start() {
@@ -68,13 +54,9 @@ class StopWatch {
 
   reset() {
     clearInterval(this.intervalID);
-    this.setTimeText('00:00:00');
+    this.setTimeText(0);
     this.keepDuration = 0;
     this.setIsRun(false);
-  }
-
-  getTimeText() {
-    return msToTimeText(this.getMs());
   }
 }
 

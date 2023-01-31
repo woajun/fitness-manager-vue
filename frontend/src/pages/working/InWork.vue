@@ -2,12 +2,13 @@
 import { ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
+import { msToTimeText } from '../../components/helper';
 
 const timeText = ref('');
 const isRun = ref(false);
 
-function setTimeText(txt: string) {
-  timeText.value = txt;
+function setTimeText(ms: number) {
+  timeText.value = msToTimeText(ms);
 }
 
 function setIsRun(bool: boolean) {

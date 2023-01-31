@@ -63,7 +63,7 @@ onMounted(() => {
       labels: [],
       datasets: [{
         data: toData(props.data),
-        borderWidth: 1,
+        borderColor: 'rgb(75, 192, 192)',
       }],
     },
     options: {
@@ -85,8 +85,13 @@ onMounted(() => {
               }
               return `${Math.floor(second)} 초`;
             },
+            color: 'rgb(248 250 252)',
           },
-          weight: 0,
+        },
+        x: {
+          ticks: {
+            color: 'rgb(248 250 252)',
+          },
         },
       },
       animation: {
@@ -98,7 +103,7 @@ onMounted(() => {
 
 watch(props, (aProps) => {
   lineChart.data.labels = toLabel(aProps.data.length);
-  lineChart.data.datasets[0] = { data: toData(aProps.data) };
+  lineChart.data.datasets[0] = { data: toData(aProps.data), borderColor: 'rgb(75, 192, 192)' };
   lineChart.options.scales.y.ticks.stepSize = getMax(aProps.data);
   lineChart.update();
 });

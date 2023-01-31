@@ -57,7 +57,7 @@ function reset() {
 }
 </script>
 <template>
-  <div class="h-screen px-4 py-4 background" :class="secondsToMs(restSeconds) - timer.getMs() < 0 ? 'active' : ''">
+  <div class="h-screen px-4 py-4 background" :class="secondsToMs(restSeconds) - timer.getMs() < 0 ? 'red-mode' : ''">
     <div class="text-center pt-3">
       <p class="text-4xl font-semibold">
         {{ secondsToMs(restSeconds) - timer.getMs() < 0 ? 'Let\'s work out!' : 'Take a breath!' }}
@@ -87,15 +87,15 @@ function reset() {
       <span class="font-semibold"> 3sec</span>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
-      <button class="font-semibold rounded-lg bg-fuchsia-500 h-14" @click="isRun ? record() : start()">
+      <button class="button font-semibold rounded-lg bg-slate-700 h-14" @click="isRun ? record() : start()">
         {{ isRun ? '기록' : '시작' }}
       </button>
-      <button class="font-semibold rounded-lg bg-fuchsia-500 h-14" @click="isRun ? stop() : reset()">
+      <button class="button font-semibold rounded-lg bg-slate-700 h-14" @click="isRun ? stop() : reset()">
         {{ isRun ? '정지' : '운동종료' }}
       </button>
     </div>
     <div class="grid pt-5">
-      <button class="font-semibold rounded-lg bg-fuchsia-500 h-14">
+      <button class="button font-semibold rounded-lg bg-slate-700 h-14">
         다음운동
       </button>
     </div>
@@ -114,11 +114,12 @@ function reset() {
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: rgb(153 27 27);;
+  background-color: rgb(153, 27, 27);
   opacity: 0;
   transition: opacity 0.2s linear;
 }
-.active.background::before {
+.red-mode.background::before {
   opacity: 1;
 }
+
 </style>

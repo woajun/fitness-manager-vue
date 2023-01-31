@@ -5,7 +5,20 @@ import JChart from '../../components/JChart.vue';
 
 const timeText = ref('');
 const isRun = ref(false);
-const totalStopWatch = new StopWatch(timeText, isRun);
+
+function setTimeText(txt: string) {
+  timeText.value = txt;
+}
+
+function setIsRun(bool: boolean) {
+  isRun.value = bool;
+}
+
+function getIsRun() {
+  return isRun.value;
+}
+
+const totalStopWatch = new StopWatch(setTimeText, setIsRun, getIsRun);
 
 type ChartData = {
   value: number,

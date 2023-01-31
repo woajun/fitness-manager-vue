@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import { to00 } from './helper';
 
 /* eslint-disable no-plusplus */
@@ -14,7 +13,7 @@ function msToTimeText(ms: number) {
     : `${to00(m)}:${to00(s)}:${to00(mSec)}`;
 }
 class StopWatch {
-  timeText: Ref<string>;
+  setTimeText: (t: string) => void;
 
   recentStartTime: number;
 
@@ -22,14 +21,21 @@ class StopWatch {
 
   keepDuration: number;
 
-  isRun: Ref<boolean>;
+  setIsRun: (b: boolean) => void;
+
+  getIsRun: () => boolean;
 
   now: number;
 
-  constructor(timeText: Ref<string>, isRun: Ref<boolean>) {
-    this.timeText = timeText;
-    this.isRun = isRun;
-    this.timeText.value = '00:00:00';
+  constructor(
+    setTimeText: (t: string) => void,
+    setIsRun: (b: boolean) => void,
+    getIsRun: () => boolean,
+  ) {
+    this.setTimeText = setTimeText;
+    this.setIsRun = setIsRun;
+    this.getIsRun = getIsRun;
+    this.setTimeText('00:00:00');
     this.recentStartTime = new Date().getTime();
     this.intervalID = 0;
     this.keepDuration = 0;
@@ -42,29 +48,29 @@ class StopWatch {
   }
 
   #doTimer = () => {
-    this.timeText.value = this.getTimeText();
+    this.setTimeText(this.getTimeText());
   };
 
   start() {
-    if (this.isRun.value) return;
+    if (this.getIsRun()) return;
     clearInterval(this.intervalID);
     this.recentStartTime = new Date().getTime();
     this.intervalID = setInterval(this.#doTimer, 10);
-    this.isRun.value = true;
+    this.setIsRun(true);
   }
 
   stop() {
-    if (!this.isRun.value) return;
+    if (!this.getIsRun()) return;
     clearInterval(this.intervalID);
     this.keepDuration = this.getMs();
-    this.isRun.value = false;
+    this.setIsRun(false);
   }
 
   reset() {
     clearInterval(this.intervalID);
-    this.timeText.value = '00:00:00';
+    this.setTimeText('00:00:00');
     this.keepDuration = 0;
-    this.isRun.value = false;
+    this.setIsRun(false);
   }
 
   getTimeText() {

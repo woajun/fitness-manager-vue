@@ -19,16 +19,20 @@ const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 
 const timerText = ref('');
 const restSeconds = ref(90);
+const chartData = ref<ChartData[]>([]);
+
 function setTimerText(ms: number) {
   timerText.value = msToTimeText(secondsToMs(restSeconds.value) - ms);
+  if (chartData.value.length > 1) {
+    chartData.value[chartData.value.length - 1] = { value: ms / 1000 };
+  }
 }
+
 const timer = new StopWatch(setTimerText, setIsRun);
 
 type ChartData = {
   value: number,
 };
-
-const chartData = ref<ChartData[]>([]);
 
 function start() {
   totalStopWatch.start();
@@ -49,6 +53,7 @@ function stop() {
 function reset() {
   totalStopWatch.reset();
   timer.reset();
+  chartData.value = [];
 }
 </script>
 <template>

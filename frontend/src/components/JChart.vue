@@ -39,9 +39,16 @@ function toLabel(num: number) {
   return result;
 }
 
+function getMax(data: Record<string, number>[]) {
+  if (data.length < 1) {
+    return 0;
+  }
+  return Math.max(...data.map((e) => e.value));
+}
+
 const canvasId = crypto.randomUUID();
 
-let lineChart: Chart;
+let lineChart: any;
 
 onMounted(() => {
   const apple = document.getElementById(canvasId) as HTMLCanvasElement;
@@ -59,7 +66,24 @@ onMounted(() => {
       scales: {
         y: {
           position: 'right',
+          grid: {
+            display: false,
+          },
+          min: 0,
+          ticks: {
+            callback(value) {
+              const second = value as number;
+              if (second < 10) {
+                return `${second.toFixed(1)} 초`;
+              }
+              return `${Math.floor(second)}초`;
+            },
+          },
+          weight: 0,
         },
+      },
+      animation: {
+        duration: 0,
       },
     },
   });
@@ -68,6 +92,7 @@ onMounted(() => {
 watch(props, (aProps) => {
   lineChart.data.labels = toLabel(aProps.data.length);
   lineChart.data.datasets[0] = { data: toData(aProps.data) };
+  lineChart.options.scales.y.ticks.stepSize = getMax(aProps.data);
   lineChart.update();
 });
 

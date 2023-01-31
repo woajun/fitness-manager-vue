@@ -40,13 +40,13 @@ function reset() {
 <template>
   <div>
     <div class="text-center">
-      <span>Total </span>
+      <span>운동시간 </span>
       <span class="text-3xl">
         {{ timeText }}
       </span>
     </div>
     <div class="text-center pt-3">
-      <span>Now </span>
+      <span>쉬는시간 </span>
       <span class="text-4xl">
         {{ timeText }}
       </span>
@@ -74,7 +74,7 @@ function reset() {
         {{ isRun ? '기록' : '시작' }}
       </button>
       <button class="font-semibold rounded-lg bg-fuchsia-500 h-14" @click="isRun ? stop() : reset()">
-        {{ isRun ? '정지' : '초기화' }}
+        {{ isRun ? '정지' : '운동종료' }}
       </button>
     </div>
     <div class="grid pt-10">

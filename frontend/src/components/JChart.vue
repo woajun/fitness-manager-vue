@@ -31,6 +31,14 @@ function toData(data: Record<string, number>[]): number[] {
   return data.map((e) => e.value);
 }
 
+function toLabel(num: number) {
+  const result = [];
+  for (let i = 1; i <= num; i += 1) {
+    result.push(`${i}회`);
+  }
+  return result;
+}
+
 const canvasId = crypto.randomUUID();
 
 let lineChart: Chart;
@@ -58,8 +66,7 @@ onMounted(() => {
 });
 
 watch(props, (aProps) => {
-  console.log('aaa');
-  // lineChart.data.labels = toLabel(aProps.data.length);
+  lineChart.data.labels = toLabel(aProps.data.length);
   lineChart.data.datasets[0] = { data: toData(aProps.data) };
   lineChart.update();
 });

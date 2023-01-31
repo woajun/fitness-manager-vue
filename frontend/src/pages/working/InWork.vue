@@ -40,10 +40,13 @@ function start() {
   timer.start();
 }
 
+const showModal = ref(false);
+
 function record() {
   chartData.value.push({ seconds: timer.getMs() / 1000 });
   timer.reset();
   timer.start();
+  showModal.value = true;
 }
 
 function stop() {
@@ -56,8 +59,6 @@ function reset() {
   timer.reset();
   chartData.value = [];
 }
-
-const showModal = ref(false);
 
 </script>
 <template>
@@ -104,14 +105,18 @@ const showModal = ref(false);
       </button>
     </div>
 
-    <button id="show-modal" @click="showModal = true">
-      Show Modal
-    </button>
     <Teleport to="body">
-      <!-- use the modal component, pass in the prop -->
-      <JModal :show="showModal" @close="showModal = false">
+      <JModal :show="showModal">
         <template #header>
-          <h3>custom header</h3>
+          <h3>수행결과</h3>
+        </template>
+        <template #body>
+          중량 60 kg
+        </template>
+        <template #footer>
+          <button @click="showModal = false">
+            확인
+          </button>
         </template>
       </JModal>
     </Teleport>

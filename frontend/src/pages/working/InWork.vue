@@ -18,7 +18,7 @@ function setIsRun(bool: boolean) {
 const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 
 const timerText = ref('');
-const restSeconds = ref(3);
+const restSeconds = ref(90);
 function setTimerText(ms: number) {
   timerText.value = msToTimeText(secondsToMs(restSeconds.value) - ms);
 }
@@ -36,7 +36,9 @@ function start() {
 }
 
 function record() {
-  chartData.value.push({ value: totalStopWatch.getMs() / 1000 });
+  chartData.value.push({ value: timer.getMs() / 1000 });
+  timer.reset();
+  timer.start();
 }
 
 function stop() {

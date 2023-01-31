@@ -15,11 +15,7 @@ function setIsRun(bool: boolean) {
   isRun.value = bool;
 }
 
-function getIsRun() {
-  return isRun.value;
-}
-
-const totalStopWatch = new StopWatch(setTimeText, setIsRun, getIsRun);
+const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 
 type ChartData = {
   value: number,

@@ -7,25 +7,24 @@ class StopWatch {
 
   keepDuration: number;
 
-  setIsRun: (b: boolean) => void;
-
-  getIsRun: () => boolean;
+  setIsRunTrigger: (b: boolean) => void;
 
   now: number;
 
+  isRun: boolean;
+
   constructor(
     setTimeText: (t: number) => void,
-    setIsRun: (b: boolean) => void,
-    getIsRun: () => boolean,
+    setIsRunTrigger: (b: boolean) => void,
   ) {
     this.setTimeText = setTimeText;
-    this.setIsRun = setIsRun;
-    this.getIsRun = getIsRun;
+    this.setIsRunTrigger = setIsRunTrigger;
     this.setTimeText(0);
     this.recentStartTime = new Date().getTime();
     this.intervalID = 0;
     this.keepDuration = 0;
     this.now = new Date().getTime();
+    this.isRun = false;
   }
 
   getMs() {
@@ -38,25 +37,30 @@ class StopWatch {
   };
 
   start() {
-    if (this.getIsRun()) return;
+    if (this.isRun) return;
     clearInterval(this.intervalID);
     this.recentStartTime = new Date().getTime();
     this.intervalID = setInterval(this.#doTimer, 10);
-    this.setIsRun(true);
+    this.#setIsRun(true);
   }
 
   stop() {
-    if (!this.getIsRun()) return;
+    if (!this.isRun) return;
     clearInterval(this.intervalID);
     this.keepDuration = this.getMs();
-    this.setIsRun(false);
+    this.#setIsRun(false);
   }
 
   reset() {
     clearInterval(this.intervalID);
     this.setTimeText(0);
     this.keepDuration = 0;
-    this.setIsRun(false);
+    this.#setIsRun(false);
+  }
+
+  #setIsRun(bool: boolean) {
+    this.isRun = bool;
+    this.setIsRunTrigger(this.isRun);
   }
 }
 

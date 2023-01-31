@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
-import { msToTimeText } from '../../components/helper';
+import { msToTimeText, secondsToMs } from '../../components/helper';
 
 const timeText = ref('');
 const isRun = ref(false);
@@ -17,6 +17,13 @@ function setIsRun(bool: boolean) {
 
 const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 
+const timerText = ref('');
+const restSeconds = ref(3);
+function setTimerText(ms: number) {
+  timerText.value = msToTimeText(secondsToMs(restSeconds.value) - ms);
+}
+const timer = new StopWatch(setTimerText, setIsRun);
+
 type ChartData = {
   value: number,
 };
@@ -25,6 +32,7 @@ const chartData = ref<ChartData[]>([]);
 
 function start() {
   totalStopWatch.start();
+  timer.start();
 }
 
 function record() {
@@ -33,10 +41,12 @@ function record() {
 
 function stop() {
   totalStopWatch.stop();
+  timer.stop();
 }
 
 function reset() {
   totalStopWatch.reset();
+  timer.reset();
 }
 </script>
 <template>
@@ -50,7 +60,7 @@ function reset() {
     <div class="text-center pt-3">
       <span>쉬는 시간 </span>
       <span class="text-4xl">
-        {{ timeText }}
+        {{ timerText }}
       </span>
     </div>
     <div class="text-center pt-6">

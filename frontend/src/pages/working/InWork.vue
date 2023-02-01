@@ -146,7 +146,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
               중량
             </div>
             <div class="flex-1 text-4xl vertical-center max-h-24 truncate">
-              <VueScrollPicker :options="[1, 2, 3]" />
+              <VueScrollPicker :options="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]" />
             </div>
             <div class="flex-1 vertical-center">
               kg

@@ -24,45 +24,13 @@ function setIsRun(bool: boolean) {
 const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 
 const timerText = ref('');
-const restSeconds = ref(3);
 const chartData = ref<ChartData[]>([]);
-
-function setTimerText(ms: number) {
-  timerText.value = msToTimeText(secondsToMs(restSeconds.value) - ms);
-  if (chartData.value.length > 1) {
-    chartData.value[chartData.value.length - 1] = { seconds: ms / 1000 };
-  }
-}
-
-const timer = new StopWatch(setTimerText, setIsRun);
-
-function start() {
-  totalStopWatch.start();
-  timer.start();
-}
-
-function record() {
-  chartData.value.push({ seconds: timer.getMs() / 1000 });
-  timer.reset();
-  timer.start();
-}
-
-function stop() {
-  totalStopWatch.stop();
-  timer.stop();
-}
-
-function reset() {
-  totalStopWatch.reset();
-  timer.reset();
-  chartData.value = [];
-}
-
-const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(restSeconds.value) - timer.getMs()) < 0));
 
 const expectWeight = ref(60);
 const expectRep = ref(15);
 const expectSec = ref(30);
+
+// BottomSheet - start =====
 type BottomSheet = 'weight' | 'rep' | 'sec' | 'record';
 const btmShtState = ref<BottomSheet>('weight');
 const showBtmSht = ref(false);
@@ -83,6 +51,40 @@ function showBtmShtRecord() {
   btmShtState.value = 'record';
   showBtmSht.value = true;
 }
+// BottomSheet - end =====
+function setTimerText(ms: number) {
+  timerText.value = msToTimeText(secondsToMs(expectSec.value) - ms);
+  if (chartData.value.length > 1) {
+    chartData.value[chartData.value.length - 1] = { seconds: ms / 1000 };
+  }
+}
+
+const timer = new StopWatch(setTimerText, setIsRun);
+
+function start() {
+  totalStopWatch.start();
+  timer.start();
+}
+
+function record() {
+  chartData.value.push({ seconds: timer.getMs() / 1000 });
+  timer.reset();
+  timer.start();
+  showBtmShtRecord();
+}
+
+function stop() {
+  totalStopWatch.stop();
+  timer.stop();
+}
+
+function reset() {
+  totalStopWatch.reset();
+  timer.reset();
+  chartData.value = [];
+}
+
+const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(expectSec.value) - timer.getMs()) < 0));
 
 </script>
 <template>
@@ -133,7 +135,7 @@ function showBtmShtRecord() {
     </div>
     <div class="pt-5 flex text-center">
       <div class="flex-1" @click="showBtmShtWeight">
-        <label class="text-xl text-gray-500">다음 중량</label><br />
+        <label class="text-xl text-gray-500">도전 중량</label><br />
         <span>{{ expectWeight }}kg</span>
       </div>
       <div class="flex-1" @click="showBtmShtRep">

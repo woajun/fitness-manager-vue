@@ -116,20 +116,24 @@ function btnReset() {
 }
 // btn - end ====
 
-const isActive = computed(() => {
+const isWorkTime = computed(() => {
   const isFirstSet = records.value.length === 0;
   return timerText.value && isRun.value && ((secondsToMs(isFirstSet ? firstSetSec : expectSec.value) - timer.getMs()) < 0);
 });
 
+const message = computed(() => {
+  if (!isWorkTime.value && records.value.length === 0 && isRun.value && !showBtmSht.value) {
+    return '5초 후 시작!';
+  }
+  return isWorkTime.value ? '운동시작' : '휴식';
+});
 </script>
 <template>
-  <div class="h-screen px-4 py-4 background fixed" :class="{ active: isActive }">
+  <div class="h-screen px-4 py-4 background fixed" :class="{ active: isWorkTime }">
     <div class="flex justify-between pt-3">
       <div>
         <div class="">
-          <p class="">
-            {{ isActive ? '운동시작' : '휴식' }}
-          </p>
+          {{ message }}
         </div>
         <div class="">
           <span class="text-4xl">
@@ -155,8 +159,8 @@ const isActive = computed(() => {
     </div>
 
     <div class="mt-5 border">
-      <JMultiChart data-key="rep" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" unit="회" />
-      <!-- <JChart data-key="totalSec" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" unit="초" /> -->
+      <JMultiChart data-key="rep" :data="records" :font-color="isWorkTime ? 'rgb(248 250 252)' : ''" unit="회" />
+      <!-- <JChart data-key="totalSec" :data="records" :font-color="isWorkTime ? 'rgb(248 250 252)' : ''" unit="초" /> -->
     </div>
 
     <div class="pt-4 mx-4 flex justify-between">
@@ -173,15 +177,15 @@ const isActive = computed(() => {
     <div class="pt-5 flex text-center">
       <div class="flex-1" @click="showBtmShtWeight">
         <label class="text-xl text-gray-500">도전 중량</label><br />
-        <span :class="isActive ? 'text-red-300' : 'text-red-800'">{{ expectWeight }}kg</span>
+        <span :class="isWorkTime ? 'text-red-300' : 'text-red-800'">{{ expectWeight }}kg</span>
       </div>
       <div class="flex-1" @click="showBtmShtRep">
         <label class="text-xl text-gray-500">목표 횟수</label>
-        <span :class="isActive ? 'text-violet-300' : 'text-violet-800'">{{ expectRep }}rep</span>
+        <span :class="isWorkTime ? 'text-violet-300' : 'text-violet-800'">{{ expectRep }}rep</span>
       </div>
       <div class="flex-1" @click="showBtmShtSec">
         <label class="text-xl text-gray-500">휴식 시간</label>
-        <span :class="isActive ? 'text-green-300' : 'text-green-800'">{{ expectSec }}sec</span>
+        <span :class="isWorkTime ? 'text-green-300' : 'text-green-800'">{{ expectSec }}sec</span>
       </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">

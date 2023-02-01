@@ -154,9 +154,11 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
           </div>
         </template>
         <template #footer>
-          <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-x" @click="showModal = false">
-            선택완료
-          </button>
+          <div class="grid">
+            <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-xl" @click="showModal = false">
+              선택완료
+            </button>
+          </div>
         </template>
       </JBottomSheet>
     </Teleport>

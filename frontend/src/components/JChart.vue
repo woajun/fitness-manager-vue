@@ -29,6 +29,7 @@ Chart.register(
 
 const props = defineProps<{
   data: ChartData[]
+  fontColor: string
 }>();
 
 function toData(data: ChartData[]): number[] {
@@ -63,7 +64,6 @@ onMounted(() => {
       labels: [],
       datasets: [{
         data: toData(props.data),
-        borderColor: 'rgb(75, 192, 192)',
       }],
     },
     options: {
@@ -85,12 +85,20 @@ onMounted(() => {
               }
               return `${Math.floor(second)} 초`;
             },
-            color: 'rgb(248 250 252)',
+            // color: 'rgb(248 250 252)',
+            color: props.fontColor,
+            font: {
+              size: 15,
+            },
           },
         },
         x: {
           ticks: {
-            color: 'rgb(248 250 252)',
+            // color: 'rgb(248 250 252)',
+            color: props.fontColor,
+            font: {
+              size: 15,
+            },
           },
         },
       },
@@ -98,6 +106,7 @@ onMounted(() => {
         duration: 0,
       },
     },
+
   });
 });
 
@@ -105,6 +114,8 @@ watch(props, (aProps) => {
   lineChart.data.labels = toLabel(aProps.data.length);
   lineChart.data.datasets[0] = { data: toData(aProps.data), borderColor: 'rgb(75, 192, 192)' };
   lineChart.options.scales.y.ticks.stepSize = getMax(aProps.data);
+  lineChart.options.scales.y.ticks.color = aProps.fontColor;
+  lineChart.options.scales.x.ticks.color = aProps.fontColor;
   lineChart.update();
 });
 

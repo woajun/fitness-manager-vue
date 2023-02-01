@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
 import JModal from '../../components/JModal.vue';
@@ -60,48 +60,68 @@ function reset() {
   chartData.value = [];
 }
 
+const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(restSeconds.value) - timer.getMs()) < 0));
+
 </script>
 <template>
-  <div class="h-screen px-4 py-4 background" :class="secondsToMs(restSeconds) - timer.getMs() < 0 ? 'active' : ''">
-    <div class="text-center pt-3">
-      <p class="text-4xl font-semibold">
-        {{ secondsToMs(restSeconds) - timer.getMs() < 0 ? 'Let\'s work out!' : 'Take a breath!' }}
-      </p>
-    </div>
-    <div class="text-center pt-3">
-      <span class="text-5xl">
-        {{ timerText }}
-      </span>
-    </div>
-    <div class="text-center">
-      <span class="text-3xl font-semibold text-gray-500">
-        ( {{ timeText }} )
-      </span>
+  <div class="h-screen px-4 py-4 background" :class="{ active: isActive }">
+    <div class="flex justify-between pt-3">
+      <div>
+        <div class="">
+          <p class="">
+            {{ isActive ? '운동시작' : '휴식' }}
+          </p>
+        </div>
+        <div class="">
+          <span class="text-4xl">
+            {{ timerText }}
+          </span>
+        </div>
+        <div class="">
+          <span class="text-2xl  text-gray-500">
+            {{ timeText }}
+          </span>
+        </div>
+      </div>
+      <div>
+        <div class="numberCircle bg-neutral-400 text-white">
+          <div class="pt-3">
+            <span class="text-4xl">3</span>
+            <span>set</span>
+          </div>
+          <span class="text-lg">1256</span>
+          <span class="text-sm">칼로리</span>
+        </div>
+      </div>
     </div>
 
-    <div class="pt-5">
-      <JChart :data="chartData" />
+    <div class="mt-5 border">
+      <JChart :data="chartData" :font-color="isActive ? 'rgb(248 250 252)' : ''" />
     </div>
 
-    <div class="text-center text-3xl pt-3">
-      <span class="font-semibold">스쿼트 </span>
+    <div class="pt-3 pl-4">
+      <span class="ms-5">스쿼트 </span>
     </div>
-    <div class="text-center text-3xl pt-5">
-      <span class="font-semibold">60kg </span>
-      <span class="font-semibold"> 15rep </span>
-      <span class="font-semibold"> 3sec</span>
+    <div class="pt-5 flex text-center">
+      <div class="flex-1">
+        <label class="text-xl text-gray-500">다음 중량</label>
+        <span class="">60kg</span>
+      </div>
+      <div class="flex-1">
+        <label class="text-xl text-gray-500">목표 횟수</label>
+        <span class="">15rep</span>
+      </div>
+      <div class="flex-1">
+        <label class="text-xl text-gray-500">휴식 시간</label>
+        <span class="">3sec</span>
+      </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
-      <button class="text-slate-50 font-semibold rounded-lg bg-slate-700 h-14" @click="isRun ? record() : start()">
+      <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="isRun ? record() : start()">
         {{ isRun ? '기록' : '시작' }}
       </button>
-      <button class="text-slate-50 font-semibold rounded-lg bg-slate-700 h-14" @click="isRun ? stop() : reset()">
+      <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="isRun ? stop() : reset()">
         {{ isRun ? '정지' : '운동종료' }}
-      </button>
-    </div>
-    <div class="grid pt-5">
-      <button class="text-slate-50 font-semibold rounded-lg bg-slate-700 h-14">
-        다음운동
       </button>
     </div>
 
@@ -146,6 +166,14 @@ function reset() {
 .active {
   --tw-text-opacity: 1;
   color: rgb(248 250 252 / var(--tw-text-opacity));
+}
+
+.numberCircle {
+    border-radius: 50%;
+    width: 7rem;
+    height: 100%;
+    border: 2px solid #666;
+    text-align: center;
 }
 
 </style>

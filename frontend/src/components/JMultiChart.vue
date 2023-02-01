@@ -44,13 +44,6 @@ function toLabel(num: number) {
   return result;
 }
 
-function getMax(data: ChartData[]) {
-  if (data.length < 1) {
-    return 0;
-  }
-  return Math.max(...data.map((e) => e[props.dataKey] as number));
-}
-
 const canvasId = crypto.randomUUID();
 
 let lineChart: any;
@@ -113,7 +106,6 @@ onMounted(() => {
 watch(props, (aProps) => {
   lineChart.data.labels = toLabel(aProps.data.length);
   lineChart.data.datasets[0] = { data: toData(aProps.data), borderColor: 'rgb(75, 192, 192)' };
-  lineChart.options.scales.y.ticks.stepSize = getMax(aProps.data);
   lineChart.options.scales.y.ticks.color = aProps.fontColor;
   lineChart.options.scales.x.ticks.color = aProps.fontColor;
   lineChart.update();

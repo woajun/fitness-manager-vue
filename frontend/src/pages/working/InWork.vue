@@ -18,9 +18,9 @@ type Records = {
 };
 const records = ref<Records[]>([]);
 
-const expectWeight = ref(60);
+const expectWeight = ref(0);
 const expectRep = ref(15);
-const expectSec = ref(3);
+const expectSec = ref(90);
 
 // BottomSheet - start =====
 type BottomSheet = 'weight' | 'rep' | 'sec' | 'record';
@@ -80,8 +80,10 @@ const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 
 const timerText = ref('');
 
+const firstSetSec = 5; // 처음 시작 할 때 휴식시간
 function setTimerText(ms: number) {
-  timerText.value = msToTimeText(secondsToMs(expectSec.value) - ms);
+  const isFirstSet = records.value.length === 0;
+  timerText.value = msToTimeText(secondsToMs(isFirstSet ? firstSetSec : expectSec.value) - ms);
   if (records.value.length > 1) {
     records.value[records.value.length - 1] = { ...records.value[records.value.length - 1], totalSec: ms / 1000 };
   }
@@ -114,7 +116,10 @@ function btnReset() {
 }
 // btn - end ====
 
-const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(expectSec.value) - timer.getMs()) < 0));
+const isActive = computed(() => {
+  const isFirstSet = records.value.length === 0;
+  return timerText.value && isRun.value && ((secondsToMs(isFirstSet ? firstSetSec : expectSec.value) - timer.getMs()) < 0);
+});
 
 </script>
 <template>
@@ -143,20 +148,18 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
             <span class="text-4xl">{{ records.length }}</span>
             <span>set</span>
           </div>
-          <span class="text-lg">1256</span>
-          <span class="text-sm">칼로리</span>
         </div>
       </div>
     </div>
 
     <div class="mt-5 border">
-      <JMultiChart data-key="totalSec" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" unit="초" />
+      <JMultiChart data-key="rep" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" unit="회" />
       <!-- <JChart data-key="totalSec" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" unit="초" /> -->
     </div>
 
     <div class="pt-4 mx-4 flex justify-between">
       <div>
-        <span class="">스쿼트 </span>
+        <span class="">윗몸일으키기</span>
       </div>
       <div class="rounded-lg  bg-neutral-500 text-white text-xl px-4 py-2">
         <span>

@@ -84,7 +84,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
         </div>
       </div>
       <div>
-        <div class="numberCircle bg-neutral-400 text-white">
+        <div class="numberCircle bg-neutral-500 text-white">
           <div class="pt-3">
             <span class="text-4xl">3</span>
             <span>set</span>
@@ -99,8 +99,15 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
       <JChart :data="chartData" :font-color="isActive ? 'rgb(248 250 252)' : ''" />
     </div>
 
-    <div class="pt-3 pl-4">
-      <span class="ms-5">스쿼트 </span>
+    <div class="pt-4 mx-4 flex justify-between">
+      <div>
+        <span class="">스쿼트 </span>
+      </div>
+      <div>
+        <span class="rounded-lg  bg-neutral-500 text-white text-xl px-4 py-2">
+          52회
+        </span>
+      </div>
     </div>
     <div class="pt-5 flex text-center">
       <div class="flex-1">

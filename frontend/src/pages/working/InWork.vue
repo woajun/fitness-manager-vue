@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
 import JBottomSheet from '../../components/JBottomSheet.vue';
@@ -51,7 +51,28 @@ function showBtmShtRecord() {
   btmShtState.value = 'record';
   showBtmSht.value = true;
 }
-// BottomSheet - end =====
+// BottomSheet - end ====
+// for Record - start ====
+const recordObj = reactive({
+  weight: 0,
+  rep: 0,
+  restSec: 0,
+  totalSec: 0,
+});
+
+function initRecordObj(w: number, rep: number, rs: number, ts: number) {
+  recordObj.weight = w;
+  recordObj.rep = rep;
+  recordObj.restSec = rs;
+  recordObj.totalSec = ts;
+}
+
+function doRecord() {
+  chartData.value.push({ seconds: recordObj.totalSec / 1000 });
+  showBtmSht.value = false;
+}
+
+// for Record - end ====
 function setTimerText(ms: number) {
   timerText.value = msToTimeText(secondsToMs(expectSec.value) - ms);
   if (chartData.value.length > 1) {
@@ -67,7 +88,7 @@ function start() {
 }
 
 function record() {
-  chartData.value.push({ seconds: timer.getMs() / 1000 });
+  initRecordObj(expectWeight.value, expectRep.value, expectSec.value, timer.getMs());
   timer.reset();
   timer.start();
   showBtmShtRecord();
@@ -163,17 +184,24 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     </div>
 
     <Teleport to="body">
-      <JBottomSheet class="text-3xl font-semibold" :show="showBtmSht">
+      <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showBtmSht">
         <template #body>
           <JScrollPickerVue v-if="btmShtState === 'weight'" v-model="expectWeight" :options="500" label="중량" unit="kg" />
           <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="expectRep" :options="500" label="횟수" unit="rep" />
           <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="expectSec" :options="1000" label="시간" unit="sec" />
-          <div v-else-if="btmShtState === 'record'">
-            레코드
+          <div v-else-if="btmShtState === 'record'" class="text-2xl gap-3">
+            <JScrollPickerVue v-model="recordObj.weight" class="py-5 border-b" :options="500" label="수행중량" unit="kg" />
+            <JScrollPickerVue v-model="recordObj.rep" class="py-5 border-b" :options="500" label="수행횟수" unit="rep" />
+            <JScrollPickerVue v-model="recordObj.restSec" class="py-5" :options="1000" label="휴식시간" unit="sec" />
           </div>
         </template>
         <template #footer>
-          <div class="grid">
+          <div v-if="btmShtState === 'record'" class="grid">
+            <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-xl" @click="doRecord">
+              선택완료
+            </button>
+          </div>
+          <div v-else class="grid">
             <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-xl" @click="showBtmSht = false">
               선택완료
             </button>

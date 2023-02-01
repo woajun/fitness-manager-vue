@@ -41,8 +41,6 @@ function start() {
   timer.start();
 }
 
-const showModal = ref(false);
-
 function record() {
   chartData.value.push({ seconds: timer.getMs() / 1000 });
   timer.reset();
@@ -62,7 +60,30 @@ function reset() {
 
 const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(restSeconds.value) - timer.getMs()) < 0));
 
-const expectWeight = ref(3);
+const expectWeight = ref(60);
+const expectRep = ref(15);
+const expectSec = ref(30);
+type BottomSheet = 'weight' | 'rep' | 'sec' | 'record';
+const btmShtState = ref<BottomSheet>('weight');
+const showBtmSht = ref(false);
+
+function showBtmShtWeight() {
+  btmShtState.value = 'weight';
+  showBtmSht.value = true;
+}
+function showBtmShtRep() {
+  btmShtState.value = 'rep';
+  showBtmSht.value = true;
+}
+function showBtmShtSec() {
+  btmShtState.value = 'sec';
+  showBtmSht.value = true;
+}
+function showBtmShtRecord() {
+  btmShtState.value = 'record';
+  showBtmSht.value = true;
+}
+
 </script>
 <template>
   <div class="h-screen px-4 py-4 background fixed" :class="{ active: isActive }">
@@ -111,17 +132,17 @@ const expectWeight = ref(3);
       </div>
     </div>
     <div class="pt-5 flex text-center">
-      <div class="flex-1" @click="showModal = true">
+      <div class="flex-1" @click="showBtmShtWeight">
         <label class="text-xl text-gray-500">다음 중량</label><br />
         <span>{{ expectWeight }}kg</span>
       </div>
-      <div class="flex-1">
+      <div class="flex-1" @click="showBtmShtRep">
         <label class="text-xl text-gray-500">목표 횟수</label>
-        <span class="">15rep</span>
+        <span class="">{{ expectRep }}rep</span>
       </div>
-      <div class="flex-1">
+      <div class="flex-1" @click="showBtmShtSec">
         <label class="text-xl text-gray-500">휴식 시간</label>
-        <span class="">3sec</span>
+        <span class="">{{ expectSec }}sec</span>
       </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
@@ -140,13 +161,18 @@ const expectWeight = ref(3);
     </div>
 
     <Teleport to="body">
-      <JBottomSheet class="text-3xl font-semibold" :show="showModal">
+      <JBottomSheet class="text-3xl font-semibold" :show="showBtmSht">
         <template #body>
-          <JScrollPickerVue v-model="expectWeight" :options="100" label="중량" unit="kg" />
+          <JScrollPickerVue v-if="btmShtState === 'weight'" v-model="expectWeight" :options="500" label="중량" unit="kg" />
+          <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="expectRep" :options="500" label="횟수" unit="rep" />
+          <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="expectSec" :options="1000" label="시간" unit="sec" />
+          <div v-else-if="btmShtState === 'record'">
+            레코드
+          </div>
         </template>
         <template #footer>
           <div class="grid">
-            <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-xl" @click="showModal = false">
+            <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-xl" @click="showBtmSht = false">
               선택완료
             </button>
           </div>

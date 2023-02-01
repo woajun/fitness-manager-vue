@@ -148,6 +148,8 @@ const isActive = computed(() => {
             <span class="text-4xl">{{ records.length }}</span>
             <span>set</span>
           </div>
+          <span class="text-lg">1256</span>
+          <span class="text-sm">칼로리</span>
         </div>
       </div>
     </div>
@@ -200,13 +202,13 @@ const isActive = computed(() => {
     <Teleport to="body">
       <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showBtmSht">
         <template #body>
-          <JScrollPickerVue v-if="btmShtState === 'weight'" v-model="expectWeight" :options="500" label="중량" unit="kg" />
-          <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="expectRep" :options="500" label="횟수" unit="rep" />
-          <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="expectSec" :options="1000" label="시간" unit="sec" />
+          <JScrollPickerVue v-if="btmShtState === 'weight'" v-model="expectWeight" :options="500" label="중량" unit="kg" selected-color="red" />
+          <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="expectRep" :options="500" label="횟수" unit="rep" selected-color="purple" />
+          <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="expectSec" :options="1000" label="시간" unit="sec" selected-color="green" />
           <div v-else-if="btmShtState === 'record'" class="text-2xl gap-3">
-            <JScrollPickerVue v-model="recordRequest.weight" class="py-5 border-b" :options="500" label="수행중량" unit="kg" />
-            <JScrollPickerVue v-model="recordRequest.rep" class="py-5 border-b" :options="500" label="수행횟수" unit="rep" />
-            <JScrollPickerVue v-model="recordRequest.restSec" class="py-5" :options="1000" label="휴식시간" unit="sec" />
+            <JScrollPickerVue v-model="recordRequest.weight" class="py-5 border-b" :options="500" label="수행중량" unit="kg" selected-color="red" />
+            <JScrollPickerVue v-model="recordRequest.rep" class="py-5 border-b" :options="500" label="수행횟수" unit="rep" selected-color="purple" />
+            <JScrollPickerVue v-model="recordRequest.restSec" class="py-5" :options="1000" label="휴식시간" unit="sec" selected-color="green" />
           </div>
         </template>
         <template #footer>

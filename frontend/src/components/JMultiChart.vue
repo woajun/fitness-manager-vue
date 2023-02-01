@@ -105,7 +105,7 @@ onMounted(() => {
 
 watch(props, (aProps) => {
   lineChart.data.labels = toLabel(aProps.data.length);
-  lineChart.data.datasets[0] = { data: toData(aProps.data), borderColor: 'rgb(75, 192, 192)' };
+  lineChart.data.datasets[0] = { data: toData(aProps.data), borderColor: 'rgb(91, 33, 182)' };
   lineChart.options.scales.y.ticks.color = aProps.fontColor;
   lineChart.options.scales.x.ticks.color = aProps.fontColor;
   lineChart.update();

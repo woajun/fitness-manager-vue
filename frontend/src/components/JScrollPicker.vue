@@ -15,9 +15,11 @@ const props = withDefaults(
     label: string;
     unit: string;
     options: number;
+    selectedColor?: 'red' | 'purple' | 'green';
   }>(),
-  {},
+  { selectedColor: undefined },
 );
+
 const emit = defineEmits(['update:modelValue']);
 
 const newValue = ref(props.modelValue);
@@ -54,7 +56,11 @@ const options = computed(() => {
       {{ props.label }}
     </div>
     <div class="flex-1 text-4xl vertical-center max-h-24 truncate">
-      <VueScrollPicker v-model="computedVal" :options="options" />
+      <VueScrollPicker
+        v-model="computedVal"
+        :options="options"
+        :class="props.selectedColor ? `selected-color-${props.selectedColor}` : ''"
+      />
     </div>
     <div class="flex-1 vertical-center">
       {{ props.unit }}
@@ -62,3 +68,14 @@ const options = computed(() => {
   </div>
 </template>
 <style src="vue-scroll-picker/lib/style.css"></style>
+<style>
+.selected-color-red .vue-scroll-picker-item-selected {
+  color: rgb(153 27 27 / var(--tw-text-opacity));
+}
+.selected-color-purple .vue-scroll-picker-item-selected {
+  color: rgb(91 33 182 / var(--tw-text-opacity));
+}
+.selected-color-green .vue-scroll-picker-item-selected {
+  color: rgb(22 101 52 / var(--tw-text-opacity));
+}
+</style>

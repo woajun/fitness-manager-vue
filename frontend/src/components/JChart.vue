@@ -11,9 +11,7 @@ import {
 } from 'chart.js';
 import { onMounted, watch } from 'vue';
 
-type ChartData = {
-  seconds: number,
-};
+type ChartData = Record<string, unknown>;
 
 Chart.register(
   Title,
@@ -29,11 +27,12 @@ Chart.register(
 
 const props = defineProps<{
   data: ChartData[]
+  dataKey: string
   fontColor: string
 }>();
 
-function toData(data: ChartData[]): number[] {
-  return data.map((e) => e.seconds);
+function toData(data: ChartData[]) {
+  return data.map((e) => e[props.dataKey]);
 }
 
 function toLabel(num: number) {
@@ -48,7 +47,7 @@ function getMax(data: ChartData[]) {
   if (data.length < 1) {
     return 0;
   }
-  return Math.max(...data.map((e) => e.seconds));
+  return Math.max(...data.map((e) => e[props.dataKey] as number));
 }
 
 const canvasId = crypto.randomUUID();

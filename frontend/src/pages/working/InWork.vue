@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/max-len -->
 <script setup lang="ts">
 import { computed, ref, reactive } from 'vue';
 import StopWatch from '../../components/stopWatch';
@@ -6,8 +7,11 @@ import JBottomSheet from '../../components/JBottomSheet.vue';
 import { msToTimeText, secondsToMs } from '../../components/helper';
 import JScrollPickerVue from '../../components/JScrollPicker.vue';
 
-type ChartData = {
-  seconds: number,
+type Records = {
+  weight: number,
+  rep: number,
+  restSec: number,
+  totalSec: number,
 };
 
 const timeText = ref('');
@@ -24,7 +28,7 @@ function setIsRun(bool: boolean) {
 const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 
 const timerText = ref('');
-const chartData = ref<ChartData[]>([]);
+const records = ref<Records[]>([]);
 
 const expectWeight = ref(60);
 const expectRep = ref(15);
@@ -53,7 +57,7 @@ function showBtmShtRecord() {
 }
 // BottomSheet - end ====
 // for Record - start ====
-const recordObj = reactive({
+const recordRequest = reactive({
   weight: 0,
   rep: 0,
   restSec: 0,
@@ -61,48 +65,47 @@ const recordObj = reactive({
 });
 
 function initRecordObj(w: number, rep: number, rs: number, ts: number) {
-  recordObj.weight = w;
-  recordObj.rep = rep;
-  recordObj.restSec = rs;
-  recordObj.totalSec = ts;
+  recordRequest.weight = w;
+  recordRequest.rep = rep;
+  recordRequest.restSec = rs;
+  recordRequest.totalSec = ts;
 }
 
 function doRecord() {
-  chartData.value.push({ seconds: recordObj.totalSec / 1000 });
+  records.value.push({ ...recordRequest, totalSec: recordRequest.totalSec / 1000 });
   showBtmSht.value = false;
 }
-
 // for Record - end ====
 function setTimerText(ms: number) {
   timerText.value = msToTimeText(secondsToMs(expectSec.value) - ms);
-  if (chartData.value.length > 1) {
-    chartData.value[chartData.value.length - 1] = { seconds: ms / 1000 };
+  if (records.value.length > 1) {
+    records.value[records.value.length - 1] = { ...records.value[records.value.length - 1], totalSec: ms / 1000 };
   }
 }
 
 const timer = new StopWatch(setTimerText, setIsRun);
 
-function start() {
+function btnStart() {
   totalStopWatch.start();
   timer.start();
 }
 
-function record() {
+function btnRecord() {
   initRecordObj(expectWeight.value, expectRep.value, expectSec.value, timer.getMs());
   timer.reset();
   timer.start();
   showBtmShtRecord();
 }
 
-function stop() {
+function btnStop() {
   totalStopWatch.stop();
   timer.stop();
 }
 
-function reset() {
+function btnReset() {
   totalStopWatch.reset();
   timer.reset();
-  chartData.value = [];
+  records.value = [];
 }
 
 const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(expectSec.value) - timer.getMs()) < 0));
@@ -141,7 +144,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     </div>
 
     <div class="mt-5 border">
-      <JChart :data="chartData" :font-color="isActive ? 'rgb(248 250 252)' : ''" />
+      <JChart data-key="totalSec" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" />
     </div>
 
     <div class="pt-4 mx-4 flex justify-between">
@@ -169,16 +172,16 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
       </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
-      <button v-if="isRun" class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="record()">
+      <button v-if="isRun" class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="btnRecord()">
         기록
       </button>
-      <button v-else class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="start()">
+      <button v-else class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="btnStart()">
         시작
       </button>
-      <button v-if="isRun" class="text-slate-50 rounded-lg bg-red-700 h-14 text-xl" @click="stop()">
+      <button v-if="isRun" class="text-slate-50 rounded-lg bg-red-700 h-14 text-xl" @click="btnStop()">
         정지
       </button>
-      <button v-else class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="reset()">
+      <button v-else class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="btnReset()">
         종료
       </button>
     </div>
@@ -190,9 +193,9 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
           <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="expectRep" :options="500" label="횟수" unit="rep" />
           <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="expectSec" :options="1000" label="시간" unit="sec" />
           <div v-else-if="btmShtState === 'record'" class="text-2xl gap-3">
-            <JScrollPickerVue v-model="recordObj.weight" class="py-5 border-b" :options="500" label="수행중량" unit="kg" />
-            <JScrollPickerVue v-model="recordObj.rep" class="py-5 border-b" :options="500" label="수행횟수" unit="rep" />
-            <JScrollPickerVue v-model="recordObj.restSec" class="py-5" :options="1000" label="휴식시간" unit="sec" />
+            <JScrollPickerVue v-model="recordRequest.weight" class="py-5 border-b" :options="500" label="수행중량" unit="kg" />
+            <JScrollPickerVue v-model="recordRequest.rep" class="py-5 border-b" :options="500" label="수행횟수" unit="rep" />
+            <JScrollPickerVue v-model="recordRequest.restSec" class="py-5" :options="1000" label="휴식시간" unit="sec" />
           </div>
         </template>
         <template #footer>

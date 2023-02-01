@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { VueScrollPicker } from 'vue-scroll-picker';
 import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
 import JBottomSheet from '../../components/JBottomSheet.vue';
 import { msToTimeText, secondsToMs } from '../../components/helper';
+import JScrollPickerVue from '../../components/JScrollPicker.vue';
 
 type ChartData = {
   seconds: number,
@@ -62,6 +62,7 @@ function reset() {
 
 const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(restSeconds.value) - timer.getMs()) < 0));
 
+const expectWeight = ref(3);
 </script>
 <template>
   <div class="h-screen px-4 py-4 background fixed" :class="{ active: isActive }">
@@ -111,8 +112,8 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     </div>
     <div class="pt-5 flex text-center">
       <div class="flex-1" @click="showModal = true">
-        <label class="text-xl text-gray-500">다음 중량</label>
-        <span class="">60kg</span>
+        <label class="text-xl text-gray-500">다음 중량</label><br />
+        <span>{{ expectWeight }}kg</span>
       </div>
       <div class="flex-1">
         <label class="text-xl text-gray-500">목표 횟수</label>
@@ -141,17 +142,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     <Teleport to="body">
       <JBottomSheet class="text-3xl font-semibold" :show="showModal">
         <template #body>
-          <div class="flex text-center">
-            <div class="flex-1 vertical-center">
-              중량
-            </div>
-            <div class="flex-1 text-4xl vertical-center max-h-24 truncate">
-              <VueScrollPicker :options="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]" />
-            </div>
-            <div class="flex-1 vertical-center">
-              kg
-            </div>
-          </div>
+          <JScrollPickerVue v-model="expectWeight" :options="100" label="중량" unit="kg" />
         </template>
         <template #footer>
           <div class="grid">
@@ -164,7 +155,6 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     </Teleport>
   </div>
 </template>
-<style src="vue-scroll-picker/lib/style.css"></style>
 <style>
 .background {
   position: relative;

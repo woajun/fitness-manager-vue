@@ -124,11 +124,17 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
       </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
-      <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="isRun ? record() : start()">
-        {{ isRun ? '기록' : '시작' }}
+      <button v-if="isRun" class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="record()">
+        기록
       </button>
-      <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="isRun ? stop() : reset()">
-        {{ isRun ? '정지' : '운동종료' }}
+      <button v-else class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="start()">
+        시작
+      </button>
+      <button v-if="isRun" class="text-slate-50 rounded-lg bg-red-700 h-14 text-xl" @click="stop()">
+        정지
+      </button>
+      <button v-else class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="reset()">
+        종료
       </button>
     </div>
 

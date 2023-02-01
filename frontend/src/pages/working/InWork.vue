@@ -13,21 +13,6 @@ type Records = {
   restSec: number,
   totalSec: number,
 };
-
-const timeText = ref('');
-const isRun = ref(false);
-
-function setTimeText(ms: number) {
-  timeText.value = msToTimeText(ms);
-}
-
-function setIsRun(bool: boolean) {
-  isRun.value = bool;
-}
-
-const totalStopWatch = new StopWatch(setTimeText, setIsRun);
-
-const timerText = ref('');
 const records = ref<Records[]>([]);
 
 const expectWeight = ref(60);
@@ -76,6 +61,22 @@ function doRecord() {
   showBtmSht.value = false;
 }
 // for Record - end ====
+// timer & stopWatch - start ====
+const timeText = ref('');
+const isRun = ref(false);
+
+function setTimeText(ms: number) {
+  timeText.value = msToTimeText(ms);
+}
+
+function setIsRun(bool: boolean) {
+  isRun.value = bool;
+}
+
+const totalStopWatch = new StopWatch(setTimeText, setIsRun);
+
+const timerText = ref('');
+
 function setTimerText(ms: number) {
   timerText.value = msToTimeText(secondsToMs(expectSec.value) - ms);
   if (records.value.length > 1) {
@@ -84,7 +85,8 @@ function setTimerText(ms: number) {
 }
 
 const timer = new StopWatch(setTimerText, setIsRun);
-
+// timer & stopWatch - end ====
+// btn - start ====
 function btnStart() {
   totalStopWatch.start();
   timer.start();
@@ -107,6 +109,7 @@ function btnReset() {
   timer.reset();
   records.value = [];
 }
+// btn - end ====
 
 const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(expectSec.value) - timer.getMs()) < 0));
 

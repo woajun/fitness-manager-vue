@@ -25,3 +25,12 @@ export function msToTimeText(ms: number) {
 export function secondsToMs(sec: number) {
   return sec * 1000;
 }
+
+export function msToTimeTextWithHour(ms: number) {
+  const rawH = ms / 1000 / 60 / 60;
+  const h = Math.floor(rawH);
+  const m = Math.floor((rawH - h) * 60);
+  const s = Math.floor(((rawH - h) * 60 - m) * 60);
+
+  return `${to00(h)}:${to00(m)}:${to00(s)}`;
+}

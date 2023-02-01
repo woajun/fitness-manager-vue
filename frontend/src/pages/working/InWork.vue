@@ -5,7 +5,7 @@ import StopWatch from '../../components/stopWatch';
 // import JChart from '../../components/JChart.vue';
 import JMultiChart from '../../components/JMultiChart.vue';
 import JBottomSheet from '../../components/JBottomSheet.vue';
-import { msToTimeText, secondsToMs } from '../../components/helper';
+import { msToTimeText, msToTimeTextWithHour, secondsToMs } from '../../components/helper';
 import JScrollPickerVue from '../../components/JScrollPicker.vue';
 
 // excercise - start ====
@@ -69,7 +69,7 @@ const timeText = ref('');
 const isRun = ref(false);
 
 function setTimeText(ms: number) {
-  timeText.value = msToTimeText(ms);
+  timeText.value = msToTimeTextWithHour(ms);
 }
 
 function setIsRun(bool: boolean) {

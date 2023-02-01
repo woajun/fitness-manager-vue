@@ -21,6 +21,7 @@ module.exports = {
     'vue/html-button-has-type': 'off',
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/click-events-have-key-events': 'off',
+    'vue/max-len': 'off',
   },
   ignorePatterns: ['dist/**', 'debug.js', 'tailwind.config.js'],
 };

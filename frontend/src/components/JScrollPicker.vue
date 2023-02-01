@@ -41,7 +41,7 @@ watch(
 
 const options = computed(() => {
   const result = [];
-  for (let i = 1; i <= props.options; i += 1) {
+  for (let i = 0; i <= props.options; i += 1) {
     result.push(i);
   }
   return result;

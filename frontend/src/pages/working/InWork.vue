@@ -2,11 +2,14 @@
 <script setup lang="ts">
 import { computed, ref, reactive } from 'vue';
 import StopWatch from '../../components/stopWatch';
-import JChart from '../../components/JChart.vue';
+// import JChart from '../../components/JChart.vue';
+import JMultiChart from '../../components/JMultiChart.vue';
 import JBottomSheet from '../../components/JBottomSheet.vue';
 import { msToTimeText, secondsToMs } from '../../components/helper';
 import JScrollPickerVue from '../../components/JScrollPicker.vue';
 
+// excercise - start ====
+// excercise - end ====
 type Records = {
   weight: number,
   rep: number,
@@ -17,7 +20,7 @@ const records = ref<Records[]>([]);
 
 const expectWeight = ref(60);
 const expectRep = ref(15);
-const expectSec = ref(30);
+const expectSec = ref(3);
 
 // BottomSheet - start =====
 type BottomSheet = 'weight' | 'rep' | 'sec' | 'record';
@@ -147,7 +150,8 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     </div>
 
     <div class="mt-5 border">
-      <JChart data-key="rep" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" />
+      <JMultiChart data-key="totalSec" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" unit="초" />
+      <!-- <JChart data-key="totalSec" :data="records" :font-color="isActive ? 'rgb(248 250 252)' : ''" unit="초" /> -->
     </div>
 
     <div class="pt-4 mx-4 flex justify-between">
@@ -164,15 +168,15 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     <div class="pt-5 flex text-center">
       <div class="flex-1" @click="showBtmShtWeight">
         <label class="text-xl text-gray-500">도전 중량</label><br />
-        <span>{{ expectWeight }}kg</span>
+        <span :class="isActive ? 'text-red-300' : 'text-red-800'">{{ expectWeight }}kg</span>
       </div>
       <div class="flex-1" @click="showBtmShtRep">
         <label class="text-xl text-gray-500">목표 횟수</label>
-        <span class="">{{ expectRep }}rep</span>
+        <span :class="isActive ? 'text-violet-300' : 'text-violet-800'">{{ expectRep }}rep</span>
       </div>
       <div class="flex-1" @click="showBtmShtSec">
         <label class="text-xl text-gray-500">휴식 시간</label>
-        <span class="">{{ expectSec }}sec</span>
+        <span :class="isActive ? 'text-green-300' : 'text-green-800'">{{ expectSec }}sec</span>
       </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">

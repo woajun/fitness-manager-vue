@@ -206,9 +206,9 @@ const isActive = computed(() => {
           <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="expectRep" :options="500" label="횟수" unit="rep" selected-color="purple" />
           <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="expectSec" :options="1000" label="시간" unit="sec" selected-color="green" />
           <div v-else-if="btmShtState === 'record'" class="text-2xl gap-3">
-            <JScrollPickerVue v-model="recordRequest.weight" class="py-5 border-b" :options="500" label="수행중량" unit="kg" selected-color="red" />
-            <JScrollPickerVue v-model="recordRequest.rep" class="py-5 border-b" :options="500" label="수행횟수" unit="rep" selected-color="purple" />
-            <JScrollPickerVue v-model="recordRequest.restSec" class="py-5" :options="1000" label="휴식시간" unit="sec" selected-color="green" />
+            <JScrollPickerVue v-model="recordRequest.weight" class="py-8 border-b" :options="500" label="수행중량" unit="kg" selected-color="red" />
+            <JScrollPickerVue v-model="recordRequest.rep" class="py-8 " :options="500" label="수행횟수" unit="rep" selected-color="purple" />
+            <!-- <JScrollPickerVue v-model="recordRequest.restSec" class="py-5" :options="1000" label="휴식시간" unit="sec" selected-color="green" /> -->
           </div>
         </template>
         <template #footer>

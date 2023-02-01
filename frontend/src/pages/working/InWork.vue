@@ -64,7 +64,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
 
 </script>
 <template>
-  <div class="h-screen px-4 py-4 background" :class="{ active: isActive }">
+  <div class="h-screen px-4 py-4 background fixed" :class="{ active: isActive }">
     <div class="flex justify-between pt-3">
       <div>
         <div class="">

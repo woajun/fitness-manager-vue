@@ -3,7 +3,7 @@ import InWork from './pages/working/InWork.vue';
 
 </script>
 <template>
-  <div class="container mx-auto bg-neutral-800 text-slate-50 h-screen">
+  <div class="container mx-auto h-screen">
     <InWork />
   </div>
 </template>

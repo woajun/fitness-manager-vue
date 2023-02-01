@@ -46,7 +46,6 @@ function record() {
   chartData.value.push({ seconds: timer.getMs() / 1000 });
   timer.reset();
   timer.start();
-  showModal.value = true;
 }
 
 function stop() {
@@ -110,7 +109,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
       </div>
     </div>
     <div class="pt-5 flex text-center">
-      <div class="flex-1">
+      <div class="flex-1" @click="showModal = true">
         <label class="text-xl text-gray-500">다음 중량</label>
         <span class="">60kg</span>
       </div>
@@ -147,8 +146,8 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
           중량 60 kg
         </template>
         <template #footer>
-          <button @click="showModal = false">
-            확인
+          <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-x" @click="showModal = false">
+            선택완료
           </button>
         </template>
       </JBottomSheet>

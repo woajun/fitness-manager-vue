@@ -20,6 +20,7 @@ module.exports = {
     'vuejs-accessibility/form-control-has-label': 'off',
     'vue/html-button-has-type': 'off',
     'vuejs-accessibility/label-has-for': 'off',
+    'vuejs-accessibility/click-events-have-key-events': 'off',
   },
   ignorePatterns: ['dist/**', 'debug.js', 'tailwind.config.js'],
 };

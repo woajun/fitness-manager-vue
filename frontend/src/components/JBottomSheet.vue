@@ -1,12 +1,15 @@
+<!-- eslint-disable no-spaced-func -->
 <script setup lang="ts">
 const props = defineProps({
   show: Boolean,
 });
+const emit = defineEmits<{ (e: 'close'): void
+}>();
 </script>
 
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div v-if="props.show" class="modal-mask">
       <div class="modal-container">
         <div class="modal-header">
           <slot name="header">
@@ -24,7 +27,7 @@ const props = defineProps({
           <slot name="footer">
             <button
               class="modal-default-button"
-              @click="$emit('close')"
+              @click="emit('close')"
             >
               OK
             </button>
@@ -45,17 +48,18 @@ const props = defineProps({
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  transition: opacity 0.3s ease;
+  transition: .3s cubic-bezier(.25,.8,.25,1);
 }
 
 .modal-container {
-  width: 300px;
-  margin: auto;
+  max-height: 90%;
+  align-self: flex-end;
+  width: 100%;
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 33%);
+  transition: .3s cubic-bezier(.25,.8,.25,1);
 }
 
 .modal-header h3 {
@@ -71,15 +75,6 @@ const props = defineProps({
   float: right;
 }
 
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
 .modal-enter-from {
   opacity: 0;
 }
@@ -90,7 +85,6 @@ const props = defineProps({
 
 .modal-enter-from .modal-container,
 .modal-leave-to .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+  transform:translateY(100%)
 }
 </style>

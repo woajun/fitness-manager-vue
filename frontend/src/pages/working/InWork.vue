@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
-import JModal from '../../components/JModal.vue';
+import JBottomSheet from '../../components/JBottomSheet.vue';
 import { msToTimeText, secondsToMs } from '../../components/helper';
 
 type ChartData = {
@@ -139,7 +139,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     </div>
 
     <Teleport to="body">
-      <JModal :show="showModal">
+      <JBottomSheet :show="showModal">
         <template #header>
           <h3>수행결과</h3>
         </template>
@@ -151,7 +151,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
             확인
           </button>
         </template>
-      </JModal>
+      </JBottomSheet>
     </Teleport>
   </div>
 </template>

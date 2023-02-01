@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "chart.js": "^4.2.0",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue-scroll-picker": "^1.1.3"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",

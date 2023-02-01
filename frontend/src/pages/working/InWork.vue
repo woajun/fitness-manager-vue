@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { VueScrollPicker } from 'vue-scroll-picker';
 import StopWatch from '../../components/stopWatch';
 import JChart from '../../components/JChart.vue';
 import JBottomSheet from '../../components/JBottomSheet.vue';
@@ -138,12 +139,19 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     </div>
 
     <Teleport to="body">
-      <JBottomSheet :show="showModal">
-        <template #header>
-          <h3>수행결과</h3>
-        </template>
+      <JBottomSheet class="text-3xl font-semibold" :show="showModal">
         <template #body>
-          중량 60 kg
+          <div class="flex text-center">
+            <div class="flex-1 vertical-center">
+              중량
+            </div>
+            <div class="flex-1 text-4xl vertical-center max-h-24 truncate">
+              <VueScrollPicker :options="[1, 2, 3]" />
+            </div>
+            <div class="flex-1 vertical-center">
+              kg
+            </div>
+          </div>
         </template>
         <template #footer>
           <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-x" @click="showModal = false">
@@ -154,6 +162,7 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     </Teleport>
   </div>
 </template>
+<style src="vue-scroll-picker/lib/style.css"></style>
 <style>
 .background {
   position: relative;
@@ -188,4 +197,9 @@ const isActive = computed(() => timerText.value && isRun.value && ((secondsToMs(
     text-align: center;
 }
 
+.vertical-center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 </style>

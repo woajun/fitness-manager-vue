@@ -12,9 +12,7 @@ const emit = defineEmits<{ (e: 'close'): void
     <div v-if="props.show" class="modal-mask">
       <div class="modal-container">
         <div class="modal-header">
-          <slot name="header">
-            default header
-          </slot>
+          <slot name="header" />
         </div>
 
         <div class="modal-body">

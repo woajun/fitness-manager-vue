@@ -34,3 +34,19 @@ export function msToTimeTextWithHour(ms: number) {
 
   return `${to00(h)}:${to00(m)}:${to00(s)}`;
 }
+
+type Iterate = {
+  (num: number):number[];
+  <T>(num: number, fill?:T):T[];
+  (num: number, fill?:unknown):unknown[];
+};
+export const iterate: Iterate = (num: number, fill?:unknown) => {
+  if (fill !== undefined) {
+    return Array(num).fill(fill);
+  }
+  return Array(num).fill(0).map((e, i) => i);
+};
+
+export function makeNumberArray(length: number, from: number, unit: number) {
+  return Array(length).fill(0).map((e, i) => from + (unit * i));
+}

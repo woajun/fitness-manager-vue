@@ -133,43 +133,37 @@ const message = computed(() => {
         회)
       </div>
     </div>
-    <div class="pt-5 grid grid-cols-3 text-center gap-1">
-      <div>
-        <label class="text-xl text-gray-500">
-          중량(kg)<br />
-          <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-3">
-            <VueScrollPicker
-              v-model="weight"
-              :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
-              class="selected-color-red"
-            />
-          </div>
-        </label>
-      </div>
-      <div>
-        <label class="text-xl text-gray-500">
-          횟수(회)<br />
-          <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-3">
-            <VueScrollPicker
-              v-model="rep"
-              :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
-              class="selected-color-purple"
-            />
-          </div>
-        </label>
-      </div>
-      <div>
-        <label class="text-xl text-gray-500">
-          휴식(초)<br />
-          <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-3">
-            <VueScrollPicker
-              v-model="sec"
-              :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
-              class="selected-color-green"
-            />
-          </div>
-        </label>
-      </div>
+    <div class="pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
+      <label>
+        중량(kg)<br />
+        <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
+          <VueScrollPicker
+            v-model="weight"
+            :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+            class="selected-color-red"
+          />
+        </div>
+      </label>
+      <label>
+        횟수(회)<br />
+        <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
+          <VueScrollPicker
+            v-model="rep"
+            :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+            class="selected-color-purple"
+          />
+        </div>
+      </label>
+      <label>
+        휴식(초)<br />
+        <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
+          <VueScrollPicker
+            v-model="sec"
+            :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+            class="selected-color-green"
+          />
+        </div>
+      </label>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
       <button v-if="isRun" class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="btnRecord()">

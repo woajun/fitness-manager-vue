@@ -106,7 +106,7 @@ const message = computed(() => {
 });
 </script>
 <template>
-  <div class="h-screen px-4 py-4 background fixed" :class="{ active: isWorkTime }">
+  <div class="w-screen h-screen px-4 py-4 background fixed" :class="{ active: isWorkTime }">
     <div class="flex justify-between pt-3">
       <div>
         <div class="">
@@ -150,23 +150,23 @@ const message = computed(() => {
         회)
       </div>
     </div>
-    <div class="pt-5 flex text-center">
-      <div class="flex-1" @click="showBtmShtWeight">
+    <div class="pt-5 grid grid-cols-3 text-center gap-1">
+      <div @click="showBtmShtWeight">
         <label class="text-xl text-gray-500">
           중량<br />
-          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-red-800" :value="`${weight}kg`" size="3">
+          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-red-800 w-full" :value="`${weight}kg`">
         </label>
       </div>
-      <div class="flex-1" @click="showBtmShtRep">
+      <div @click="showBtmShtRep">
         <label class="text-xl text-gray-500">
           횟수<br />
-          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-violet-800" :value="`${rep}rep`" size="3">
+          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-violet-800 w-full" :value="`${rep}rep`" size="3">
         </label>
       </div>
-      <div class="flex-1" @click="showBtmShtSec">
+      <div @click="showBtmShtSec">
         <label class="text-xl text-gray-500">
           휴식 시간<br />
-          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-green-800" :value="`${sec}sec`" size="3">
+          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-green-800 w-full" :value="`${sec}sec`" size="3">
         </label>
       </div>
     </div>

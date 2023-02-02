@@ -18,9 +18,9 @@ type Records = {
 };
 const records = ref<Records[]>([]);
 
-const expectWeight = ref(0);
-const expectRep = ref(15);
-const expectSec = ref(90);
+const weight = ref(0);
+const rep = ref(15);
+const sec = ref(90);
 
 // BottomSheet - start =====
 type BottomSheet = 'weight' | 'rep' | 'sec' | 'record';
@@ -59,10 +59,7 @@ const timerText = ref('');
 const firstSetSec = 5; // 처음 시작 할 때 휴식시간
 function setTimerText(ms: number) {
   const isFirstSet = records.value.length === 0;
-  timerText.value = msToTimeText(secondsToMs(isFirstSet ? firstSetSec : expectSec.value) - ms);
-  if (records.value.length > 1) {
-    records.value[records.value.length - 1] = { ...records.value[records.value.length - 1], totalSec: ms / 1000 };
-  }
+  timerText.value = msToTimeText(secondsToMs(isFirstSet ? firstSetSec : sec.value) - ms);
 }
 
 const timer = new StopWatch(setTimerText, setIsRun);
@@ -75,9 +72,9 @@ function btnStart() {
 
 function btnRecord() {
   records.value.push({
-    weight: expectWeight.value,
-    rep: expectRep.value,
-    restSec: expectSec.value,
+    weight: weight.value,
+    rep: rep.value,
+    restSec: sec.value,
     totalSec: timer.getMs() / 1000,
   });
   timer.reset();
@@ -98,7 +95,7 @@ function btnReset() {
 
 const isWorkTime = computed(() => {
   const isFirstSet = records.value.length === 0;
-  return timerText.value && isRun.value && ((secondsToMs(isFirstSet ? firstSetSec : expectSec.value) - timer.getMs()) < 0);
+  return timerText.value && isRun.value && ((secondsToMs(isFirstSet ? firstSetSec : sec.value) - timer.getMs()) < 0);
 });
 
 const message = computed(() => {
@@ -157,15 +154,15 @@ const message = computed(() => {
     <div class="pt-5 flex text-center">
       <div class="flex-1" @click="showBtmShtWeight">
         <label class="text-xl text-gray-500">중량</label><br />
-        <span :class="isWorkTime ? 'text-red-300' : 'text-red-800'">{{ expectWeight }}kg</span>
+        <span :class="isWorkTime ? 'text-red-300' : 'text-red-800'">{{ weight }}kg</span>
       </div>
       <div class="flex-1" @click="showBtmShtRep">
         <label class="text-xl text-gray-500">횟수</label>
-        <span :class="isWorkTime ? 'text-violet-300' : 'text-violet-800'">{{ expectRep }}rep</span>
+        <span :class="isWorkTime ? 'text-violet-300' : 'text-violet-800'">{{ rep }}rep</span>
       </div>
       <div class="flex-1" @click="showBtmShtSec">
         <label class="text-xl text-gray-500">휴식 시간</label>
-        <span :class="isWorkTime ? 'text-green-300' : 'text-green-800'">{{ expectSec }}sec</span>
+        <span :class="isWorkTime ? 'text-green-300' : 'text-green-800'">{{ sec }}sec</span>
       </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
@@ -186,9 +183,9 @@ const message = computed(() => {
     <Teleport to="body">
       <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showBtmSht">
         <template #body>
-          <JScrollPickerVue v-if="btmShtState === 'weight'" v-model="expectWeight" :options="500" label="중량" unit="kg" selected-color="red" />
-          <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="expectRep" :options="500" label="횟수" unit="rep" selected-color="purple" />
-          <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="expectSec" :options="1000" label="시간" unit="sec" selected-color="green" />
+          <JScrollPickerVue v-if="btmShtState === 'weight'" v-model="weight" :options="500" label="중량" unit="kg" selected-color="red" />
+          <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="rep" :options="500" label="횟수" unit="rep" selected-color="purple" />
+          <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="sec" :options="1000" label="시간" unit="sec" selected-color="green" />
         </template>
         <template #footer>
           <div class="grid">

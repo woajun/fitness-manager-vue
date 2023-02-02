@@ -122,14 +122,14 @@ const message = computed(() => {
       <JMultiChart data-key="rep" :data="records" />
     </div>
 
-    <div class="pt-4 mx-4 flex justify-between">
-      <div>
-        <span class="text-2xl">플랫 벤치프레스</span>
+    <div class="pt-4 flex height60px">
+      <div class="basis-3/4 border-2 rounded-lg text-2xl py-1 pl-2  overflow-hidden break-all">
+        플랫 벤치프레스
       </div>
-      <div class="text-gray-500 text-2xl">
-        (x
-        {{ records.reduce((t, c) => t + c.rep, 0) }}
-        회)
+      <div class="basis-1/4 text-gray-500 text-2xl ml-2 text-right relative break-keep">
+        <div class="absolute bottom-0 right-0">
+          {{ records.reduce((t, c) => t + c.rep, 0) }}<span class="text-xl">회</span>
+        </div>
       </div>
     </div>
     <div class="pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
@@ -193,6 +193,9 @@ const message = computed(() => {
   justify-content: center;
   align-items: center;
   display: flex;
+}
+.height60px {
+  height: 60px;
 }
 </style>
 <style src="vue-scroll-picker/lib/style.css"></style>

@@ -10,7 +10,9 @@ import {
 import selectorOptions from '../../data/selectorOptions';
 import JBottomSheet from '../../components/JBottomSheet.vue';
 import ExcerciseSelector from './ExcerciseSelector.vue';
-import type { Excercise } from '@/interfaces';
+import RecordReport from './RecordReport.vue';
+import type { Excercise, Records } from '@/interfaces';
+import excercises from '../../data/excercises';
 
 // excercise - start ====
 const excercise = ref<Excercise>(
@@ -24,19 +26,15 @@ function changeExcercise(exr: Excercise) {
   showExcerciseSelector.value = false;
 }
 // excercise - end ====
-type Records = {
-  exrID: number,
-  weight: number,
-  rep: number,
-  restSec: number,
-  totalSec: number,
-};
 const records = ref<Records[]>([]);
 
 const weight = ref(0);
 const rep = ref(15);
 const sec = ref(90);
 
+// RecordReport - start ===
+const showRecordReport = ref(false);
+// RecordReport - end ===
 // timer & stopWatch - start ====
 const timeText = ref('');
 const isRun = ref(false);
@@ -73,7 +71,7 @@ function btnRecord() {
     weight: weight.value,
     rep: rep.value,
     restSec: sec.value,
-    totalSec: timer.getMs() / 1000,
+    totalSec: timer.getMs(),
   });
   timer.reset();
   timer.start();
@@ -127,7 +125,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
         </div>
       </div>
       <div>
-        <div class="numberCircle bg-neutral-500 text-white" :class="{ 'bg-red-600': isWorkTime, 'border-red-700': isWorkTime }">
+        <div class="numberCircle bg-neutral-500 text-white" :class="{ 'bg-red-600': isWorkTime, 'border-red-700': isWorkTime }" @click="showRecordReport = true">
           <div class="pt-3">
             <span class="text-4xl">{{ nowExcerciseSet }}</span>
             <span class="text-lg">/{{ records.length }}</span>
@@ -199,9 +197,10 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     </div>
   </div>
   <Teleport to="body">
-    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true">
+    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true || showRecordReport === true">
       <template #body>
-        <ExcerciseSelector v-model="excercise" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
+        <ExcerciseSelector v-if="showExcerciseSelector" v-model="excercise" :excercises="excercises" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
+        <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="timeText" @cancel="showRecordReport = false" @submit="showRecordReport = false" />
       </template>
     </JBottomSheet>
   </Teleport>

@@ -1,7 +1,6 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
 import { ref } from 'vue';
-import excercises from '../../data/excercises';
 import type { Excercise } from '@/interfaces';
 
 const emit = defineEmits<{
@@ -11,6 +10,7 @@ const emit = defineEmits<{
 
 const props = defineProps<{
   modelValue: Excercise,
+  excercises: Excercise[],
 }>();
 
 const selected = ref<Excercise>(props.modelValue);
@@ -29,7 +29,7 @@ function submit() {
       <input class="text-xl border-2 rounded-xl w-full h-12 px-3">
     </div>
     <div class="text-xl pt-5">
-      <div v-for="exr in excercises" :key="exr.id" @click="()=> select(exr)">
+      <div v-for="exr in props.excercises" :key="exr.id" @click="()=> select(exr)">
         <span :class="{ 'text-green-500': selected.id === exr.id }">{{ exr.label }}</span>
       </div>
     </div>

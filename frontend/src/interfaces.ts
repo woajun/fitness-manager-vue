@@ -23,3 +23,11 @@ export type Excercise = {
   id: number,
   label: string,
 };
+
+export type Records = {
+  exrID: number,
+  weight: number,
+  rep: number,
+  restSec: number,
+  totalSec: number,
+};

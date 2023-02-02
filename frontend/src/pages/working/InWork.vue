@@ -5,8 +5,9 @@ import { VueScrollPicker } from 'vue-scroll-picker';
 import StopWatch from '../../components/stopWatch';
 import JMultiChart from '../../components/JMultiChart.vue';
 import {
-  iterate, msToTimeText, msToTimeTextWithHour, secondsToMs, makeNumberArray,
+  msToTimeText, msToTimeTextWithHour, secondsToMs,
 } from '../../components/helper';
+import selectorOptions from '../../data/selectorOptions';
 
 // excercise - start ====
 // excercise - end ====
@@ -137,7 +138,7 @@ const message = computed(() => {
         <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
           <VueScrollPicker
             v-model="weight"
-            :options="[...makeNumberArray(20, 0, 1), ...makeNumberArray(16, 20, 5), ...makeNumberArray(40, 100, 10)]"
+            :options="selectorOptions.weight"
             class="selected-color-red"
           />
         </div>
@@ -147,8 +148,8 @@ const message = computed(() => {
         <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
           <VueScrollPicker
             v-model="rep"
-            :options="[...makeNumberArray(500, 0, 1)]"
             class="selected-color-purple"
+            :options="selectorOptions.rep"
           />
         </div>
       </label>
@@ -157,7 +158,7 @@ const message = computed(() => {
         <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
           <VueScrollPicker
             v-model="sec"
-            :options="[...makeNumberArray(61, 0, 10)]"
+            :options="selectorOptions.sec"
             class="selected-color-green"
           />
         </div>

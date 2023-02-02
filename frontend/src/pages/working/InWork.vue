@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/max-len -->
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { VueScrollPicker } from 'vue-scroll-picker';
 import StopWatch from '../../components/stopWatch';
 // import JChart from '../../components/JChart.vue';
 import JMultiChart from '../../components/JMultiChart.vue';
@@ -22,24 +23,6 @@ const weight = ref(0);
 const rep = ref(15);
 const sec = ref(90);
 
-// BottomSheet - start =====
-type BottomSheet = 'weight' | 'rep' | 'sec' | 'record';
-const btmShtState = ref<BottomSheet>('weight');
-const showBtmSht = ref(false);
-
-function showBtmShtWeight() {
-  btmShtState.value = 'weight';
-  showBtmSht.value = true;
-}
-function showBtmShtRep() {
-  btmShtState.value = 'rep';
-  showBtmSht.value = true;
-}
-function showBtmShtSec() {
-  btmShtState.value = 'sec';
-  showBtmSht.value = true;
-}
-// BottomSheet - end ====
 // timer & stopWatch - start ====
 const timeText = ref('');
 const isRun = ref(false);
@@ -99,7 +82,7 @@ const isWorkTime = computed(() => {
 });
 
 const message = computed(() => {
-  if (!isWorkTime.value && records.value.length === 0 && isRun.value && !showBtmSht.value) {
+  if (!isWorkTime.value && records.value.length === 0 && isRun.value) {
     return '5초 후 시작!';
   }
   return isWorkTime.value ? '운동시작' : '휴식';
@@ -151,22 +134,40 @@ const message = computed(() => {
       </div>
     </div>
     <div class="pt-5 grid grid-cols-3 text-center gap-1">
-      <div @click="showBtmShtWeight">
+      <div>
         <label class="text-xl text-gray-500">
-          중량<br />
-          <div class="border-2 rounded-lg text-3xl text-center pt-1 pb-2 mt-1 text-red-800 w-full">{{ weight }}kg</div>
+          중량(kg)<br />
+          <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-3">
+            <VueScrollPicker
+              v-model="weight"
+              :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+              class="selected-color-red"
+            />
+          </div>
         </label>
       </div>
-      <div @click="showBtmShtRep">
+      <div>
         <label class="text-xl text-gray-500">
-          횟수<br />
-          <div class="border-2 rounded-lg text-3xl text-center pt-1 pb-2 mt-1 text-violet-800 w-full">{{ rep }}rep</div>
+          횟수(회)<br />
+          <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-3">
+            <VueScrollPicker
+              v-model="rep"
+              :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+              class="selected-color-purple"
+            />
+          </div>
         </label>
       </div>
-      <div @click="showBtmShtSec">
+      <div>
         <label class="text-xl text-gray-500">
-          휴식 시간<br />
-          <div class="border-2 rounded-lg text-3xl text-center pt-1 pb-2 mt-1 text-green-800 w-full">{{ sec }}sec</div>
+          휴식(초)<br />
+          <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-3">
+            <VueScrollPicker
+              v-model="sec"
+              :options="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+              class="selected-color-green"
+            />
+          </div>
         </label>
       </div>
     </div>
@@ -184,23 +185,6 @@ const message = computed(() => {
         종료
       </button>
     </div>
-
-    <Teleport to="body">
-      <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showBtmSht">
-        <template #body>
-          <JScrollPickerVue v-if="btmShtState === 'weight'" v-model="weight" :options="500" label="중량" unit="kg" selected-color="red" />
-          <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="rep" :options="500" label="횟수" unit="rep" selected-color="purple" />
-          <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="sec" :options="1000" label="시간" unit="sec" selected-color="green" />
-        </template>
-        <template #footer>
-          <div class="grid">
-            <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-xl" @click="showBtmSht = false">
-              선택완료
-            </button>
-          </div>
-        </template>
-      </JBottomSheet>
-    </Teleport>
   </div>
 </template>
 <style>

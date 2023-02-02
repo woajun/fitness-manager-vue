@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <script setup lang="ts">
-import { computed, ref, reactive } from 'vue';
+import { computed, ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
 // import JChart from '../../components/JChart.vue';
 import JMultiChart from '../../components/JMultiChart.vue';
@@ -159,13 +159,13 @@ const message = computed(() => {
       </div>
       <div class="flex-1" @click="showBtmShtRep">
         <label class="text-xl text-gray-500">
-          횟수
+          횟수<br />
           <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-violet-800" :value="`${rep}rep`" size="3">
         </label>
       </div>
       <div class="flex-1" @click="showBtmShtSec">
         <label class="text-xl text-gray-500">
-          휴식 시간
+          휴식 시간<br />
           <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-green-800" :value="`${sec}sec`" size="3">
         </label>
       </div>

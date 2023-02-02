@@ -3,11 +3,8 @@
 import { computed, ref } from 'vue';
 import { VueScrollPicker } from 'vue-scroll-picker';
 import StopWatch from '../../components/stopWatch';
-// import JChart from '../../components/JChart.vue';
 import JMultiChart from '../../components/JMultiChart.vue';
-import JBottomSheet from '../../components/JBottomSheet.vue';
 import { msToTimeText, msToTimeTextWithHour, secondsToMs } from '../../components/helper';
-import JScrollPickerVue from '../../components/JScrollPicker.vue';
 
 // excercise - start ====
 // excercise - end ====
@@ -89,7 +86,7 @@ const message = computed(() => {
 });
 </script>
 <template>
-  <div class="w-screen h-screen px-4 py-4 background fixed" :class="{ active: isWorkTime }">
+  <div class="w-screen h-screen px-4 py-4 fixed">
     <div class="flex justify-between pt-3">
       <div>
         <div class="">
@@ -107,7 +104,7 @@ const message = computed(() => {
         </div>
       </div>
       <div>
-        <div class="numberCircle bg-neutral-500 text-white">
+        <div class="numberCircle bg-neutral-500 text-white" :class="{ 'bg-red-600': isWorkTime, 'border-red-700': isWorkTime }">
           <div class="pt-3">
             <span class="text-4xl">{{ records.length }}</span>
             <span>set</span>
@@ -119,13 +116,12 @@ const message = computed(() => {
     </div>
 
     <div class="mt-5 border">
-      <JMultiChart data-key="rep" :data="records" :font-color="isWorkTime ? 'rgb(248 250 252)' : ''" unit="회" />
-      <!-- <JChart data-key="totalSec" :data="records" :font-color="isWorkTime ? 'rgb(248 250 252)' : ''" unit="초" /> -->
+      <JMultiChart data-key="rep" :data="records" />
     </div>
 
     <div class="pt-4 mx-4 flex justify-between">
       <div>
-        <span class="">윗몸일으키기</span>
+        <span class="text-2xl">플랫 벤치프레스</span>
       </div>
       <div class="text-gray-500 text-2xl">
         (x
@@ -182,31 +178,6 @@ const message = computed(() => {
   </div>
 </template>
 <style>
-.background {
-  position: relative;
-  z-index: 0;
-}
-.background::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0;
-  transition: opacity 0.2s linear;
-  --tw-bg-opacity: 1;
-  background-color: rgb(38 38 38 / var(--tw-bg-opacity));
-}
-.active.background::before {
-  opacity: 1;
-}
-.active {
-  --tw-text-opacity: 1;
-  color: rgb(248 250 252 / var(--tw-text-opacity));
-}
-
 .numberCircle {
     border-radius: 50%;
     width: 7rem;
@@ -219,5 +190,17 @@ const message = computed(() => {
   justify-content: center;
   align-items: center;
   display: flex;
+}
+</style>
+<style src="vue-scroll-picker/lib/style.css"></style>
+<style>
+.selected-color-red .vue-scroll-picker-item-selected {
+  color: rgb(153 27 27 / var(--tw-text-opacity));
+}
+.selected-color-purple .vue-scroll-picker-item-selected {
+  color: rgb(91 33 182 / var(--tw-text-opacity));
+}
+.selected-color-green .vue-scroll-picker-item-selected {
+  color: rgb(22 101 52 / var(--tw-text-opacity));
 }
 </style>

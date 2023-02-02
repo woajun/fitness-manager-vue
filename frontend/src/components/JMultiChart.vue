@@ -34,13 +34,10 @@ Chart.register(
 
 const props = defineProps<{
   data: ChartData[]
-  dataKey: string
-  fontColor: string
-  unit: string
 }>();
 
-function toData(data: ChartData[]) {
-  return data.map((e) => e[props.dataKey]);
+function toData(data: ChartData[], dataKey: string) {
+  return data.map((e) => e[dataKey]);
 }
 
 function toLabel(num: number) {
@@ -62,11 +59,16 @@ onMounted(() => {
     type: 'line',
     data: {
       labels: [],
-      datasets: [{
-        data: toData(props.data),
-        borderColor: 'rgb(91, 33, 182)',
-      }],
-
+      datasets: [
+        {
+          data: toData(props.data, 'rep'),
+          borderColor: 'rgb(91, 33, 182)',
+        }, {
+          data: toData(props.data, 'weight'),
+          borderColor: 'rgb(153, 27, 27)',
+          yAxisID: 'y1',
+        },
+      ],
     },
     options: {
       scales: {
@@ -78,26 +80,33 @@ onMounted(() => {
           min: 0,
           ticks: {
             callback(value) {
-              const second = value as number;
-              if (second === 0) {
-                return '';
-              }
-              if (second < 10) {
-                return `${second.toFixed(1)} ${props.unit}`;
-              }
-              return `${Math.floor(second)} ${props.unit}`;
+              if (typeof value === 'string' || value === 0) return '';
+              return `${value}`;
             },
-            // color: 'rgb(248 250 252)',
-            color: props.fontColor,
+            color: 'rgb(91, 33, 182)',
+            stepSize: 5,
             font: {
-              size: 15,
+              size: 14,
+            },
+          },
+        },
+        y1: {
+          position: 'left',
+          min: 0,
+          ticks: {
+            callback(value) {
+              if (typeof value === 'string' || value === 0) return '';
+              return `${value}`;
+            },
+            stepSize: 10,
+            color: 'rgb(153, 27, 27)',
+            font: {
+              size: 14,
             },
           },
         },
         x: {
           ticks: {
-            // color: 'rgb(248 250 252)',
-            color: props.fontColor,
             font: {
               size: 15,
             },
@@ -118,9 +127,8 @@ onMounted(() => {
 
 watch(props, (aProps) => {
   lineChart.data.labels = toLabel(aProps.data.length);
-  lineChart.data.datasets[0].data = toData(aProps.data);
-  lineChart.options.scales.y.ticks.color = aProps.fontColor;
-  lineChart.options.scales.x.ticks.color = aProps.fontColor;
+  lineChart.data.datasets[0].data = toData(aProps.data, 'rep');
+  lineChart.data.datasets[1].data = toData(aProps.data, 'weight');
   lineChart.update();
 });
 

@@ -8,8 +8,21 @@ import {
   msToTimeText, msToTimeTextWithHour, secondsToMs,
 } from '../../components/helper';
 import selectorOptions from '../../data/selectorOptions';
+import JBottomSheet from '../../components/JBottomSheet.vue';
+import ExcerciseSelector from './ExcerciseSelector.vue';
+import type { Excercise } from '@/interfaces';
 
 // excercise - start ====
+const excercise = ref<Excercise>(
+  { id: 0, label: '플랫 벤치 프레스' },
+);
+
+const showExcerciseSelector = ref(false);
+
+function changeExcercise(exr: Excercise) {
+  excercise.value = exr;
+  showExcerciseSelector.value = false;
+}
 // excercise - end ====
 type Records = {
   weight: number,
@@ -87,6 +100,7 @@ const message = computed(() => {
   }
   return isWorkTime.value ? '운동시작' : '휴식';
 });
+
 </script>
 <template>
   <div class="w-screen h-screen px-4 py-4 fixed">
@@ -123,8 +137,8 @@ const message = computed(() => {
     </div>
 
     <div class="pt-4 flex height60px">
-      <div class="basis-3/4 border-2 rounded-lg text-2xl py-1 pl-2  overflow-hidden break-all">
-        플랫 벤치프레스
+      <div class="basis-3/4 border-2 rounded-lg text-2xl py-1 pl-2  overflow-hidden break-all" @click="showExcerciseSelector = true">
+        {{ excercise.label }}
       </div>
       <div class="basis-1/4 text-gray-500 text-2xl ml-2 text-right relative break-keep">
         <div class="absolute bottom-0 right-0">
@@ -179,6 +193,13 @@ const message = computed(() => {
       </button>
     </div>
   </div>
+  <Teleport to="body">
+    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true">
+      <template #body>
+        <ExcerciseSelector v-model="excercise" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
+      </template>
+    </JBottomSheet>
+  </Teleport>
 </template>
 <style>
 .numberCircle {

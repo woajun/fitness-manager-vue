@@ -18,3 +18,8 @@ export type SaveRequestDTO = {
   totalTime: number;
   sets: WorkingSet[]
 };
+
+export type Excercise = {
+  id: number,
+  label: string,
+};

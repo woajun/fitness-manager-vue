@@ -22,14 +22,7 @@ const emit = defineEmits<{ (e: 'close'): void
         </div>
 
         <div class="modal-footer">
-          <slot name="footer">
-            <button
-              class="modal-default-button"
-              @click="emit('close')"
-            >
-              OK
-            </button>
-          </slot>
+          <slot name="footer" />
         </div>
       </div>
     </div>
@@ -50,7 +43,7 @@ const emit = defineEmits<{ (e: 'close'): void
 }
 
 .modal-container {
-  max-height: 90%;
+  height: 90%;
   align-self: flex-end;
   width: 100%;
   padding: 20px 30px;

@@ -39,31 +39,7 @@ function showBtmShtSec() {
   btmShtState.value = 'sec';
   showBtmSht.value = true;
 }
-function showBtmShtRecord() {
-  btmShtState.value = 'record';
-  showBtmSht.value = true;
-}
 // BottomSheet - end ====
-// for Record - start ====
-const recordRequest = reactive({
-  weight: 0,
-  rep: 0,
-  restSec: 0,
-  totalSec: 0,
-});
-
-function initRecordObj(w: number, rep: number, rs: number, ts: number) {
-  recordRequest.weight = w;
-  recordRequest.rep = rep;
-  recordRequest.restSec = rs;
-  recordRequest.totalSec = ts;
-}
-
-function doRecord() {
-  records.value.push({ ...recordRequest, totalSec: recordRequest.totalSec / 1000 });
-  showBtmSht.value = false;
-}
-// for Record - end ====
 // timer & stopWatch - start ====
 const timeText = ref('');
 const isRun = ref(false);
@@ -98,10 +74,14 @@ function btnStart() {
 }
 
 function btnRecord() {
-  initRecordObj(expectWeight.value, expectRep.value, expectSec.value, timer.getMs());
+  records.value.push({
+    weight: expectWeight.value,
+    rep: expectRep.value,
+    restSec: expectSec.value,
+    totalSec: timer.getMs() / 1000,
+  });
   timer.reset();
   timer.start();
-  showBtmShtRecord();
 }
 
 function btnStop() {
@@ -176,11 +156,11 @@ const message = computed(() => {
     </div>
     <div class="pt-5 flex text-center">
       <div class="flex-1" @click="showBtmShtWeight">
-        <label class="text-xl text-gray-500">도전 중량</label><br />
+        <label class="text-xl text-gray-500">중량</label><br />
         <span :class="isWorkTime ? 'text-red-300' : 'text-red-800'">{{ expectWeight }}kg</span>
       </div>
       <div class="flex-1" @click="showBtmShtRep">
-        <label class="text-xl text-gray-500">목표 횟수</label>
+        <label class="text-xl text-gray-500">횟수</label>
         <span :class="isWorkTime ? 'text-violet-300' : 'text-violet-800'">{{ expectRep }}rep</span>
       </div>
       <div class="flex-1" @click="showBtmShtSec">
@@ -209,19 +189,9 @@ const message = computed(() => {
           <JScrollPickerVue v-if="btmShtState === 'weight'" v-model="expectWeight" :options="500" label="중량" unit="kg" selected-color="red" />
           <JScrollPickerVue v-else-if="btmShtState === 'rep'" v-model="expectRep" :options="500" label="횟수" unit="rep" selected-color="purple" />
           <JScrollPickerVue v-else-if="btmShtState === 'sec'" v-model="expectSec" :options="1000" label="시간" unit="sec" selected-color="green" />
-          <div v-else-if="btmShtState === 'record'" class="text-2xl gap-3">
-            <JScrollPickerVue v-model="recordRequest.weight" class="py-8 border-b" :options="500" label="수행중량" unit="kg" selected-color="red" />
-            <JScrollPickerVue v-model="recordRequest.rep" class="py-8 " :options="500" label="수행횟수" unit="rep" selected-color="purple" />
-            <!-- <JScrollPickerVue v-model="recordRequest.restSec" class="py-5" :options="1000" label="휴식시간" unit="sec" selected-color="green" /> -->
-          </div>
         </template>
         <template #footer>
-          <div v-if="btmShtState === 'record'" class="grid">
-            <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-xl" @click="doRecord">
-              선택완료
-            </button>
-          </div>
-          <div v-else class="grid">
+          <div class="grid">
             <button class="text-slate-50 rounded-lg bg-sky-500 h-14 text-xl" @click="showBtmSht = false">
               선택완료
             </button>

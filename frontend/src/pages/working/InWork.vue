@@ -83,9 +83,14 @@ function btnStop() {
 }
 
 function btnReset() {
+  showRecordReport.value = true;
+}
+
+function finish() {
   totalStopWatch.reset();
   timer.reset();
   records.value = [];
+  showRecordReport.value = false;
 }
 // btn - end ====
 
@@ -200,7 +205,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true || showRecordReport === true">
       <template #body>
         <ExcerciseSelector v-if="showExcerciseSelector" v-model="excercise" :excercises="excercises" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
-        <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="timeText" @cancel="showRecordReport = false" @submit="showRecordReport = false" />
+        <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="timeText" @cancel="showRecordReport = false" @submit="finish" />
       </template>
     </JBottomSheet>
   </Teleport>

@@ -12,11 +12,8 @@ import {
 import { onMounted, watch } from 'vue';
 
 // color start ====
-const colors = {
-  purple: 'rgb(91, 33, 182)',
-  green: '',
-  red: '',
-};
+const COLOR_PURPLE = 'rgb(91, 33, 182)';
+const COLOR_RED = 'rgb(153, 27, 27)';
 // color end ====
 type ChartData = Record<string, unknown>;
 
@@ -65,10 +62,10 @@ onMounted(() => {
       datasets: [
         {
           data: toData(props.data, 'rep'),
-          borderColor: 'rgb(91, 33, 182)',
+          borderColor: COLOR_PURPLE,
         }, {
           data: toData(props.data, 'weight'),
-          borderColor: 'rgb(153, 27, 27)',
+          borderColor: COLOR_RED,
           yAxisID: 'y1',
         },
       ],
@@ -86,7 +83,7 @@ onMounted(() => {
               if (typeof value === 'string' || value === 0) return '';
               return `${value}`;
             },
-            color: 'rgb(91, 33, 182)',
+            color: COLOR_PURPLE,
             stepSize: 5,
             font: {
               size: 14,
@@ -102,7 +99,7 @@ onMounted(() => {
               return `${value}`;
             },
             stepSize: 10,
-            color: 'rgb(153, 27, 27)',
+            color: COLOR_RED,
             font: {
               size: 14,
             },

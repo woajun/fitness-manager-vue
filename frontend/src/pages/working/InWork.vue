@@ -25,6 +25,7 @@ function changeExcercise(exr: Excercise) {
 }
 // excercise - end ====
 type Records = {
+  exrID: number,
   weight: number,
   rep: number,
   restSec: number,
@@ -68,6 +69,7 @@ function btnStart() {
 
 function btnRecord() {
   records.value.push({
+    exrID: excercise.value.id,
     weight: weight.value,
     rep: rep.value,
     restSec: sec.value,
@@ -101,6 +103,10 @@ const message = computed(() => {
   return isWorkTime.value ? '운동시작' : '휴식';
 });
 
+// nowExcercise computed - start ====
+const nowExcerciseRep = computed(() => records.value.reduce((t, c) => (c.exrID === excercise.value.id ? t + c.rep : t), 0));
+const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID === excercise.value.id ? t + 1 : t), 0));
+// nowExcercise computed - end ====
 </script>
 <template>
   <div class="w-screen h-screen px-4 py-4 fixed">
@@ -123,17 +129,16 @@ const message = computed(() => {
       <div>
         <div class="numberCircle bg-neutral-500 text-white" :class="{ 'bg-red-600': isWorkTime, 'border-red-700': isWorkTime }">
           <div class="pt-3">
-            <span class="text-4xl">{{ records.length }}</span>
-            <span>set</span>
+            <span class="text-4xl">{{ nowExcerciseSet }}</span>
+            <span class="text-lg">/{{ records.length }}</span>
           </div>
-          <span class="text-lg">1256</span>
-          <span class="text-sm">칼로리</span>
+          <span class="text-2xl">Set</span>
         </div>
       </div>
     </div>
 
     <div class="mt-5 border">
-      <JMultiChart data-key="rep" :data="records" />
+      <JMultiChart :data="records" :now-exr-id="excercise.id" />
     </div>
 
     <div class="pt-4 flex height60px">
@@ -142,7 +147,7 @@ const message = computed(() => {
       </div>
       <div class="basis-1/4 text-gray-500 text-2xl ml-2 text-right relative break-keep">
         <div class="absolute bottom-0 right-0">
-          {{ records.reduce((t, c) => t + c.rep, 0) }}<span class="text-xl">회</span>
+          {{ nowExcerciseRep }}<span class="text-xl">회</span>
         </div>
       </div>
     </div>

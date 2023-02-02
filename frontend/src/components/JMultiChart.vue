@@ -34,10 +34,13 @@ Chart.register(
 
 const props = defineProps<{
   data: ChartData[]
+  nowExrId: number
 }>();
 
 function toData(data: ChartData[], dataKey: string) {
-  return data.map((e) => e[dataKey]);
+  return data
+    .filter((e) => e.exrID === props.nowExrId)
+    .map((e) => e[dataKey]);
 }
 
 function toLabel(num: number) {
@@ -126,7 +129,7 @@ onMounted(() => {
 });
 
 watch(props, (aProps) => {
-  lineChart.data.labels = toLabel(aProps.data.length);
+  lineChart.data.labels = toLabel(aProps.data.reduce((t, c) => (c.exrID === props.nowExrId ? t + 1 : t), 0));
   lineChart.data.datasets[0].data = toData(aProps.data, 'rep');
   lineChart.data.datasets[1].data = toData(aProps.data, 'weight');
   lineChart.update();

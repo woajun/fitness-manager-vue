@@ -11,6 +11,13 @@ import {
 } from 'chart.js';
 import { onMounted, watch } from 'vue';
 
+// color start ====
+const colors = {
+  purple: 'rgb(91, 33, 182)',
+  green: '',
+  red: '',
+};
+// color end ====
 type ChartData = Record<string, unknown>;
 
 Chart.register(
@@ -57,7 +64,9 @@ onMounted(() => {
       labels: [],
       datasets: [{
         data: toData(props.data),
+        borderColor: 'rgb(91, 33, 182)',
       }],
+
     },
     options: {
       scales: {
@@ -109,7 +118,7 @@ onMounted(() => {
 
 watch(props, (aProps) => {
   lineChart.data.labels = toLabel(aProps.data.length);
-  lineChart.data.datasets[0] = { data: toData(aProps.data), borderColor: 'rgb(91, 33, 182)' };
+  lineChart.data.datasets[0].data = toData(aProps.data);
   lineChart.options.scales.y.ticks.color = aProps.fontColor;
   lineChart.options.scales.x.ticks.color = aProps.fontColor;
   lineChart.update();

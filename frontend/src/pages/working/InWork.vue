@@ -144,25 +144,30 @@ const message = computed(() => {
       <div>
         <span class="">윗몸일으키기</span>
       </div>
-      <div class="rounded-lg  bg-neutral-500 text-white text-xl px-4 py-2">
-        <span>
-          {{ records.reduce((t, c) => t + c.rep, 0) }}
-          회
-        </span>
+      <div class="text-gray-500 text-2xl">
+        (x
+        {{ records.reduce((t, c) => t + c.rep, 0) }}
+        회)
       </div>
     </div>
     <div class="pt-5 flex text-center">
       <div class="flex-1" @click="showBtmShtWeight">
-        <label class="text-xl text-gray-500">중량</label><br />
-        <span :class="isWorkTime ? 'text-red-300' : 'text-red-800'">{{ weight }}kg</span>
+        <label class="text-xl text-gray-500">
+          중량<br />
+          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-red-800" :value="`${weight}kg`" size="3">
+        </label>
       </div>
       <div class="flex-1" @click="showBtmShtRep">
-        <label class="text-xl text-gray-500">횟수</label>
-        <span :class="isWorkTime ? 'text-violet-300' : 'text-violet-800'">{{ rep }}rep</span>
+        <label class="text-xl text-gray-500">
+          횟수
+          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-violet-800" :value="`${rep}rep`" size="3">
+        </label>
       </div>
       <div class="flex-1" @click="showBtmShtSec">
-        <label class="text-xl text-gray-500">휴식 시간</label>
-        <span :class="isWorkTime ? 'text-green-300' : 'text-green-800'">{{ sec }}sec</span>
+        <label class="text-xl text-gray-500">
+          휴식 시간
+          <input class="border-2 rounded-lg text-3xl text-center h-14 mt-1 text-green-800" :value="`${sec}sec`" size="3">
+        </label>
       </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">

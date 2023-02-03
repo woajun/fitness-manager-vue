@@ -49,17 +49,19 @@ const sets = computed(() => {
       <div>{{ props.records.length }} 세트 / {{ props.records.reduce((t, c) => t + c.rep, 0) }} 회 </div>
     </div>
     <div class="text-xl h-80 overflow-auto">
-      <div v-for="set in sets" :key="`exrID-${set.exrID}`" class="border-b-2 mb-3 pb-3">
-        <label>
-          {{ set.exrName }}
-        </label>
-        <table class="table-auto w-full">
-          <thead>
+      <div v-for="set in sets" :key="`exrID-${set.exrID}`">
+        <div>
+          <label>
+            {{ set.exrName }}
+          </label>
+          <table class="table-auto w-full">
             <tr>
               <td>
                 {{ set.sets.length }}set
               </td>
-              <td />
+              <td>
+                0-0kg
+              </td>
               <td>
                 {{ set.sets.reduce((t, c) => t + c.rep, 0) }}rep
               </td>
@@ -67,24 +69,28 @@ const sets = computed(() => {
                 {{ msToTimeText(set.sets.reduce((t, c) => t + c.totalSec, 0)) }}
               </td>
             </tr>
-          </thead>
-          <tbody v-for="(rep, i) in set.sets" :key="`kkk-${i}`" class="font-light">
-            <tr>
-              <td>
-                {{ i + 1 }}set
-              </td>
-              <td>
-                {{ rep.weight }}kg
-              </td>
-              <td>
-                {{ rep.rep }}rep
-              </td>
-              <td>
-                {{ msToTimeText(rep.totalSec) }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          </table>
+        </div>
+        <div class="overflow-hidden">
+          <div class="font-light expandable pl-3 expanded">
+            <table class="table-auto w-full">
+              <tr v-for="(rep, i) in set.sets" :key="`kkk-${i}`">
+                <td>
+                  {{ i + 1 }}set
+                </td>
+                <td>
+                  {{ rep.weight }}kg
+                </td>
+                <td>
+                  {{ rep.rep }}rep
+                </td>
+                <td>
+                  {{ msToTimeText(rep.totalSec) }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -97,3 +103,12 @@ const sets = computed(() => {
     </button>
   </div>
 </template>
+<style>
+.expandable {
+  margin-top: -100%;
+  transition: all 0.5s;
+}
+.expandable.expanded {
+  margin-top: 0;
+}
+</style>

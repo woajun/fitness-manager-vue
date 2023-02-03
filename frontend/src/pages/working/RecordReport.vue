@@ -1,8 +1,9 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { Excercise, Records } from '@/interfaces';
 import { msToTimeText } from '../../components/helper';
+import JCollapse from '../../components/JCollapse.vue';
 
 const emit = defineEmits<{
   (e: 'cancel'):void
@@ -31,16 +32,17 @@ function getExrName(id: number) {
 
 const sets = computed(() => {
   const uniqExrIds = getExrIDsWithExrOrder();
-
   const separated = uniqExrIds.map((exrID, i) => ({
     exrID,
     exrName: getExrName(exrID),
     order: i,
     sets: props.records.filter((e) => e.exrID === exrID),
+    apple: ref(false),
   }));
 
   return separated;
 });
+
 </script>
 <template>
   <div>
@@ -49,8 +51,8 @@ const sets = computed(() => {
       <div>{{ props.records.length }} 세트 / {{ props.records.reduce((t, c) => t + c.rep, 0) }} 회 </div>
     </div>
     <div class="text-xl h-80 overflow-auto">
-      <div v-for="set in sets" :key="`exrID-${set.exrID}`">
-        <div>
+      <div v-for="set in sets" :key="`exrID-${set.exrID}`" class="border-b-2">
+        <div @click="set.apple.value = !set.apple.value">
           <label>
             {{ set.exrName }}
           </label>
@@ -71,26 +73,24 @@ const sets = computed(() => {
             </tr>
           </table>
         </div>
-        <div class="overflow-hidden">
-          <div class="font-light expandable pl-3 expanded">
-            <table class="table-auto w-full">
-              <tr v-for="(rep, i) in set.sets" :key="`kkk-${i}`">
-                <td>
-                  {{ i + 1 }}set
-                </td>
-                <td>
-                  {{ rep.weight }}kg
-                </td>
-                <td>
-                  {{ rep.rep }}rep
-                </td>
-                <td>
-                  {{ msToTimeText(rep.totalSec) }}
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        <JCollapse :show="set.apple.value" class="font-light bg-gray-50">
+          <table class="table-auto w-full ml-3">
+            <tr v-for="(rep, i) in set.sets" :key="`kkk-${i}`">
+              <td>
+                {{ i + 1 }}set
+              </td>
+              <td>
+                {{ rep.weight }}kg
+              </td>
+              <td>
+                {{ rep.rep }}rep
+              </td>
+              <td>
+                {{ msToTimeText(rep.totalSec) }}
+              </td>
+            </tr>
+          </table>
+        </JCollapse>
       </div>
     </div>
   </div>

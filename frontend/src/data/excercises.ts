@@ -9,5 +9,6 @@ const excercises: Excercise[] = [
   { id: 5, label: '스쿼트' },
   { id: 6, label: '데드리프트' },
   { id: 7, label: '번지피지오' },
+  { id: 8, label: 'AB슬라이드' },
 ];
 export default excercises;

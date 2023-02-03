@@ -25,3 +25,8 @@ const value = computed({
     type="text"
   >
 </template>
+<style scoped>
+input:disabled {
+    color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+</style>

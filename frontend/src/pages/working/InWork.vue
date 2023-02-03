@@ -94,23 +94,22 @@ function finish() {
   showRecordReport.value = false;
 }
 // btn - end ====
-
+// computed - start ====
 const isWorkTime = computed(() => presentTimeText.value && isRun.value && ((getNowRestTime() - presentTimer.getMs()) < 0));
-
 const message = computed(() => {
+  let result = '휴식';
   if (!isWorkTime.value && records.value.length === 0 && isRun.value) {
-    return `${firstSetSec}초 후 시작!`;
+    result = `${firstSetSec}초 후 시작!`;
+  } if (!isRun.value) {
+    result = '정지';
+  } if (isWorkTime.value) {
+    result = '운동시작';
   }
-  if (!isRun.value) {
-    return '정지';
-  }
-  return isWorkTime.value ? '운동시작' : '휴식';
+  return result;
 });
-
-// nowExcercise computed - start ====
 const nowExcerciseRep = computed(() => records.value.reduce((t, c) => (c.exrID === excercise.value.id ? t + c.rep : t), 0));
 const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID === excercise.value.id ? t + 1 : t), 0));
-// nowExcercise computed - end ====
+// computed - end ====
 </script>
 <template>
   <div class="w-screen h-screen px-4 py-4 fixed">

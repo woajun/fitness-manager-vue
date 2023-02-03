@@ -116,25 +116,24 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
   <div class="w-screen h-screen px-4 py-4 fixed">
     <div class="flex justify-between pt-3">
       <div>
-        <div class="">
+        <p>
           {{ message }}
-        </div>
-        <div class="">
-          <span class="text-4xl">
-            {{ timerText }}
-          </span>
-        </div>
-        <div class="">
-          <span class="text-2xl  text-gray-500">
-            {{ timeText }}
-          </span>
-        </div>
+        </p>
+        <p class="text-4xl">
+          {{ timerText }}
+        </p>
+        <p class="text-2xl text-gray-500">
+          {{ timeText }}
+        </p>
       </div>
       <JCircle :is-red="isWorkTime" @click="showRecordReport = true">
-        <span class="text-4xl">{{ nowExcerciseSet }}</span>
-        <span class="text-lg">/{{ records.length }}</span>
-        <br />
-        <span class="text-2xl">Set</span>
+        <p>
+          <span class="text-4xl">{{ nowExcerciseSet }}</span>
+          <span class="text-lg">/{{ records.length }}</span>
+        </p>
+        <p class="text-2xl">
+          Set
+        </p>
       </JCircle>
     </div>
 

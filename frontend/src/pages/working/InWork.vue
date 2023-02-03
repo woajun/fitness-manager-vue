@@ -130,7 +130,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
         </div>
       </div>
       <div>
-        <div class="numberCircle bg-neutral-500 text-white" :class="{ 'bg-red-600': isWorkTime, 'border-red-700': isWorkTime }" @click="showRecordReport = true">
+        <div class="w-28 h-28 text-center rounded-full bg-neutral-500 text-white" :class="{ 'bg-red-600': isWorkTime, 'border-red-700': isWorkTime }" @click="showRecordReport = true">
           <div class="pt-3">
             <span class="text-4xl">{{ nowExcerciseSet }}</span>
             <span class="text-lg">/{{ records.length }}</span>
@@ -144,7 +144,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
       <JMultiChart :data="records" :now-exr-id="excercise.id" />
     </div>
 
-    <div class="pt-4 flex height60px">
+    <div class="pt-5 flex h-16">
       <div class="basis-3/4 border-2 rounded-lg text-2xl py-1 pl-2  overflow-hidden break-all" @click="showExcerciseSelector = true">
         {{ excercise.label }}
       </div>
@@ -157,7 +157,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     <div class="pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
       <label>
         중량(kg)<br />
-        <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
+        <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
           <VueScrollPicker
             v-model="weight"
             :options="selectorOptions.weight"
@@ -167,7 +167,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
       </label>
       <label>
         횟수(회)<br />
-        <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
+        <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
           <VueScrollPicker
             v-model="rep"
             class="selected-color-purple"
@@ -177,7 +177,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
       </label>
       <label>
         휴식(초)<br />
-        <div class="border-2 rounded-lg text-3xl vertical-center max-h-24 truncate mt-1">
+        <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
           <VueScrollPicker
             v-model="sec"
             :options="selectorOptions.sec"
@@ -210,24 +210,6 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     </JBottomSheet>
   </Teleport>
 </template>
-<style>
-.numberCircle {
-    border-radius: 50%;
-    width: 7rem;
-    height: 100%;
-    border: 2px solid #666;
-    text-align: center;
-}
-
-.vertical-center {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-.height60px {
-  height: 60px;
-}
-</style>
 <style src="vue-scroll-picker/lib/style.css"></style>
 <style>
 .selected-color-red .vue-scroll-picker-item-selected {

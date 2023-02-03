@@ -54,9 +54,14 @@ const totalStopWatch = new StopWatch(setTimeText, setIsRun);
 const timerText = ref('');
 
 const firstSetSec = 5; // 처음 시작 할 때 휴식시간
-function setTimerText(ms: number) {
+
+function getDisplayTime() {
   const isFirstSet = records.value.length === 0;
-  timerText.value = msToTimeText(secondsToMs(isFirstSet ? firstSetSec : sec.value) - ms);
+  return secondsToMs(isFirstSet ? firstSetSec : sec.value);
+}
+
+function setTimerText(ms: number) {
+  timerText.value = msToTimeText(getDisplayTime() - ms);
 }
 
 const timer = new StopWatch(setTimerText, setIsRun);
@@ -96,14 +101,11 @@ function finish() {
 }
 // btn - end ====
 
-const isWorkTime = computed(() => {
-  const isFirstSet = records.value.length === 0;
-  return timerText.value && isRun.value && ((secondsToMs(isFirstSet ? firstSetSec : sec.value) - timer.getMs()) < 0);
-});
+const isWorkTime = computed(() => timerText.value && isRun.value && ((getDisplayTime() - timer.getMs()) < 0));
 
 const message = computed(() => {
   if (!isWorkTime.value && records.value.length === 0 && isRun.value) {
-    return '5초 후 시작!';
+    return `${firstSetSec}초 후 시작!`;
   }
   if (!isRun.value) {
     return '정지';

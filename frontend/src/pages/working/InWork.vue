@@ -146,7 +146,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
       <div class="col-span-4" @click="showExcerciseSelector = true">
         <JInputText v-model="excercise.label" disabled />
       </div>
-      <div class=" text-gray-500 text-2xl ml-2 text-right relative break-keep">
+      <div class=" text-gray-500 text-2xl relative break-keep">
         <div class="absolute bottom-0 right-0">
           {{ nowExcerciseRep }}<span class="text-xl">회</span>
         </div>

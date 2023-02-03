@@ -13,6 +13,7 @@ import ExcerciseSelector from './ExcerciseSelector.vue';
 import RecordReport from './RecordReport.vue';
 import type { Excercise, Records } from '@/interfaces';
 import excercises from '../../data/excercises';
+import JCircle from '@/components/JCircle.vue';
 
 // excercise - start ====
 const excercise = ref<Excercise>(
@@ -129,15 +130,12 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
           </span>
         </div>
       </div>
-      <div>
-        <div class="w-28 h-28 text-center rounded-full bg-neutral-500 text-white" :class="{ 'bg-red-600': isWorkTime, 'border-red-700': isWorkTime }" @click="showRecordReport = true">
-          <div class="pt-3">
-            <span class="text-4xl">{{ nowExcerciseSet }}</span>
-            <span class="text-lg">/{{ records.length }}</span>
-          </div>
-          <span class="text-2xl">Set</span>
-        </div>
-      </div>
+      <JCircle :is-red="isWorkTime" @click="showRecordReport = true">
+        <span class="text-4xl">{{ nowExcerciseSet }}</span>
+        <span class="text-lg">/{{ records.length }}</span>
+        <br />
+        <span class="text-2xl">Set</span>
+      </JCircle>
     </div>
 
     <div class="mt-5 border">

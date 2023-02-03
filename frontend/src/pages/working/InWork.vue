@@ -37,39 +37,33 @@ const weight = ref(0);
 const rep = ref(15);
 const sec = ref(90);
 
-// timer & stopWatch - start ====
-const timeText = ref('');
+// totalTimeText & stopWatch - start ====
+const totalTimeText = ref('');
 const isRun = ref(false);
 
-function setTimeText(ms: number) {
-  timeText.value = msToTimeTextWithHour(ms);
-}
+const totalTimer = new StopWatch(
+  (ms:number) => { totalTimeText.value = msToTimeTextWithHour(ms); },
+  (bool: boolean) => { isRun.value = bool; },
+);
 
-function setIsRun(bool: boolean) {
-  isRun.value = bool;
-}
-
-const totalStopWatch = new StopWatch(setTimeText, setIsRun);
-
-const timerText = ref('');
+const presentTimeText = ref('');
 
 const firstSetSec = 5; // 처음 시작 할 때 휴식시간
 
-function getDisplayTime() {
+function getNowRestTime() {
   const isFirstSet = records.value.length === 0;
   return secondsToMs(isFirstSet ? firstSetSec : sec.value);
 }
 
-function setTimerText(ms: number) {
-  timerText.value = msToTimeText(getDisplayTime() - ms);
-}
-
-const timer = new StopWatch(setTimerText, setIsRun);
-// timer & stopWatch - end ====
+const presentTimer = new StopWatch(
+  (ms: number) => { presentTimeText.value = msToTimeText(getNowRestTime() - ms); },
+  (bool: boolean) => { isRun.value = bool; },
+);
+// presentTimer & stopWatch - end ====
 // btn - start ====
 function btnStart() {
-  totalStopWatch.start();
-  timer.start();
+  totalTimer.start();
+  presentTimer.start();
 }
 
 function btnRecord() {
@@ -78,15 +72,15 @@ function btnRecord() {
     weight: weight.value,
     rep: rep.value,
     restSec: sec.value,
-    totalSec: timer.getMs(),
+    totalSec: presentTimer.getMs(),
   });
-  timer.reset();
-  timer.start();
+  presentTimer.reset();
+  presentTimer.start();
 }
 
 function btnStop() {
-  totalStopWatch.stop();
-  timer.stop();
+  totalTimer.stop();
+  presentTimer.stop();
 }
 
 function btnReset() {
@@ -94,14 +88,14 @@ function btnReset() {
 }
 
 function finish() {
-  totalStopWatch.reset();
-  timer.reset();
+  totalTimer.reset();
+  presentTimer.reset();
   records.value = [];
   showRecordReport.value = false;
 }
 // btn - end ====
 
-const isWorkTime = computed(() => timerText.value && isRun.value && ((getDisplayTime() - timer.getMs()) < 0));
+const isWorkTime = computed(() => presentTimeText.value && isRun.value && ((getNowRestTime() - presentTimer.getMs()) < 0));
 
 const message = computed(() => {
   if (!isWorkTime.value && records.value.length === 0 && isRun.value) {
@@ -126,10 +120,10 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
           {{ message }}
         </p>
         <p class="text-4xl">
-          {{ timerText }}
+          {{ presentTimeText }}
         </p>
         <p class="text-2xl text-gray-500">
-          {{ timeText }}
+          {{ totalTimeText }}
         </p>
       </div>
       <JCircle :is-red="isWorkTime" @click="showRecordReport = true">
@@ -191,7 +185,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true || showRecordReport === true">
       <template #body>
         <ExcerciseSelector v-if="showExcerciseSelector" v-model="excercise" :excercises="excercises" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
-        <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="timeText" @cancel="showRecordReport = false" @submit="finish" />
+        <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="totalTimeText" @cancel="showRecordReport = false" @submit="finish" />
       </template>
     </JBottomSheet>
   </Teleport>

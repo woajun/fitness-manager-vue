@@ -31,6 +31,7 @@ function changeExcercise(aExcercise: Excercise) {
 const records = ref<Records[]>([]);
 
 const showRecordReport = ref(false);
+const showSubmit = ref(false);
 // RecordReport - end ===
 
 const weight = ref(0);
@@ -61,6 +62,11 @@ const presentTimer = new StopWatch(
 );
 // presentTimer & stopWatch - end ====
 // btn - start ====
+function btnCircle() {
+  showSubmit.value = false;
+  showRecordReport.value = true;
+}
+
 function btnStart() {
   totalTimer.start();
   presentTimer.start();
@@ -84,6 +90,7 @@ function btnStop() {
 }
 
 function btnReset() {
+  showSubmit.value = true;
   showRecordReport.value = true;
 }
 
@@ -134,7 +141,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
           {{ totalTimeText }}
         </p>
       </div>
-      <JCircle :is-red="isWorking" :color="circleColor" @click="showRecordReport = true">
+      <JCircle :is-red="isWorking" :color="circleColor" @click="btnCircle">
         <p>
           <span class="text-4xl">{{ nowExcerciseSet }}</span>
           <span class="text-lg">/{{ records.length }}</span>
@@ -193,7 +200,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true || showRecordReport === true">
       <template #body>
         <ExcerciseSelector v-if="showExcerciseSelector" v-model="excercise" :excercises="excercises" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
-        <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="totalTimeText" @cancel="showRecordReport = false" @submit="finish" />
+        <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="totalTimeText" :show-submit="showSubmit" @cancel="showRecordReport = false" @submit="finish" />
       </template>
     </JBottomSheet>
   </Teleport>

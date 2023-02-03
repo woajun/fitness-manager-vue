@@ -13,6 +13,7 @@ const props = defineProps<{
   records: Records[],
   excercises: Excercise[],
   timeText: string,
+  showSubmit?: boolean,
 }>();
 
 function submit() {
@@ -87,11 +88,11 @@ const sets = computed(() => {
       </div>
     </div>
   </div>
-  <div class="grid gap-4 grid-cols-2 pt-5 my-3">
+  <div class="grid gap-4 pt-5 my-3" :class="{ 'grid-cols-2': showSubmit }">
     <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="emit('cancel')">
       뒤로
     </button>
-    <button class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="submit">
+    <button v-if="showSubmit" class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="submit">
       운동종료
     </button>
   </div>

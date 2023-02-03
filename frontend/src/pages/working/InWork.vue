@@ -18,26 +18,25 @@ import JScrollPicker from '../../components/JScrollPicker.vue';
 import JButton from '../../components/JButton.vue';
 
 // excercise - start ====
-const excercise = ref<Excercise>(
-  { id: 0, label: '플랫 벤치 프레스' },
-);
+const excercise = ref<Excercise>(excercises[0]);
 
 const showExcerciseSelector = ref(false);
 
-function changeExcercise(exr: Excercise) {
-  excercise.value = exr;
+function changeExcercise(aExcercise: Excercise) {
+  excercise.value = aExcercise;
   showExcerciseSelector.value = false;
 }
 // excercise - end ====
+// RecordReport - start ===
 const records = ref<Records[]>([]);
+
+const showRecordReport = ref(false);
+// RecordReport - end ===
 
 const weight = ref(0);
 const rep = ref(15);
 const sec = ref(90);
 
-// RecordReport - start ===
-const showRecordReport = ref(false);
-// RecordReport - end ===
 // timer & stopWatch - start ====
 const timeText = ref('');
 const isRun = ref(false);
@@ -105,6 +104,9 @@ const isWorkTime = computed(() => {
 const message = computed(() => {
   if (!isWorkTime.value && records.value.length === 0 && isRun.value) {
     return '5초 후 시작!';
+  }
+  if (!isRun.value) {
+    return '정지';
   }
   return isWorkTime.value ? '운동시작' : '휴식';
 });

@@ -158,7 +158,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
 
     <div class="pt-5 grid grid-cols-5">
       <div class="col-span-4" @click="showExcerciseSelector = true">
-        <JInputText v-model="excercise.label" disabled />
+        <JInputText v-model="excercise.label" readonly />
       </div>
       <div class=" text-gray-500 text-2xl relative break-keep">
         <div class="absolute bottom-0 right-0">

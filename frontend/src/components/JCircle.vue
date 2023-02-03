@@ -2,14 +2,18 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-  isRed?: boolean | ''
+  color?: 'slate' | 'red' | 'gray'
 }>();
 
 const style = computed(() => {
-  if (props.isRed) {
-    return 'bg-red-600 border-red-700';
+  switch (props.color) {
+    case 'red':
+      return 'bg-red-600 border-red-700';
+    case 'slate':
+      return 'bg-slate-700';
+    default:
+      return 'bg-neutral-500 ';
   }
-  return 'bg-neutral-500 ';
 });
 
 </script>

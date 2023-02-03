@@ -95,17 +95,26 @@ function finish() {
 }
 // btn - end ====
 // computed - start ====
-const isWorkTime = computed(() => presentTimeText.value && isRun.value && ((getNowRestTime() - presentTimer.getMs()) < 0));
+const isWorking = computed(() => presentTimeText.value && isRun.value && ((getNowRestTime() - presentTimer.getMs()) < 0));
 const message = computed(() => {
   let result = '휴식';
-  if (!isWorkTime.value && records.value.length === 0 && isRun.value) {
+  if (!isWorking.value && records.value.length === 0 && isRun.value) {
     result = `${firstSetSec}초 후 시작!`;
   } if (!isRun.value) {
     result = '정지';
-  } if (isWorkTime.value) {
+  } if (isWorking.value) {
     result = '운동시작';
   }
   return result;
+});
+const circleColor = computed(() => {
+  if (!isRun.value) {
+    return 'slate';
+  }
+  if (isWorking.value) {
+    return 'red';
+  }
+  return 'gray';
 });
 const nowExcerciseRep = computed(() => records.value.reduce((t, c) => (c.exrID === excercise.value.id ? t + c.rep : t), 0));
 const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID === excercise.value.id ? t + 1 : t), 0));
@@ -125,7 +134,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
           {{ totalTimeText }}
         </p>
       </div>
-      <JCircle :is-red="isWorkTime" @click="showRecordReport = true">
+      <JCircle :is-red="isWorking" :color="circleColor" @click="showRecordReport = true">
         <p>
           <span class="text-4xl">{{ nowExcerciseSet }}</span>
           <span class="text-lg">/{{ records.length }}</span>

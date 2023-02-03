@@ -14,6 +14,7 @@ import RecordReport from './RecordReport.vue';
 import type { Excercise, Records } from '@/interfaces';
 import excercises from '../../data/excercises';
 import JCircle from '../../components/JCircle.vue';
+import JInputText from '../../components/JInputText.vue';
 
 // excercise - start ====
 const excercise = ref<Excercise>(
@@ -141,11 +142,11 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
       <JMultiChart :data="records" :now-exr-id="excercise.id" />
     </div>
 
-    <div class="pt-5 flex h-16">
-      <div class="basis-3/4 border-2 rounded-lg text-2xl py-1 pl-2  overflow-hidden break-all" @click="showExcerciseSelector = true">
-        {{ excercise.label }}
+    <div class="pt-5 grid grid-cols-5">
+      <div class="col-span-4" @click="showExcerciseSelector = true">
+        <JInputText v-model="excercise.label" disabled />
       </div>
-      <div class="basis-1/4 text-gray-500 text-2xl ml-2 text-right relative break-keep">
+      <div class=" text-gray-500 text-2xl ml-2 text-right relative break-keep">
         <div class="absolute bottom-0 right-0">
           {{ nowExcerciseRep }}<span class="text-xl">회</span>
         </div>

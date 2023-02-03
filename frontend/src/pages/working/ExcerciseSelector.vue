@@ -1,7 +1,8 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { Excercise } from '@/interfaces';
+import searcherSearch from '../../components/searcher';
 
 const emit = defineEmits<{
   (e: 'cancel'):void
@@ -22,14 +23,20 @@ function select(exr: Excercise) {
 function submit() {
   emit('doSelect', selected.value);
 }
+
+const list = ref<Excercise[]>(props.excercises);
+function search(e:any) {
+  list.value = searcherSearch(e.target.value, props.excercises, 'label');
+}
+
 </script>
 <template>
   <div>
     <div>
-      <input class="text-xl border-2 rounded-xl w-full h-12 px-3">
+      <input class="text-xl border-2 rounded-xl w-full h-12 px-3" @keyup="search">
     </div>
     <div class="text-xl pt-5">
-      <div v-for="exr in props.excercises" :key="exr.id" @click="()=> select(exr)">
+      <div v-for="exr in list" :key="exr.id" @click="()=> select(exr)">
         <span :class="{ 'text-green-500': selected.id === exr.id }">{{ exr.label }}</span>
       </div>
     </div>

@@ -51,7 +51,7 @@ function createFuzzyMatcher(input: string) {
   return new RegExp(pattern);
 }
 
-export default function search(query: string, list: string[]) {
+export default function search(query: string, list: any, key: string) {
   const regex = createFuzzyMatcher(query);
-  return list.filter((str) => regex.test(str.toLocaleLowerCase()));
+  return list.filter((e: any) => regex.test(e[key].toLocaleLowerCase()));
 }

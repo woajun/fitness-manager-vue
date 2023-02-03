@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { VueScrollPicker } from 'vue-scroll-picker';
 import StopWatch from '../../components/stopWatch';
 import JMultiChart from '../../components/JMultiChart.vue';
 import {
@@ -16,6 +15,7 @@ import excercises from '../../data/excercises';
 import JCircle from '../../components/JCircle.vue';
 import JInputText from '../../components/JInputText.vue';
 import JScrollPicker from '../../components/JScrollPicker.vue';
+import JButton from '../../components/JButton.vue';
 
 // excercise - start ====
 const excercise = ref<Excercise>(
@@ -176,18 +176,10 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     </div>
 
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
-      <button v-if="isRun" class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="btnRecord()">
-        기록
-      </button>
-      <button v-else class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="btnStart()">
-        시작
-      </button>
-      <button v-if="isRun" class="text-slate-50 rounded-lg bg-red-700 h-14 text-xl" @click="btnStop()">
-        정지
-      </button>
-      <button v-else class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="btnReset()">
-        종료
-      </button>
+      <JButton v-if="isRun" label="기록" @click="btnRecord()" />
+      <JButton v-else label="시작" color="green" @click="btnStart()" />
+      <JButton v-if="isRun" label="정지" color="red" @click="btnStop()" />
+      <JButton v-else label="종료" @click="btnReset()" />
     </div>
   </div>
 

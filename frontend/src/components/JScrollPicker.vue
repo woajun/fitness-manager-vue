@@ -8,6 +8,7 @@ const props = defineProps<{
   label: string
   modelValue: number
   options: ScrollPickerOptionable[]
+  color?: 'red' | 'green' | 'purple'
 }>();
 const emit = defineEmits<{(e:'update:modelValue', modelValue: number): void;
 }>();
@@ -21,6 +22,19 @@ const value = computed({
   },
 });
 
+const style = computed(() => {
+  switch (props.color) {
+    case 'red':
+      return 'selected-color-red';
+    case 'green':
+      return 'selected-color-green';
+    case 'purple':
+      return 'selected-color-purple';
+    default:
+      return '';
+  }
+});
+
 </script>
 <template>
   <label>
@@ -28,8 +42,8 @@ const value = computed({
     <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
       <VueScrollPicker
         v-model="value"
-        class="selected-color-purple"
         :options="props.options"
+        :class="style"
       />
     </div>
   </label>

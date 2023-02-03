@@ -159,19 +159,19 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
         v-model="weight"
         label="중량(kg)"
         :options="selectorOptions.weight"
-        class="selected-color-red"
+        color="red"
       />
       <JScrollPicker
         v-model="rep"
         label="횟수(회)"
         :options="selectorOptions.rep"
-        class="selected-color-purple"
+        color="purple"
       />
       <JScrollPicker
         v-model="sec"
-        label="휴삭(초)"
+        label="휴식(초)"
         :options="selectorOptions.sec"
-        class="selected-color-green"
+        color="green"
       />
     </div>
 

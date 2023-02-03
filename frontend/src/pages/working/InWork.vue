@@ -13,7 +13,7 @@ import ExcerciseSelector from './ExcerciseSelector.vue';
 import RecordReport from './RecordReport.vue';
 import type { Excercise, Records } from '@/interfaces';
 import excercises from '../../data/excercises';
-import JCircle from '@/components/JCircle.vue';
+import JCircle from '../../components/JCircle.vue';
 
 // excercise - start ====
 const excercise = ref<Excercise>(
@@ -151,6 +151,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
         </div>
       </div>
     </div>
+
     <div class="pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
       <label>
         중량(kg)<br />
@@ -183,6 +184,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
         </div>
       </label>
     </div>
+
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
       <button v-if="isRun" class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="btnRecord()">
         기록
@@ -198,6 +200,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
       </button>
     </div>
   </div>
+
   <Teleport to="body">
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true || showRecordReport === true">
       <template #body>

@@ -1,71 +1,38 @@
+<!-- eslint-disable @typescript-eslint/object-curly-spacing -->
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { VueScrollPicker } from 'vue-scroll-picker';
-import {
-  withDefaults,
-  defineProps,
-  defineEmits,
-  computed,
-  ref,
-  watch,
-} from 'vue';
+import type { ScrollPickerOptionable } from 'vue-scroll-picker/lib/components/picker';
 
-const props = withDefaults(
-  defineProps<{
-    modelValue: number;
-    label: string;
-    unit: string;
-    options: number;
-    selectedColor?: 'red' | 'purple' | 'green';
-  }>(),
-  { selectedColor: undefined },
-);
+const props = defineProps<{
+  label: string
+  modelValue: number
+  options: ScrollPickerOptionable[]
+}>();
+const emit = defineEmits<{(e:'update:modelValue', modelValue: number): void;
+}>();
 
-const emit = defineEmits(['update:modelValue']);
-
-const newValue = ref(props.modelValue);
-
-const computedVal = computed({
+const value = computed({
   get() {
-    return newValue.value;
+    return props.modelValue;
   },
-  set(value) {
-    newValue.value = value;
-    emit('update:modelValue', value);
+  set(modelValue) {
+    emit('update:modelValue', modelValue);
   },
-});
-
-watch(
-  () => props.modelValue,
-  (value) => {
-    newValue.value = value;
-  },
-);
-
-const options = computed(() => {
-  const result = [];
-  for (let i = 0; i <= props.options; i += 1) {
-    result.push(i);
-  }
-  return result;
 });
 
 </script>
 <template>
-  <div class="flex text-center">
-    <div class="flex-1 vertical-center">
-      {{ props.label }}
-    </div>
-    <div class="flex-1 text-4xl vertical-center max-h-24 truncate">
+  <label>
+    {{ label }}<br />
+    <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
       <VueScrollPicker
-        v-model="computedVal"
-        :options="options"
-        :class="props.selectedColor ? `selected-color-${props.selectedColor}` : ''"
+        v-model="value"
+        class="selected-color-purple"
+        :options="props.options"
       />
     </div>
-    <div class="flex-1 vertical-center">
-      {{ props.unit }}
-    </div>
-  </div>
+  </label>
 </template>
 <style src="vue-scroll-picker/lib/style.css"></style>
 <style>

@@ -15,6 +15,7 @@ import type { Excercise, Records } from '@/interfaces';
 import excercises from '../../data/excercises';
 import JCircle from '../../components/JCircle.vue';
 import JInputText from '../../components/JInputText.vue';
+import JScrollPicker from '../../components/JScrollPicker.vue';
 
 // excercise - start ====
 const excercise = ref<Excercise>(
@@ -154,36 +155,24 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     </div>
 
     <div class="pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
-      <label>
-        중량(kg)<br />
-        <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
-          <VueScrollPicker
-            v-model="weight"
-            :options="selectorOptions.weight"
-            class="selected-color-red"
-          />
-        </div>
-      </label>
-      <label>
-        횟수(회)<br />
-        <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
-          <VueScrollPicker
-            v-model="rep"
-            class="selected-color-purple"
-            :options="selectorOptions.rep"
-          />
-        </div>
-      </label>
-      <label>
-        휴식(초)<br />
-        <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
-          <VueScrollPicker
-            v-model="sec"
-            :options="selectorOptions.sec"
-            class="selected-color-green"
-          />
-        </div>
-      </label>
+      <JScrollPicker
+        v-model="weight"
+        label="중량(kg)"
+        :options="selectorOptions.weight"
+        class="selected-color-red"
+      />
+      <JScrollPicker
+        v-model="rep"
+        label="횟수(회)"
+        :options="selectorOptions.rep"
+        class="selected-color-purple"
+      />
+      <JScrollPicker
+        v-model="sec"
+        label="휴삭(초)"
+        :options="selectorOptions.sec"
+        class="selected-color-green"
+      />
     </div>
 
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
@@ -211,15 +200,3 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     </JBottomSheet>
   </Teleport>
 </template>
-<style src="vue-scroll-picker/lib/style.css"></style>
-<style>
-.selected-color-red .vue-scroll-picker-item-selected {
-  color: rgb(153 27 27 / var(--tw-text-opacity));
-}
-.selected-color-purple .vue-scroll-picker-item-selected {
-  color: rgb(91 33 182 / var(--tw-text-opacity));
-}
-.selected-color-green .vue-scroll-picker-item-selected {
-  color: rgb(22 101 52 / var(--tw-text-opacity));
-}
-</style>

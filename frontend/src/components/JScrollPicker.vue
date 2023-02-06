@@ -1,6 +1,6 @@
 <!-- eslint-disable @typescript-eslint/object-curly-spacing -->
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { VueScrollPicker } from 'vue-scroll-picker';
 import type { ScrollPickerOptionable } from 'vue-scroll-picker/lib/components/picker';
 
@@ -35,11 +35,17 @@ const style = computed(() => {
   }
 });
 
+const isBeingScolled = ref(false);
 </script>
 <template>
   <label>
     {{ label }}<br />
-    <div class="border-2 rounded-lg text-3xl flex items-center max-h-24 truncate mt-1">
+    <div
+      class="rounded-lg text-3xl flex items-center max-h-12 mt-1"
+      :class="isBeingScolled ? '' : 'truncate border-2'"
+      @touchstart="() => { isBeingScolled = true }"
+      @touchend="() => { isBeingScolled = false }"
+    >
       <VueScrollPicker
         v-model="value"
         :options="props.options"

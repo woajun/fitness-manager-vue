@@ -189,7 +189,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     </div>
 
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">
-      <JButton v-if="isRun" label="기록" @click="btnRecord()" />
+      <JButton v-if="isRun" label="기록" :disabled="!isWorking" @click="btnRecord()" />
       <JButton v-else label="시작" color="green" @click="btnStart()" />
       <JButton v-if="isRun" label="정지" color="red" @click="btnStop()" />
       <JButton v-else label="종료" @click="btnReset()" />

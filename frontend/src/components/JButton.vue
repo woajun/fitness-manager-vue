@@ -22,3 +22,8 @@ const style = computed(() => {
     {{ props.label }}
   </button>
 </template>
+<style>
+button:disabled.bg-slate-700 {
+  background-color: rgb(148 163 184);
+}
+</style>

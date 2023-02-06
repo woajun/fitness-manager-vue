@@ -16,6 +16,7 @@ import JCircle from '../../components/JCircle.vue';
 import JInputText from '../../components/JInputText.vue';
 import JScrollPicker from '../../components/JScrollPicker.vue';
 import JButton from '../../components/JButton.vue';
+import JBottomRightSnackbar from '../../components/JBottomRightSnackbar.vue';
 
 // excercise - start ====
 const excercise = ref<Excercise>(excercises[0]);
@@ -72,6 +73,8 @@ function btnStart() {
   presentTimer.start();
 }
 
+const isSnackbarShow = ref(false);
+
 function btnRecord() {
   records.value.push({
     exrID: excercise.value.id,
@@ -82,6 +85,7 @@ function btnRecord() {
   });
   presentTimer.reset();
   presentTimer.start();
+  isSnackbarShow.value = true;
 }
 
 function btnStop() {
@@ -166,7 +170,6 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
         </div>
       </div>
     </div>
-
     <div class="pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
       <JScrollPicker
         v-model="weight"
@@ -203,5 +206,9 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
         <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="totalTimeText" :show-submit="showSubmit" @cancel="showRecordReport = false" @submit="finish" />
       </template>
     </JBottomSheet>
+  </Teleport>
+
+  <Teleport to="body">
+    <JBottomRightSnackbar v-model="isSnackbarShow" label="기록취소✖" @click="() => {}" />
   </Teleport>
 </template>

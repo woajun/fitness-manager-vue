@@ -10,6 +10,7 @@ import {
   CategoryScale,
 } from 'chart.js';
 import { onMounted, watch } from 'vue';
+import { uuid } from './helper';
 
 // color start ====
 const COLOR_PURPLE = 'rgb(91, 33, 182)';
@@ -48,7 +49,7 @@ function toLabel(num: number) {
   return result;
 }
 
-const canvasId = crypto.randomUUID();
+const canvasId = uuid();
 
 let lineChart: any;
 

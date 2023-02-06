@@ -38,3 +38,7 @@ export function msToTimeTextWithHour(ms: number) {
 export function makeNumberArray(length: number, from: number, unit: number) {
   return Array(length).fill(0).map((e, i) => from + (unit * i));
 }
+
+export function uuid() {
+  return Math.floor(Math.random() * 10000000000).toString();
+}

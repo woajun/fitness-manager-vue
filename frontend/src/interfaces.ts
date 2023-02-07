@@ -20,14 +20,21 @@ export type SaveRequestDTO = {
 };
 
 export type Excercise = {
-  id: number,
-  label: string,
+  id: number;
+  label: string;
 };
 
 export type Records = {
-  exrID: number,
-  weight: number,
-  rep: number,
-  restSec: number,
-  totalSec: number,
+  exrID: number;
+  weight: number;
+  rep: number;
+  restSec: number;
+  totalSec: number;
+};
+
+export type CalendarData = {
+  date: string;
+  time: string;
+  set: number;
+  rep: number;
 };

@@ -23,15 +23,35 @@ function down() {
     month.value = 12;
   }
 }
+
 const calendar = computed(() => {
   const firstDay = new Date(year.value, month.value - 1, 1).getDay();
   const lastDay = new Date(year.value, month.value, 0);
   const length = lastDay.getDate();
   const dateArray = Array(length).fill(0).map((e, i) => i + 1);
-  const dateWithGap = Array(firstDay).fill('').concat(dateArray);
+  const dateWithGap: Array<number> = Array(firstDay).fill(undefined).concat(dateArray);
   const separtedByWeek = sliceIntoChunks(dateWithGap, 7);
   return separtedByWeek;
 });
+
+function toDateString(day:number) {
+  return `${year.value}-${to00(month.value)}-${to00(day)}`;
+}
+
+function getTime(day: number) {
+  const el = data.find((e) => e.date === toDateString(day));
+  return el ? el.time : '';
+}
+
+function getSet(day: number) {
+  const el = data.find((e) => e.date === toDateString(day));
+  return el ? `${el.set}set` : '';
+}
+
+function getRep(day: number) {
+  const el = data.find((e) => e.date === toDateString(day));
+  return el ? `${el.rep}rep` : '';
+}
 </script>
 <template>
   <body>
@@ -47,7 +67,7 @@ const calendar = computed(() => {
           </button>
         </div>
       </div>
-      <table class="w-full text-center">
+      <table class="w-full text-center table-fixed">
         <thead>
           <tr>
             <th v-for="day in dayOfTheWeek" :key="day">
@@ -66,13 +86,13 @@ const calendar = computed(() => {
                 {{ date }}
               </p>
               <p class="text-xs font-medium h-4">
-                <!-- {{ date.time }} -->
+                {{ getTime(date) }}
               </p>
               <p class="text-xs font-medium h-4">
-                <!-- {{ date.set ? `${date.set}set` : '' }} -->
+                {{ getSet(date) }}
               </p>
               <p class="text-xs font-medium h-4">
-                <!-- {{ date.rep ? `${date.rep}rep` : '' }} -->
+                {{ getRep(date) }}
               </p>
             </td>
           </tr>

@@ -28,17 +28,6 @@ watch(() => props.modelValue, (newVal) => {
   </Transition>
 </template>
 <style scoped>
-.snackbar {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1;
-    bottom: 30px;
-    right: 1rem;
-}
 .v-enter-active,
 .v-leave-active {
   transition: all 0.5s ease-in-out;

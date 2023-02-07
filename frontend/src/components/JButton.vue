@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-  label: string
+  label?: string
   color?: 'red' | 'green'
 }>();
 
@@ -18,8 +18,9 @@ const style = computed(() => {
 });
 </script>
 <template>
-  <button class="text-slate-50 rounded-lg h-14 text-xl" :class="style">
+  <button class="text-slate-50 rounded-lg text-xl" :class="style">
     {{ props.label }}
+    <slot />
   </button>
 </template>
 <style>

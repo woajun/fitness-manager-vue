@@ -141,7 +141,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
 // computed - end ====
 </script>
 <template>
-  <div class="w-screen h-screen px-4 py-4 fixed">
+  <div class="w-screen h-screen px-4 py-4 fixed grid">
     <div class="flex justify-between pt-3">
       <div>
         <p>
@@ -165,7 +165,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
       </JCircle>
     </div>
 
-    <div class="mt-5 border">
+    <div class="mt-5 border max-h-52 chart-center">
       <JMultiChart :data="records" :now-exr-id="excercise.id" />
     </div>
 
@@ -221,3 +221,8 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     <JBottomRightSnackbar v-model="isSnackbarShow" label="기록취소" @click="cancelRecord" />
   </Teleport>
 </template>
+<style>
+.chart-center {
+  text-align: -webkit-center;
+}
+</style>

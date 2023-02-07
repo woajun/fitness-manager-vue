@@ -73,7 +73,7 @@ function btnStart() {
   presentTimer.start();
 }
 
-const isSnackbarShow = ref(false);
+const isSnackbarShow = ref({ value: false });
 
 function btnRecord() {
   records.value.push({
@@ -85,7 +85,7 @@ function btnRecord() {
   });
   presentTimer.reset();
   presentTimer.start();
-  isSnackbarShow.value = true;
+  isSnackbarShow.value = { value: true };
 }
 
 function cancelRecord() {
@@ -94,7 +94,7 @@ function cancelRecord() {
   presentTimer.reset();
   presentTimer.setKeepDuration(popped.totalSec);
   presentTimer.start();
-  isSnackbarShow.value = false;
+  isSnackbarShow.value = { value: false };
 }
 
 function btnStop() {

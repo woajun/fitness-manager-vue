@@ -2,28 +2,27 @@
 import { watch } from 'vue';
 
 const props = defineProps<{
-  modelValue: boolean,
+  modelValue: { value: boolean },
   label: string,
 }>();
 
 // eslint-disable-next-line @typescript-eslint/object-curly-spacing
-const emit = defineEmits<{(e: 'update:modelValue', modelValue: boolean): void,
+const emit = defineEmits<{(e: 'update:modelValue', modelValue: { value: boolean }): void,
 }>();
 
 let timeoutEventId = 0;
 watch(() => props.modelValue, (newVal) => {
-  if (newVal) {
+  clearTimeout(timeoutEventId);
+  if (newVal.value) {
     timeoutEventId = setTimeout(() => {
-      emit('update:modelValue', false);
+      emit('update:modelValue', { value: false });
     }, 3000);
-  } else {
-    clearTimeout(timeoutEventId);
   }
 });
 </script>
 <template>
   <Transition>
-    <div v-if="props.modelValue" class="bg-gray-400 fixed right-4 bottom-7 rounded-lg p-4 text-white text-lg font-bold shadow-xl">
+    <div v-if="props.modelValue.value" class="bg-gray-400 fixed right-4 bottom-7 rounded-lg p-4 text-white text-lg font-bold shadow-xl">
       {{ props.label }}
     </div>
   </Transition>

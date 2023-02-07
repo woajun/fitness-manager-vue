@@ -141,7 +141,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
 // computed - end ====
 </script>
 <template>
-  <div class="w-screen h-screen px-4 py-4 fixed grid">
+  <div class="w-screen h-screen px-4 py-4 fixed">
     <div class="flex justify-between pt-3">
       <div>
         <p>

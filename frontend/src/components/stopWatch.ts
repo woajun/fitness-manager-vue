@@ -62,6 +62,10 @@ class StopWatch {
     this.isRun = bool;
     this.setIsRunTrigger(this.isRun);
   }
+
+  setKeepDuration(ms: number) {
+    this.keepDuration = ms;
+  }
 }
 
 export default StopWatch;

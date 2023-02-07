@@ -88,6 +88,15 @@ function btnRecord() {
   isSnackbarShow.value = true;
 }
 
+function cancelRecord() {
+  const popped = records.value.pop();
+  if (!popped) return;
+  presentTimer.reset();
+  presentTimer.setKeepDuration(popped.totalSec);
+  presentTimer.start();
+  isSnackbarShow.value = false;
+}
+
 function btnStop() {
   totalTimer.stop();
   presentTimer.stop();
@@ -209,6 +218,6 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
   </Teleport>
 
   <Teleport to="body">
-    <JBottomRightSnackbar v-model="isSnackbarShow" label="기록취소✖" @click="() => {}" />
+    <JBottomRightSnackbar v-model="isSnackbarShow" label="기록취소" @click="cancelRecord" />
   </Teleport>
 </template>

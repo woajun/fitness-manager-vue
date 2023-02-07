@@ -7,25 +7,29 @@ const props = defineProps<{
 }>();
 
 // eslint-disable-next-line @typescript-eslint/object-curly-spacing
-const emit = defineEmits<{(e: 'update:modelValue', modelValue: boolean): void
+const emit = defineEmits<{(e: 'update:modelValue', modelValue: boolean): void,
 }>();
 
+let timeoutEventId = 0;
 watch(() => props.modelValue, (newVal) => {
   if (newVal) {
-    setTimeout(() => {
+    timeoutEventId = setTimeout(() => {
       emit('update:modelValue', false);
     }, 3000);
+  } else {
+    clearTimeout(timeoutEventId);
   }
 });
 </script>
 <template>
-  <div class="snackbar" :class="{ show: props.modelValue }">
-    {{ props.label }}
-  </div>
+  <Transition>
+    <div v-if="props.modelValue" class="bg-gray-400 fixed right-4 bottom-7 rounded-lg p-4 text-white text-lg font-bold shadow-xl">
+      {{ props.label }}
+    </div>
+  </Transition>
 </template>
 <style scoped>
 .snackbar {
-    visibility: hidden;
     background-color: #333;
     color: #fff;
     text-align: center;
@@ -36,28 +40,14 @@ watch(() => props.modelValue, (newVal) => {
     bottom: 30px;
     right: 1rem;
 }
-.snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-@-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease-in-out;
 }
 
-@keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
-}
-
-@keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+.v-enter-from,
+.v-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
 }
 </style>

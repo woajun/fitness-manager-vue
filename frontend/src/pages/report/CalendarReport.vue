@@ -56,6 +56,8 @@ function getRep(day: number) {
 }
 
 const excercise = ref('전체');
+
+const isOverFiveLine = computed(() => calendar.value.length > 5);
 </script>
 <template>
   <body>
@@ -74,7 +76,7 @@ const excercise = ref('전체');
       <div class="py-3">
         <JInputText v-model="excercise" readonly />
       </div>
-      <div class="border-2 rounded-lg pt-3 pb-4">
+      <div class="border-2 rounded-lg pt-3 pb-4 h-26rem">
         <table class="w-full text-center table-fixed">
           <thead>
             <tr>
@@ -93,13 +95,13 @@ const excercise = ref('전체');
                 <p v-if="date" class="text-base font-medium h-5">
                   {{ date }}
                 </p>
-                <p class="text-xs font-medium h-4">
+                <p class="text-xs font-medium h-4" :class="isOverFiveLine ? 'h-3' : 'h-4'">
                   {{ getTime(date) }}
                 </p>
-                <p class="text-xs font-medium h-4">
+                <p class="text-xs font-medium h-4" :class="isOverFiveLine ? 'h-3' : 'h-4'">
                   {{ getSet(date) }}
                 </p>
-                <p class="text-xs font-medium h-4">
+                <p class="text-xs font-medium h-4" :class="isOverFiveLine ? 'h-3' : 'h-4'">
                   {{ getRep(date) }}
                 </p>
               </td>
@@ -113,3 +115,8 @@ const excercise = ref('전체');
     </div>
   </body>
 </template>
+<style>
+.h-26rem {
+  height: 26rem;
+}
+</style>

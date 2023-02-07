@@ -42,3 +42,12 @@ export function makeNumberArray(length: number, from: number, unit: number) {
 export function uuid() {
   return Math.floor(Math.random() * 10000000000).toString();
 }
+
+export function sliceIntoChunks<T>(array: Array<T>, chunkSize: number):Array<Array<T>> {
+  const result = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    const el = array.slice(i, i + chunkSize);
+    result.push(el);
+  }
+  return result;
+}

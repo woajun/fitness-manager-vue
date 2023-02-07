@@ -1,6 +1,6 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import type { Excercise } from '@/interfaces';
 import searcherSearch from '../../components/searcher';
 

@@ -62,6 +62,18 @@ const presentTimer = new StopWatch(
   (bool: boolean) => { isRun.value = bool; },
 );
 // presentTimer & stopWatch - end ====
+// submit - start ===
+const startDate = ref<Date>(new Date());
+function submit() {
+  const dto = {
+    memberID: 0,
+    startDate: startDate.value,
+    totalTime: totalTimer.getMs(),
+    sets: records.value,
+  };
+  console.log(dto);
+}
+// submit - end ===
 // btn - start ====
 function btnCircle() {
   showSubmit.value = false;
@@ -69,6 +81,9 @@ function btnCircle() {
 }
 
 function btnStart() {
+  if (records.value.length === 0) {
+    startDate.value = new Date();
+  }
   totalTimer.start();
   presentTimer.start();
 }
@@ -82,6 +97,7 @@ function btnRecord() {
     rep: rep.value,
     restSec: sec.value,
     totalSec: presentTimer.getMs(),
+    date: new Date(),
   });
   presentTimer.reset();
   presentTimer.start();
@@ -110,6 +126,7 @@ function btnReset() {
 function finish() {
   totalTimer.reset();
   presentTimer.reset();
+  submit();
   records.value = [];
   showRecordReport.value = false;
 }

@@ -1,4 +1,3 @@
-<!-- eslint-disable @typescript-eslint/object-curly-spacing -->
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { VueScrollPicker } from 'vue-scroll-picker';

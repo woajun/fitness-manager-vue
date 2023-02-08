@@ -22,6 +22,7 @@ module.exports = {
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'vue/max-len': 'off',
+    '@typescript-eslint/object-curly-spacing': 'off',
   },
   ignorePatterns: ['dist/**', 'debug.js', 'tailwind.config.js'],
 };

@@ -73,7 +73,7 @@ function submit() {
     sets: records.value,
   };
   console.log(dto);
-  axios.post('/record', {hello: 'hi'});
+  axios.post('/record', dto);
 }
 // submit - end ===
 // btn - start ====

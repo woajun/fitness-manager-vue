@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RecordController {
 
 	@PostMapping
-	public void addRecord(@RequestBody AddRecordDto addRecordDto) {
-		System.out.println(addRecordDto.getHello());
+	public void saveResult(@RequestBody SaveRequestDTO saveRequestDTO) {
+		System.out.println(saveRequestDTO.getMemberID());
 	}
 }

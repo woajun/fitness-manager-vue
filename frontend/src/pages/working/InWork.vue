@@ -1,5 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <script setup lang="ts">
+import axios from 'axios';
 import { computed, ref } from 'vue';
 import StopWatch from '../../components/stopWatch';
 import JMultiChart from '../../components/JMultiChart.vue';
@@ -72,6 +73,7 @@ function submit() {
     sets: records.value,
   };
   console.log(dto);
+  axios.post('/record', {hello: 'hi'});
 }
 // submit - end ===
 // btn - start ====

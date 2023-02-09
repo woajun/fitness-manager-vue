@@ -1,4 +1,4 @@
-package com.juni.fm.record;
+package com.juni.fm.record.dto;
 
 public class AddRecordDto {
 	private String hello;

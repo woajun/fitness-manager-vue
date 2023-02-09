@@ -1,4 +1,4 @@
-package com.juni.fm.record;
+package com.juni.fm.record.dto;
 
 import java.time.ZonedDateTime;
 
@@ -51,6 +51,4 @@ public class SetDTO {
 	public void setStartDate(ZonedDateTime startDate) {
 		this.startDate = startDate;
 	}
-	
-	
 }

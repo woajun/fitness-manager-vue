@@ -1,4 +1,4 @@
-package com.juni.fm.record;
+package com.juni.fm.record.dto;
 
 import java.time.ZonedDateTime;
 import java.util.List;

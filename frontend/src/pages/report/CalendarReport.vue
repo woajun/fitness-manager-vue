@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import JInputText from '../../components/JInputText.vue';
-import { to00, sliceIntoChunks } from '../../components/helper';
+import { sliceIntoChunks } from '../../components/helper';
 import JSvg from '../../components/JSvg.vue';
-import data from '../../data/calendarData';
 import JButton from '../../components/JButton.vue';
+import CalendarCell from './CalendarCell.vue';
 
 const dayOfTheWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -35,25 +35,6 @@ const calendar = computed(() => {
   const separtedByWeek = sliceIntoChunks(dateWithGap, 7);
   return separtedByWeek;
 });
-
-function toDateString(day:number) {
-  return `${year.value}-${to00(month.value)}-${to00(day)}`;
-}
-
-function getTime(day: number) {
-  const el = data.find((e) => e.date === toDateString(day));
-  return el ? el.time : '';
-}
-
-function getSet(day: number) {
-  const el = data.find((e) => e.date === toDateString(day));
-  return el ? `${el.set}set` : '';
-}
-
-function getRep(day: number) {
-  const el = data.find((e) => e.date === toDateString(day));
-  return el ? `${el.rep}rep` : '';
-}
 
 const excercise = ref('전체');
 
@@ -92,18 +73,10 @@ const isOverFiveLine = computed(() => calendar.value.length > 5);
           <tbody>
             <tr v-for="(week, i) in calendar" :key="i">
               <td v-for="(date, j) in week" :key="`${i}-${j}`">
-                <p v-if="date" class="text-base font-medium h-5">
-                  {{ date }}
-                </p>
-                <p class="text-xs font-medium h-4" :class="isOverFiveLine ? 'h-3' : 'h-4'">
-                  {{ getTime(date) }}
-                </p>
-                <p class="text-xs font-medium h-4" :class="isOverFiveLine ? 'h-3' : 'h-4'">
-                  {{ getSet(date) }}
-                </p>
-                <p class="text-xs font-medium h-4" :class="isOverFiveLine ? 'h-3' : 'h-4'">
-                  {{ getRep(date) }}
-                </p>
+                <CalendarCell
+                  :date="new Date(year, month + 1, date)"
+                  :style="isOverFiveLine ? 'h-3' : 'h-4'"
+                />
               </td>
             </tr>
           </tbody>

@@ -10,7 +10,7 @@ const isInWork = ref(true);
   <div class="container h-screen font-semibold text-3xl text-gray-800 w-screen fixed">
     <NavBar v-model="isInWork" />
     <div class="pt-6">
-      <InWork v-if="isInWork" />
+      <InWork v-if="!isInWork" />
       <CalendarReport v-else />
     </div>
   </div>

@@ -20,8 +20,16 @@ export type Excercise = {
 };
 
 export type CalendarData = {
-  date: string;
-  time: string;
-  set: number;
-  rep: number;
-};
+  startTime: string;
+  totalMs: number;
+  id: number;
+  sets: {
+    id: number;
+    exrId: number;
+    recordTime: string;
+    reps: number;
+    restMs: number;
+    totalMs: number;
+    weight: number;
+  }[];
+}[];

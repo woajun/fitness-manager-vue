@@ -5,6 +5,25 @@ const data = [
     id: 0,
     sets: [
       {
+        id: 0,
+        exrId: 1,
+        recordTime: '2023-02-09 04:41:39.156+00',
+        reps: 15,
+        restMs: 0,
+        totalMs: 448,
+        weight: 0.5,
+      },
+      {
+        id: 1,
+        exrId: 0,
+        recordTime: '2023-02-09 04:42:53.156+00',
+        reps: 20,
+        restMs: 10,
+        totalMs: 2548,
+        weight: 0.5,
+      },
+      {
+        id: 0,
         exrId: 0,
         recordTime: '2023-02-09 04:41:39.156+00',
         reps: 15,
@@ -13,7 +32,8 @@ const data = [
         weight: 0.5,
       },
       {
-        exrId: 0,
+        id: 1,
+        exrId: 1,
         recordTime: '2023-02-09 04:42:53.156+00',
         reps: 20,
         restMs: 10,
@@ -28,6 +48,7 @@ const data = [
     id: 1,
     sets: [
       {
+        id: 2,
         exrId: 0,
         recordTime: '2023-02-09 05:41:39.156+00',
         reps: 20,
@@ -36,6 +57,7 @@ const data = [
         weight: 0.5,
       },
       {
+        id: 3,
         exrId: 0,
         recordTime: '2023-02-09 05:42:53.156+00',
         reps: 23,
@@ -51,6 +73,7 @@ const data = [
     id: 1,
     sets: [
       {
+        id: 4,
         exrId: 0,
         recordTime: '2023-02-09 05:41:39.156+00',
         reps: 20,
@@ -59,6 +82,7 @@ const data = [
         weight: 0.5,
       },
       {
+        id: 5,
         exrId: 0,
         recordTime: '2023-02-09 05:42:53.156+00',
         reps: 23,
@@ -74,6 +98,7 @@ const data = [
     id: 1,
     sets: [
       {
+        id: 6,
         exrId: 0,
         recordTime: '2023-02-09 05:41:39.156+00',
         reps: 20,
@@ -82,6 +107,7 @@ const data = [
         weight: 0.5,
       },
       {
+        id: 7,
         exrId: 0,
         recordTime: '2023-02-09 05:42:53.156+00',
         reps: 23,
@@ -97,19 +123,12 @@ const data = [
     id: 1,
     sets: [
       {
+        id: 8,
         exrId: 0,
         recordTime: '2023-02-09 05:41:39.156+00',
         reps: 20,
         restMs: 0,
         totalMs: 448,
-        weight: 0.5,
-      },
-      {
-        exrId: 0,
-        recordTime: '2023-02-09 05:42:53.156+00',
-        reps: 23,
-        restMs: 10,
-        totalMs: 2548,
         weight: 0.5,
       },
     ],
@@ -120,6 +139,7 @@ const data = [
     id: 1,
     sets: [
       {
+        id: 9,
         exrId: 0,
         recordTime: '2023-02-09 05:41:39.156+00',
         reps: 20,
@@ -128,6 +148,7 @@ const data = [
         weight: 0.5,
       },
       {
+        id: 10,
         exrId: 0,
         recordTime: '2023-02-09 05:42:53.156+00',
         reps: 23,

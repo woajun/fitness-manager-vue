@@ -15,6 +15,12 @@ public class Work {
 	private Instant startTime;
 	private Long totalMs;
 	
+	public Work(Long memberId, Instant startTime, Long totalMs) {
+		this.memberId = memberId;
+		this.startTime = startTime;
+		this.totalMs = totalMs;
+	}
+	
 	public Long getId() {
 		return id;
 	}

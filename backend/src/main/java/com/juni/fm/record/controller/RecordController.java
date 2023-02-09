@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.juni.fm.record.dto.SaveRequestDTO;
-import com.juni.fm.record.repository.SetRepository;
+import com.juni.fm.record.entiity.Work;
+import com.juni.fm.record.service.RecordService;
 
 @CrossOrigin
 @Controller
@@ -17,11 +18,11 @@ import com.juni.fm.record.repository.SetRepository;
 public class RecordController {
 	
 	@Autowired
-	SetRepository sets;
+	RecordService recordService;
 	
 	@PostMapping
 	public ResponseEntity<String> saveResult(@RequestBody SaveRequestDTO saveRequestDTO) {
-		System.out.println(saveRequestDTO.getStartDate());
-		return ResponseEntity.ok(saveRequestDTO.getStartDate().toString());
+		Work saveWork = recordService.saveWork(saveRequestDTO);
+		return ResponseEntity.ok(saveWork.toString());
 	}
 }

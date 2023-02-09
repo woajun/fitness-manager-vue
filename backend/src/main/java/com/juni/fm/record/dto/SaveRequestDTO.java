@@ -7,16 +7,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class SaveRequestDTO {
-	private Integer memberID;
+	private Long memberID;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private ZonedDateTime startDate;
-	private Integer totalTime;
+	private Long totalTime;
 	private List<SetDTO> sets;
 	
-	public Integer getMemberID() {
+	public Long getMemberID() {
 		return memberID;
 	}
-	public void setMemberID(Integer memberID) {
+	public void setMemberID(Long memberID) {
 		this.memberID = memberID;
 	}
 	public ZonedDateTime getStartDate() {
@@ -25,10 +25,10 @@ public class SaveRequestDTO {
 	public void setStartDate(ZonedDateTime startDate) {
 		this.startDate = startDate;
 	}
-	public Integer getTotalTime() {
+	public Long getTotalTime() {
 		return totalTime;
 	}
-	public void setTotalTime(Integer totalTime) {
+	public void setTotalTime(Long totalTime) {
 		this.totalTime = totalTime;
 	}
 	public List<SetDTO> getSets() {

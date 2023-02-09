@@ -1,11 +1,26 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import JInputText from '../../components/JInputText.vue';
-import { msToTimeTextWithHour, sliceIntoChunks } from '../../components/helper';
-import JSvg from '../../components/JSvg.vue';
-import JButton from '../../components/JButton.vue';
+import JInputText from '@/components/JInputText.vue';
+import { msToTimeTextWithHour, sliceIntoChunks } from '@/components/helper';
+import JSvg from '@/components/JSvg.vue';
+import JButton from '@/components/JButton.vue';
 import CalendarCell, { type CalendarCellProps } from './CalendarCell.vue';
-import data from '../../data/calendarData';
+import data from '@/data/calendarData';
+import excercises from '@/data/excercises';
+import type { Excercise } from '@/interfaces';
+import JBottomSheet from '@/components/JBottomSheet.vue';
+import ExcerciseSelector from '@/pages/working/ExcerciseSelector.vue';
+
+// excercise - start ====
+const excercise = ref<Excercise>({id: -1, label: '전체'});
+
+const showExcerciseSelector = ref(false);
+
+function changeExcercise(aExcercise: Excercise) {
+  excercise.value = aExcercise;
+  showExcerciseSelector.value = false;
+}
+// excercise - end ====
 
 const dayOfTheWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -37,8 +52,6 @@ const calendar = computed(() => {
   return separtedByWeek;
 });
 
-const excercise = ref('전체');
-
 const cellStyle = computed(() => (calendar.value.length > 5 ? 'h-3' : 'h-4'));
 
 function getCalendarCellProps(date?: number) {
@@ -47,7 +60,7 @@ function getCalendarCellProps(date?: number) {
   };
   if (!date) return r;
   const dateString = new Date(year.value, month.value - 1, date).toDateString();
-  const filtered = data.filter((e) => new Date(e.startTime).toDateString() === dateString);
+  const filtered = data.filter((e) => new Date(e.startTime).toDateString() === dateString && (excercise.value.id === -1 || e.id === excercise.value.id));
   r.date = date.toString();
   if (filtered.length === 0) return r;
   r.time = msToTimeTextWithHour(filtered.reduce((t, c) => t + c.totalMs, 0));
@@ -55,53 +68,59 @@ function getCalendarCellProps(date?: number) {
   r.rep = filtered.reduce((total, cur) => total + cur.sets.reduce((t, c) => t + c.reps, 0), 0).toString();
   return r;
 }
+
 </script>
 <template>
-  <body>
-    <div class="p-5">
-      <div class="px-4 flex items-center justify-between">
-        <span class="font-bold">{{ year }}.{{ month }}</span>
-        <div class="flex items-center py-3">
-          <JButton class="px-1" @click="down">
-            <JSvg type="left-cramps" />
-          </JButton>
-          <JButton class="px-1 ml-3" @click="up">
-            <JSvg type="right-cramps" />
-          </JButton>
-        </div>
-      </div>
-      <div class="py-3">
-        <JInputText v-model="excercise" readonly />
-      </div>
-      <div class="border-2 rounded-lg pt-3 pb-4 h-26rem">
-        <table class="w-full text-center table-fixed">
-          <thead>
-            <tr>
-              <th v-for="day in dayOfTheWeek" :key="day">
-                <div class="w-full flex justify-center pb-2">
-                  <p class="text-lg text-center ">
-                    {{ day }}
-                  </p>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(week, i) in calendar" :key="i">
-              <td v-for="(date, j) in week" :key="`${i}-${j}`">
-                <CalendarCell
-                  v-bind="getCalendarCellProps(date)"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="h-20 grid py-3">
-        <JButton label="그래프로 보기" />
+  <div class="p-5">
+    <div class="px-4 flex items-center justify-between">
+      <span class="font-bold">{{ year }}.{{ month }}</span>
+      <div class="flex items-center py-3">
+        <JButton class="px-1" @click="down">
+          <JSvg type="left-cramps" />
+        </JButton>
+        <JButton class="px-1 ml-3" @click="up">
+          <JSvg type="right-cramps" />
+        </JButton>
       </div>
     </div>
-  </body>
+    <div class="py-3" @click="showExcerciseSelector = true">
+      <JInputText v-model="excercise.label" readonly />
+    </div>
+    <div class="border-2 rounded-lg pt-3 pb-4 h-26rem">
+      <table class="w-full text-center table-fixed">
+        <thead>
+          <tr>
+            <th v-for="day in dayOfTheWeek" :key="day">
+              <div class="w-full flex justify-center pb-2">
+                <p class="text-lg text-center ">
+                  {{ day }}
+                </p>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(week, i) in calendar" :key="i">
+            <td v-for="(date, j) in week" :key="`${i}-${j}`">
+              <CalendarCell
+                v-bind="getCalendarCellProps(date)"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="h-20 grid py-3">
+      <JButton label="그래프로 보기" />
+    </div>
+  </div>
+  <Teleport to="body">
+    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true">
+      <template #body>
+        <ExcerciseSelector v-model="excercise" :excercises="excercises" :use-entire="true" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
+      </template>
+    </JBottomSheet>
+  </Teleport>
 </template>
 <style>
 .h-26rem {

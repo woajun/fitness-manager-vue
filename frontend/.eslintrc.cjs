@@ -23,6 +23,8 @@ module.exports = {
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'vue/max-len': 'off',
     '@typescript-eslint/object-curly-spacing': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
   },
   ignorePatterns: ['dist/**', 'debug.js', 'tailwind.config.js'],
 };

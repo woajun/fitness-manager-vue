@@ -12,6 +12,7 @@ const emit = defineEmits<{
 const props = defineProps<{
   modelValue: Excercise,
   excercises: Excercise[],
+  useEntire?: boolean,
 }>();
 
 const selected = ref<Excercise>(props.modelValue);
@@ -29,6 +30,8 @@ function search(e:any) {
   list.value = searcherSearch(e.target.value, props.excercises, 'label');
 }
 
+const entire = {id: -1, label: '전체'};
+
 </script>
 <template>
   <div>
@@ -36,6 +39,9 @@ function search(e:any) {
       <input class="text-xl border-2 rounded-xl w-full h-12 px-3" @keyup="search">
     </div>
     <div class="text-xl pt-5">
+      <div v-if="props.useEntire" class="border-b" @click="()=> select(entire)">
+        <span :class="{ 'text-green-500': selected.id === entire.id }">{{ entire.label }}</span>
+      </div>
       <div v-for="exr in list" :key="exr.id" @click="()=> select(exr)">
         <span :class="{ 'text-green-500': selected.id === exr.id }">{{ exr.label }}</span>
       </div>

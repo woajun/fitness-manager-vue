@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import JInputText from '../../components/JInputText.vue';
-import { sliceIntoChunks } from '../../components/helper';
+import { msToTimeTextWithHour, sliceIntoChunks } from '../../components/helper';
 import JSvg from '../../components/JSvg.vue';
 import JButton from '../../components/JButton.vue';
-import CalendarCell from './CalendarCell.vue';
+import CalendarCell, { type CalendarCellProps } from './CalendarCell.vue';
+import data from '../../data/calendarData';
 
 const dayOfTheWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -38,7 +39,22 @@ const calendar = computed(() => {
 
 const excercise = ref('전체');
 
-const isOverFiveLine = computed(() => calendar.value.length > 5);
+const cellStyle = computed(() => (calendar.value.length > 5 ? 'h-3' : 'h-4'));
+
+function getCalendarCellProps(date?: number) {
+  const r: CalendarCellProps = {
+    style: cellStyle.value,
+  };
+  if (!date) return r;
+  const dateString = new Date(year.value, month.value - 1, date).toDateString();
+  const filtered = data.filter((e) => new Date(e.startTime).toDateString() === dateString);
+  r.date = date.toString();
+  if (filtered.length === 0) return r;
+  r.time = msToTimeTextWithHour(filtered.reduce((t, c) => t + c.totalMs, 0));
+  r.set = filtered.reduce((t, c) => t + c.sets.length, 0).toString();
+  r.rep = filtered.reduce((total, cur) => total + cur.sets.reduce((t, c) => t + c.reps, 0), 0).toString();
+  return r;
+}
 </script>
 <template>
   <body>
@@ -74,8 +90,7 @@ const isOverFiveLine = computed(() => calendar.value.length > 5);
             <tr v-for="(week, i) in calendar" :key="i">
               <td v-for="(date, j) in week" :key="`${i}-${j}`">
                 <CalendarCell
-                  :date="new Date(year, month + 1, date)"
-                  :style="isOverFiveLine ? 'h-3' : 'h-4'"
+                  v-bind="getCalendarCellProps(date)"
                 />
               </td>
             </tr>

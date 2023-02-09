@@ -103,12 +103,3 @@ const sets = computed(() => {
     </button>
   </div>
 </template>
-<style>
-.expandable {
-  margin-top: -100%;
-  transition: all 0.5s;
-}
-.expandable.expanded {
-  margin-top: 0;
-}
-</style>

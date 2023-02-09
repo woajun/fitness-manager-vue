@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import type { CalendarData } from '@/interfaces';
 import excercises from '@/data/excercises';
 import { msToTimeText } from '@/components/helper';
+import JJCollapse from '@/components/JJCollapse.vue';
 
 const props = defineProps<{
   calendarData: CalendarData
@@ -46,53 +47,42 @@ function toHHMM(strDate: string) {
 <template>
   <div class="rem34">
     <div v-for="(work, i) in workSortedByExcercise" :key="work.id">
-      <div class="text-xl py-3 border-b-4">
+      <div class="text-lg py-3 border-t-2">
         <div>
           {{ i + 1 }}차 운동-
           {{ toHHMM(work.startTime) }} / {{ work.sets.length }}sets / {{ work.sets.reduce((t, c) => t + c.reps, 0) }}reps
         </div>
       </div>
-      <div class="text-lg">
-        <div v-for="exr in work.exrs" :key="`${work.id}-${exr.exrId}`" class="border-b-2">
-          <div>
-            <label>
-              {{ exr.exrName }}
-            </label>
-            <table class="table-auto w-full font-light">
-              <tr>
-                <td>
-                  {{ exr.sets.length }}set
-                </td>
-                <td>
-                  0-0kg
-                </td>
-                <td>
-                  {{ exr.sets.reduce((t, c) => t + c.reps, 0) }}rep
-                </td>
-                <td>
-                  {{ msToTimeText(exr.sets.reduce((t, c) => t + c.totalMs, 0)) }}
-                </td>
-              </tr>
-            </table>
-          </div>
-          <JCollapse class="font-light bg-gray-50">
-            <table class="table-auto w-full ml-3">
-              <tr v-for="(set, j) in exr.sets" :key="set.id">
-                <td>
-                  {{ j + 1 }}set
-                </td>
-                <td>
-                  {{ set.weight }}kg
-                </td>
-                <td>
-                  {{ set.reps }}rep
-                </td>
-                <td>
-                  {{ msToTimeText(set.totalMs) }}
-                </td>
-              </tr>
-            </table>
-          </JCollapse>
+      <div class="text-sm font-light">
+        <div v-for="exr in work.exrs" :key="`${work.id}-${exr.exrId}`" class="">
+          <JJCollapse>
+            <template #header>
+              <label>
+                <span class="font-bold">{{ exr.exrName }}</span> -
+                <span class="">{{ exr.sets.length }}</span> set
+                <span class="">{{ exr.sets.reduce((t, c) => t + c.reps, 0) }}</span> rep
+                {{ msToTimeText(exr.sets.reduce((t, c) => t + c.totalMs, 0)) }}
+              </label>
+            </template>
+            <div class="font-light bg-gray-50">
+              <table class="table-auto w-full ml-3">
+                <tr v-for="(set, j) in exr.sets" :key="set.id">
+                  <td>
+                    {{ j + 1 }}set
+                  </td>
+                  <td>
+                    {{ set.weight }}kg
+                  </td>
+                  <td>
+                    {{ set.reps }}rep
+                  </td>
+                  <td>
+                    {{ msToTimeText(set.totalMs) }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </JJCollapse>
         </div>
       </div>
     </div>

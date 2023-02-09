@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  show: boolean,
-}>();
+import { ref } from 'vue';
+
+const show = ref(false);
 </script>
 <template>
-  <div>
+  <div @click="show = !show">
     <slot name="header" />
+    ▼
   </div>
   <div class="overflow-hidden">
-    <div class="expandable" :class="{ expanded: props.show }">
+    <div class="expandable" :class="{ expanded: show }">
       <slot />
     </div>
   </div>

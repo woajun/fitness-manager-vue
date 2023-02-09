@@ -51,7 +51,7 @@ const totalTimer = new StopWatch(
 
 const presentTimeText = ref('');
 
-const firstSetSec = 5; // 처음 시작 할 때 휴식시간
+const firstSetSec = 0; // 처음 시작 할 때 휴식시간
 
 function getNowRestTime() {
   const isFirstSet = records.value.length === 0;

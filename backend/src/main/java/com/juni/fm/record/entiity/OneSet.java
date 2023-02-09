@@ -14,19 +14,11 @@ public class OneSet {
 	private Long exrKindId;
 	private Long workId;
 	private Long reps;
-	private Long weight;
+	private Double weight;
 	private Long totalMs;
 	private Long restMs;
-	private Instant stratTime;
+	private Instant recordTime;
 	
-	public Instant getStratTime() {
-		return stratTime;
-	}
-
-	public void setStratTime(Instant stratTime) {
-		this.stratTime = stratTime;
-	}
-
 	public Long getExrKindId() {
 		return exrKindId;
 	}
@@ -51,11 +43,11 @@ public class OneSet {
 		this.reps = reps;
 	}
 
-	public Long getWeight() {
+	public Double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Long weight) {
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
 
@@ -81,6 +73,14 @@ public class OneSet {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Instant getRecordTime() {
+		return recordTime;
+	}
+
+	public void setRecordTime(Instant recordTime) {
+		this.recordTime = recordTime;
 	}
 	
 }

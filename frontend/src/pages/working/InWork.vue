@@ -99,7 +99,7 @@ function btnRecord() {
     rep: rep.value,
     restSec: sec.value,
     totalSec: presentTimer.getMs(),
-    date: new Date(),
+    recordDate: new Date(),
   });
   presentTimer.reset();
   presentTimer.start();

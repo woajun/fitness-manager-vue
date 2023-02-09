@@ -4,7 +4,7 @@ export type Records = {
   rep: number;
   restSec: number;
   totalSec: number;
-  date: Date;
+  recordDate: Date;
 };
 
 export type SaveRequestDTO = {

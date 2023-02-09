@@ -37,5 +37,4 @@ public class SaveRequestDTO {
 	public void setSets(List<SetDTO> sets) {
 		this.sets = sets;
 	}
-	
 }

@@ -7,48 +7,49 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class SetDTO {
 
-	private Integer exrID;
-	private Integer weight;
-	private Integer rep;
-	private Integer restSec;
-	private Integer totalSec;
+	private Long exrID;
+	private Double weight;
+	private Long rep;
+	private Long restSec;
+	private Long totalSec;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private ZonedDateTime startDate;
+	private ZonedDateTime recordDate;
 	
-	public Integer getExrID() {
+	public Long getExrID() {
 		return exrID;
 	}
-	public void setExrID(Integer exrID) {
+	public void setExrID(Long exrID) {
 		this.exrID = exrID;
 	}
-	public Integer getWeight() {
+	public Double getWeight() {
 		return weight;
 	}
-	public void setWeight(Integer weight) {
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
-	public Integer getRep() {
+	public Long getRep() {
 		return rep;
 	}
-	public void setRep(Integer rep) {
+	public void setRep(Long rep) {
 		this.rep = rep;
 	}
-	public Integer getRestSec() {
+	public Long getRestSec() {
 		return restSec;
 	}
-	public void setRestSec(Integer restSec) {
+	public void setRestSec(Long restSec) {
 		this.restSec = restSec;
 	}
-	public Integer getTotalSec() {
+	public Long getTotalSec() {
 		return totalSec;
 	}
-	public void setTotalSec(Integer totalSec) {
+	public void setTotalSec(Long totalSec) {
 		this.totalSec = totalSec;
 	}
-	public ZonedDateTime getStartDate() {
-		return startDate;
+	public ZonedDateTime getRecordDate() {
+		return recordDate;
 	}
-	public void setStartDate(ZonedDateTime startDate) {
-		this.startDate = startDate;
+	public void setRecordDate(ZonedDateTime recordDate) {
+		this.recordDate = recordDate;
 	}
+	
 }

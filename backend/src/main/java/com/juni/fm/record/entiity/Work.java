@@ -10,8 +10,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter
 public class Work {
 
 	@Id @GeneratedValue
@@ -30,39 +33,6 @@ public class Work {
 		this.memberId = memberId;
 		this.startTime = startTime;
 		this.totalMs = totalMs;
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Long getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-	public Instant getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(Instant startTime) {
-		this.startTime = startTime;
-	}
-	public Long getTotalMs() {
-		return totalMs;
-	}
-	public void setTotalMs(Long totalMs) {
-		this.totalMs = totalMs;
-	}
-
-	public Set<OneSet> getSets() {
-		return sets;
-	}
-
-	public void setSets(Set<OneSet> sets) {
-		this.sets = sets;
 	}
 	
 }

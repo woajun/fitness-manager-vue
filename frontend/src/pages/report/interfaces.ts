@@ -15,7 +15,6 @@ export type Exr = {
 
 export type Work = {
   id: number;
-  memberId?: number;
   startTime: string;
   totalMs: number;
   sets: Set[];

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.juni.fm.record.dto.SaveRequestDTO;
+import com.juni.fm.record.dto.CreateWorkDTO;
+import com.juni.fm.record.dto.ReadWorkDTO;
 import com.juni.fm.record.entiity.Work;
-import com.juni.fm.record.repository.WorkRepository;
 import com.juni.fm.record.service.RecordService;
 
 @CrossOrigin
@@ -25,18 +25,15 @@ public class RecordController {
 	@Autowired
 	RecordService recordService;
 	
-	@Autowired
-	WorkRepository works;
-	
 	@PostMapping
-	public ResponseEntity<String> saveResult(@RequestBody SaveRequestDTO saveRequestDTO) {
+	public ResponseEntity<String> createWork(@RequestBody CreateWorkDTO saveRequestDTO) {
 		Work saveWork = recordService.saveWork(saveRequestDTO);
 		return ResponseEntity.ok(saveWork.toString());
 	}
 	
 	@GetMapping("/{memberId}")
-	public ResponseEntity<List<Work>> getList(@PathVariable Long memberId) {
-		List<Work> findByMemberId = works.findByMemberId(memberId);
-		return ResponseEntity.ok(findByMemberId);
+	public ResponseEntity<List<ReadWorkDTO>> readWork(@PathVariable Long memberId) {
+		List<ReadWorkDTO> dtos = recordService.getWorkDTO(memberId);
+		return ResponseEntity.ok(dtos);
 	}
 }

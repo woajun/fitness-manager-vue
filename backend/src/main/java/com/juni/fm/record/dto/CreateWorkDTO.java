@@ -1,6 +1,7 @@
 package com.juni.fm.record.dto;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -8,15 +9,14 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter 
-public class SetDTO {
-
-	private Long exrId;
-	private Double weight;
-	private Long reps;
-	private Long restMs;
-	private Long totalMs;
+@Getter @Setter
+public class CreateWorkDTO {
+	
+	private Long id;
+	private Long memberId;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private ZonedDateTime recordTime;
+	private ZonedDateTime startTime;
+	private Long totalMs;
+	private List<CreateSetDTO> sets;
 	
 }

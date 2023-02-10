@@ -1,4 +1,4 @@
-import type { Work, WorkSortedExr } from '@/interfaces';
+import type { Work, WorkSortedExr } from './interfaces';
 import excercises from '@/data/excercises';
 
 export function getExrName(id: number) {

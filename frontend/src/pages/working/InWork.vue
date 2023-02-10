@@ -17,7 +17,7 @@ import JInputText from '../../components/JInputText.vue';
 import JScrollPicker from '../../components/JScrollPicker.vue';
 import JButton from '../../components/JButton.vue';
 import JBottomRightSnackbar from '../../components/JBottomRightSnackbar.vue';
-import type { Exr, Set } from '@/interfaces';
+import type { Exr, Set } from './interfaces';
 
 // excercise - start ====
 const excercise = ref<Exr>(excercises[0]);

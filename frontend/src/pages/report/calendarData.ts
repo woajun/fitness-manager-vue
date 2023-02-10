@@ -1,4 +1,4 @@
-import type { Work } from '@/interfaces';
+import type { Work } from './interfaces';
 
 const data: Work[] = [
   {

@@ -1,7 +1,7 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import type { Exr, Set } from '@/interfaces';
+import type { Exr, Set } from './interfaces';
 import { msToTimeText } from '../../components/helper';
 import JCollapse from '../../components/JCollapse.vue';
 

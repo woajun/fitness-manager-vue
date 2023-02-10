@@ -1,7 +1,7 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { Exr } from '@/interfaces';
+import type { Exr } from './interfaces';
 import searcherSearch from '../../components/searcher';
 
 const emit = defineEmits<{

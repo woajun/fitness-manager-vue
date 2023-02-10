@@ -1,6 +1,6 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
-import type { WorkSortedExr } from '@/interfaces';
+import type { WorkSortedExr } from './interfaces';
 import { msToTimeText } from '@/components/helper';
 import JJCollapse from '@/components/JJCollapse.vue';
 
@@ -35,7 +35,7 @@ function toHHMM(strDate: string) {
             </template>
             <div class="font-light bg-gray-50">
               <table class="table-auto w-full ml-3">
-                <tr v-for="(set, j) in exr.sets" :key="set.id">
+                <tr v-for="(set, j) in exr.sets" :key="set.exrId">
                   <td>
                     {{ j + 1 }}set
                   </td>

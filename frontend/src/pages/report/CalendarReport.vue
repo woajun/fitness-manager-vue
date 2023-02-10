@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
+import axios from 'axios';
 import { msToTimeTextWithHour, sliceIntoChunks } from '@/components/helper';
 import JBottomSheet from '@/components/JBottomSheet.vue';
 import JButton from '@/components/JButton.vue';
@@ -86,7 +87,9 @@ function getCalendarCellProps(date?: number) {
 }
 
 const selectedCalendarData = ref<WorkSortedExr[]>([]);
-function cellClick(date?: number) {
+async function cellClick(date?: number) {
+  const apple = await axios.get('/record/0');
+  console.log(apple.data);
   selectedCalendarData.value = findWorks(date);
   if (selectedCalendarData.value.length !== 0) {
     showDateReport.value = true;

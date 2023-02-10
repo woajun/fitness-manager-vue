@@ -23,11 +23,11 @@ export type Excercise = {
 export type Set = {
   id: number;
   exrId: number;
-  recordTime: string;
+  weight: number;
   reps: number;
   restMs: number;
   totalMs: number;
-  weight: number;
+  recordTime: string;
 };
 
 export type Exr = {

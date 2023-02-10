@@ -23,6 +23,9 @@ public class Work {
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<OneSet> sets = new HashSet<>();
 	
+	public Work() {
+	}
+
 	public Work(Long memberId, Instant startTime, Long totalMs) {
 		this.memberId = memberId;
 		this.startTime = startTime;

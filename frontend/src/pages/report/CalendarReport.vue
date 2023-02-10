@@ -61,14 +61,18 @@ function isSameDate(a: Date, b:Date) {
   return a.toDateString() === b.toDateString();
 }
 
-const works = computed<WorkSortedExr[]>(() => convertExr(data));
+const works = computed<WorkSortedExr[]>(() => convertExr(data, selectedExr.value.id));
+
+function findWorks(date?: number) {
+  return date ? works.value.filter((e) => isSameDate(new Date(e.startTime), new Date(year.value, month.value - 1, date))) : [];
+}
 
 function getCalendarCellProps(date?: number) {
   const r: CalendarCellProps = {
     style: cellStyle.value,
   };
   if (!date) return r;
-  const filteredWorks = works.value.filter((e) => isSameDate(new Date(e.startTime), new Date(year.value, month.value - 1, date)));
+  const filteredWorks = findWorks(date);
   r.date = date.toString();
   if (filteredWorks.length === 0) return r;
   const exrs = filteredWorks.map((e) => e.exrs).flat();
@@ -83,7 +87,7 @@ function getCalendarCellProps(date?: number) {
 
 const selectedCalendarData = ref<WorkSortedExr[]>([]);
 function cellClick(date?: number) {
-  selectedCalendarData.value = works.value.filter((e) => isSameDate(new Date(e.startTime), new Date(year.value, month.value - 1, date)));
+  selectedCalendarData.value = findWorks(date);
   if (selectedCalendarData.value.length !== 0) {
     showDateReport.value = true;
   }

@@ -15,11 +15,11 @@ function sortByExcercise(work: Work): Exr[] {
   }));
 }
 
-export function convertExr(works: Work[]): WorkSortedExr[] {
+export function convertExr(works: Work[], id: number): WorkSortedExr[] {
   return works.map((work) => ({
     startTime: work.startTime,
     totalMs: work.totalMs,
     id: work.id,
-    exrs: sortByExcercise(work),
+    exrs: sortByExcercise(work).filter((e) => id === -1 || e.exrId === id),
   }));
 }

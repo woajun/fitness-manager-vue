@@ -19,7 +19,7 @@ function toHHMM(strDate: string) {
       <div class="text-lg py-3 border-t-2">
         <div>
           {{ i + 1 }}차 운동-
-          {{ toHHMM(work.startTime) }} / {{ work.exrs.reduce((t, c)=> t + c.sets.length, 0) }}sets / {{ work.exrs.reduce((t, c) => t + c.sets.reduce((tt, cc) => tt + cc.reps, 0), 0) }}reps
+          시작시간{{ toHHMM(work.startTime) }} / {{ work.exrs.reduce((t, c)=> t + c.sets.length, 0) }}sets / {{ work.exrs.reduce((t, c) => t + c.sets.reduce((tt, cc) => tt + cc.reps, 0), 0) }}reps
         </div>
       </div>
       <div class="text-sm font-light">

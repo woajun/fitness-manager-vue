@@ -19,17 +19,33 @@ export type Excercise = {
   label: string;
 };
 
-export type CalendarData = {
+// new type
+export type Set = {
+  id: number;
+  exrId: number;
+  recordTime: string;
+  reps: number;
+  restMs: number;
+  totalMs: number;
+  weight: number;
+};
+
+export type Exr = {
+  exrId: number,
+  exrName: string,
+  sets: Set[]
+};
+
+export type Work = {
   startTime: string;
   totalMs: number;
   id: number;
-  sets: {
-    id: number;
-    exrId: number;
-    recordTime: string;
-    reps: number;
-    restMs: number;
-    totalMs: number;
-    weight: number;
-  }[];
-}[];
+  sets: Set[];
+};
+
+export type WorkSortedExr = {
+  startTime: string;
+  totalMs: number;
+  id: number;
+  exrs: Exr[]
+};

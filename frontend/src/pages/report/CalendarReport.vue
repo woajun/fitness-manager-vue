@@ -1,27 +1,27 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import JInputText from '@/components/JInputText.vue';
 import { msToTimeTextWithHour, sliceIntoChunks } from '@/components/helper';
-import JSvg from '@/components/JSvg.vue';
+import JBottomSheet from '@/components/JBottomSheet.vue';
 import JButton from '@/components/JButton.vue';
-import CalendarCell, { type CalendarCellProps } from './CalendarCell.vue';
+import JInputText from '@/components/JInputText.vue';
+import JSvg from '@/components/JSvg.vue';
 import data from '@/data/calendarData';
 import excercises from '@/data/excercises';
-import type { Excercise, CalendarData } from '@/interfaces';
-import JBottomSheet from '@/components/JBottomSheet.vue';
+import type { Excercise, WorkSortedExr } from '@/interfaces';
 import ExcerciseSelector from '@/pages/working/ExcerciseSelector.vue';
+import CalendarCell, { type CalendarCellProps } from './CalendarCell.vue';
 import DateReport from './DateReport.vue';
-
-// excercise - start ====
-const excercise = ref<Excercise>({id: -1, label: '전체'});
+import { convertExr } from './workConverter';
+// selectedExr - start ====
+const selectedExr = ref<Excercise>({id: -1, label: '전체'});
 
 const showExcerciseSelector = ref(false);
 
 function changeExcercise(aExcercise: Excercise) {
-  excercise.value = aExcercise;
+  selectedExr.value = aExcercise;
   showExcerciseSelector.value = false;
 }
-// excercise - end ====
+// selectedExr - end ====
 // dateReport - start ===
 const showDateReport = ref(false);
 // dateReport - end ===
@@ -57,25 +57,33 @@ const calendar = computed(() => {
 
 const cellStyle = computed(() => (calendar.value.length > 5 ? 'h-3' : 'h-4'));
 
+function isSameDate(a: Date, b:Date) {
+  return a.toDateString() === b.toDateString();
+}
+
+const works = computed<WorkSortedExr[]>(() => convertExr(data));
+
 function getCalendarCellProps(date?: number) {
   const r: CalendarCellProps = {
     style: cellStyle.value,
   };
   if (!date) return r;
-  const dateString = new Date(year.value, month.value - 1, date).toDateString();
-  const filtered = data.filter((e) => new Date(e.startTime).toDateString() === dateString && (excercise.value.id === -1 || e.id === excercise.value.id));
+  const filteredWorks = works.value.filter((e) => isSameDate(new Date(e.startTime), new Date(year.value, month.value - 1, date)));
   r.date = date.toString();
-  if (filtered.length === 0) return r;
-  r.time = msToTimeTextWithHour(filtered.reduce((t, c) => t + c.totalMs, 0));
-  r.set = `${filtered.reduce((t, c) => t + c.sets.length, 0)} set`;
-  r.rep = `${filtered.reduce((total, cur) => total + cur.sets.reduce((t, c) => t + c.reps, 0), 0)} rep`;
+  if (filteredWorks.length === 0) return r;
+  const exrs = filteredWorks.map((e) => e.exrs).flat();
+  const filteredExrs = exrs.filter((e) => selectedExr.value.id === -1 || e.exrId === selectedExr.value.id);
+  if (filteredExrs.length === 0) return r;
+  const mappedSets = filteredExrs.map((e) => e.sets).flat();
+  r.time = msToTimeTextWithHour(mappedSets.reduce((t, c) => t + c.totalMs, 0));
+  r.set = `${mappedSets.length} set`;
+  r.rep = `${mappedSets.reduce((t, c) => t + c.reps, 0)} rep`;
   return r;
 }
 
-const selectedCalendarData = ref<CalendarData>([]);
+const selectedCalendarData = ref<WorkSortedExr[]>([]);
 function cellClick(date?: number) {
-  const dateString = new Date(year.value, month.value - 1, date).toDateString();
-  selectedCalendarData.value = data.filter((e) => new Date(e.startTime).toDateString() === dateString && (excercise.value.id === -1 || e.id === excercise.value.id));
+  selectedCalendarData.value = works.value.filter((e) => isSameDate(new Date(e.startTime), new Date(year.value, month.value - 1, date)));
   if (selectedCalendarData.value.length !== 0) {
     showDateReport.value = true;
   }
@@ -96,7 +104,7 @@ function cellClick(date?: number) {
       </div>
     </div>
     <div class="py-3" @click="showExcerciseSelector = true">
-      <JInputText v-model="excercise.label" readonly />
+      <JInputText v-model="selectedExr.label" readonly />
     </div>
     <div class="border-2 rounded-lg pt-3 pb-4 h-26rem">
       <table class="w-full text-center table-fixed">
@@ -131,14 +139,14 @@ function cellClick(date?: number) {
   <Teleport to="body">
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true">
       <template #body>
-        <ExcerciseSelector v-model="excercise" :excercises="excercises" :use-entire="true" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
+        <ExcerciseSelector v-model="selectedExr" :excercises="excercises" :use-entire="true" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
       </template>
     </JBottomSheet>
   </Teleport>
   <Teleport to="body">
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showDateReport === true">
       <template #body>
-        <DateReport :calendar-data="selectedCalendarData">
+        <DateReport :works="selectedCalendarData">
           <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="showDateReport = false">
             확인
           </button>

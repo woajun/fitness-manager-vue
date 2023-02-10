@@ -1,4 +1,6 @@
-const data = [
+import type { Work } from '@/interfaces';
+
+const data: Work[] = [
   {
     startTime: '2023-02-09 04:41:38.708+00',
     totalMs: 21841,

@@ -1,43 +1,12 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
-import { computed } from 'vue';
-import type { CalendarData } from '@/interfaces';
-import excercises from '@/data/excercises';
+import type { WorkSortedExr } from '@/interfaces';
 import { msToTimeText } from '@/components/helper';
 import JJCollapse from '@/components/JJCollapse.vue';
 
 const props = defineProps<{
-  calendarData: CalendarData
+  works: WorkSortedExr[]
 }>();
-
-function getExrName(id: number) {
-  return excercises.find((e) => e.id === id)?.label;
-}
-
-type Work = {
-  startTime: string;
-  totalMs: number;
-  id: number;
-  sets: {
-    id: number;
-    exrId: number;
-    recordTime: string;
-    reps: number;
-    restMs: number;
-    totalMs: number;
-    weight: number;
-  }[];
-};
-
-function sortByExcercise(work: Work) {
-  const exrIds = [...new Set(work.sets.map((set) => set.exrId))];
-  return exrIds.map((exrId) => ({
-    exrId,
-    exrName: getExrName(exrId),
-    sets: work.sets.filter((w) => w.exrId === exrId),
-  }));
-}
-const workSortedByExcercise = computed(() => props.calendarData.map((work) => ({...work, exrs: sortByExcercise(work)})));
 
 function toHHMM(strDate: string) {
   const date = new Date(strDate);
@@ -46,11 +15,11 @@ function toHHMM(strDate: string) {
 </script>
 <template>
   <div class="rem34">
-    <div v-for="(work, i) in workSortedByExcercise" :key="work.id">
+    <div v-for="(work, i) in props.works" :key="work.id">
       <div class="text-lg py-3 border-t-2">
         <div>
           {{ i + 1 }}차 운동-
-          {{ toHHMM(work.startTime) }} / {{ work.sets.length }}sets / {{ work.sets.reduce((t, c) => t + c.reps, 0) }}reps
+          {{ toHHMM(work.startTime) }} / {{ work.exrs.reduce((t, c)=> t + c.sets.length, 0) }}sets / {{ work.exrs.reduce((t, c) => t + c.sets.reduce((tt, cc) => tt + cc.reps, 0), 0) }}reps
         </div>
       </div>
       <div class="text-sm font-light">

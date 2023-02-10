@@ -1,11 +1,11 @@
 export type Set = {
-  id?: number;
+  id: number;
   exrId: number;
   reps: number;
   weight: number;
   restMs: number;
   totalMs: number;
-  recordTime: string | Date;
+  recordTime: string;
 };
 
 export type Exr = {
@@ -14,7 +14,7 @@ export type Exr = {
 };
 
 export type Work = {
-  id?: number;
+  id: number;
   memberId?: number;
   startTime: string;
   totalMs: number;
@@ -22,7 +22,7 @@ export type Work = {
 };
 
 export type WorkSortedExr = {
-  id?: number;
+  id: number;
   startTime: string;
   totalMs: number;
   exrs: Array<Exr & {sets: Set[]}>

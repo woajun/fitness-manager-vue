@@ -45,13 +45,9 @@ public class RecordService {
 
 	public List<ReadWorkDTO> getWorkDTO(Long memberId) {
 		List<Work> finded = works.findByMemberId(memberId);
-		List<ReadWorkDTO> result =  finded.stream().map(w-> {
-			ReadWorkDTO rw = new ReadWorkDTO();
-			rw.setId(w.getId());
-			rw.setStartTime(w.getStartTime());
-			rw.setTotalMs(w.getTotalMs());
-			return rw;
-		}).collect(Collectors.toList());
+		List<ReadWorkDTO> result =  finded.stream()
+				.map(ReadWorkDTO::convert)
+				.collect(Collectors.toList());
 		// TODO Auto-generated method stub
 		return result;
 	}

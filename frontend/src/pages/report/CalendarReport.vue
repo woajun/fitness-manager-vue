@@ -1,14 +1,13 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { msToTimeTextWithHour, sliceIntoChunks } from '@/components/helper';
 import JBottomSheet from '@/components/JBottomSheet.vue';
 import JButton from '@/components/JButton.vue';
 import JInputText from '@/components/JInputText.vue';
 import JSvg from '@/components/JSvg.vue';
-import data from './calendarData';
 import excercises from '@/data/excercises';
-import type { Exr, WorkSortedExr } from './interfaces';
+import type { Exr, Work, WorkSortedExr } from './interfaces';
 import ExcerciseSelector from '@/pages/working/ExcerciseSelector.vue';
 import CalendarCell, { type CalendarCellProps } from './CalendarCell.vue';
 import DateReport from './DateReport.vue';
@@ -62,7 +61,9 @@ function isSameDate(a: Date, b:Date) {
   return a.toDateString() === b.toDateString();
 }
 
-const works = computed<WorkSortedExr[]>(() => convertExr(data, selectedExr.value.exrId));
+const data = ref<Work[]>([]);
+
+const works = computed<WorkSortedExr[]>(() => convertExr(data.value, selectedExr.value.exrId));
 
 function findWorks(date?: number) {
   return date ? works.value.filter((e) => isSameDate(new Date(e.startTime), new Date(year.value, month.value - 1, date))) : [];
@@ -95,6 +96,11 @@ async function cellClick(date?: number) {
     showDateReport.value = true;
   }
 }
+
+onMounted(async () => {
+  const rawData = await axios.get('/record/0');
+  data.value = rawData.data;
+});
 
 </script>
 <template>

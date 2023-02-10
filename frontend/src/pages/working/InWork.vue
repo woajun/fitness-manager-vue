@@ -11,26 +11,26 @@ import selectorOptions from '../../data/selectorOptions';
 import JBottomSheet from '../../components/JBottomSheet.vue';
 import ExcerciseSelector from './ExcerciseSelector.vue';
 import RecordReport from './RecordReport.vue';
-import type { Excercise, Records } from '@/interfaces';
 import excercises from '../../data/excercises';
 import JCircle from '../../components/JCircle.vue';
 import JInputText from '../../components/JInputText.vue';
 import JScrollPicker from '../../components/JScrollPicker.vue';
 import JButton from '../../components/JButton.vue';
 import JBottomRightSnackbar from '../../components/JBottomRightSnackbar.vue';
+import type { Exr, Set } from '@/interfaces';
 
 // excercise - start ====
-const excercise = ref<Excercise>(excercises[0]);
+const excercise = ref<Exr>(excercises[0]);
 
 const showExcerciseSelector = ref(false);
 
-function changeExcercise(aExcercise: Excercise) {
+function changeExcercise(aExcercise: Exr) {
   excercise.value = aExcercise;
   showExcerciseSelector.value = false;
 }
 // excercise - end ====
 // RecordReport - start ===
-const records = ref<Records[]>([]);
+const records = ref<Set[]>([]);
 
 const showRecordReport = ref(false);
 const showSubmit = ref(false);
@@ -67,9 +67,9 @@ const presentTimer = new StopWatch(
 const startDate = ref<Date>(new Date());
 function submit() {
   const dto = {
-    memberID: 0,
-    startDate: startDate.value,
-    totalTime: totalTimer.getMs(),
+    memberId: 0,
+    startTime: startDate.value,
+    totalMs: totalTimer.getMs(),
     sets: records.value,
   };
   console.log(dto);
@@ -94,12 +94,12 @@ const isSnackbarShow = ref({ value: false });
 
 function btnRecord() {
   records.value.push({
-    exrID: excercise.value.id,
+    exrId: excercise.value.exrId,
     weight: weight.value,
-    rep: rep.value,
-    restSec: sec.value,
-    totalSec: presentTimer.getMs(),
-    recordDate: new Date(),
+    reps: rep.value,
+    restMs: sec.value,
+    totalMs: presentTimer.getMs(),
+    recordTime: new Date(),
   });
   presentTimer.reset();
   presentTimer.start();
@@ -110,7 +110,7 @@ function cancelRecord() {
   const popped = records.value.pop();
   if (!popped) return;
   presentTimer.reset();
-  presentTimer.setKeepDuration(popped.totalSec);
+  presentTimer.setKeepDuration(popped.totalMs);
   presentTimer.start();
   isSnackbarShow.value = { value: false };
 }
@@ -155,8 +155,8 @@ const circleColor = computed(() => {
   }
   return 'gray';
 });
-const nowExcerciseRep = computed(() => records.value.reduce((t, c) => (c.exrID === excercise.value.id ? t + c.rep : t), 0));
-const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID === excercise.value.id ? t + 1 : t), 0));
+const nowExcerciseRep = computed(() => records.value.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + c.reps : t), 0));
+const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + 1 : t), 0));
 // computed - end ====
 </script>
 <template>
@@ -185,12 +185,12 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrID =
     </div>
 
     <div class="mt-5 border max-h-52 chart-center">
-      <JMultiChart :data="records" :now-exr-id="excercise.id" />
+      <JMultiChart :data="records" :now-exr-id="excercise.exrId" />
     </div>
 
     <div class="pt-5 grid grid-cols-5">
       <div class="col-span-4" @click="showExcerciseSelector = true">
-        <JInputText v-model="excercise.label" readonly />
+        <JInputText v-model="excercise.exrName" readonly />
       </div>
       <div class=" text-gray-500 text-2xl relative break-keep">
         <div class="absolute bottom-0 right-0">

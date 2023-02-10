@@ -1,51 +1,29 @@
-export type Records = {
-  exrID: number;
-  weight: number;
-  rep: number;
-  restSec: number;
-  totalSec: number;
-  recordDate: Date;
-};
-
-export type SaveRequestDTO = {
-  memberID: number;
-  startDate: Date;
-  totalTime: number;
-  sets: Records[]
-};
-
-export type Excercise = {
-  id: number;
-  label: string;
-};
-
-// new type
 export type Set = {
-  id: number;
+  id?: number;
   exrId: number;
-  weight: number;
   reps: number;
+  weight: number;
   restMs: number;
   totalMs: number;
-  recordTime: string;
+  recordTime: string | Date;
 };
 
 export type Exr = {
   exrId: number,
   exrName: string,
-  sets: Set[]
 };
 
 export type Work = {
+  id?: number;
+  memberId?: number;
   startTime: string;
   totalMs: number;
-  id: number;
   sets: Set[];
 };
 
 export type WorkSortedExr = {
+  id?: number;
   startTime: string;
   totalMs: number;
-  id: number;
-  exrs: Exr[]
+  exrs: Array<Exr & {sets: Set[]}>
 };

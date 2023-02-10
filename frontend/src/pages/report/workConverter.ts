@@ -1,12 +1,12 @@
-import type { Exr, Work, WorkSortedExr } from '@/interfaces';
+import type { Work, WorkSortedExr } from '@/interfaces';
 import excercises from '@/data/excercises';
 
 export function getExrName(id: number) {
-  const result = excercises.find((e) => e.id === id);
-  return result ? result.label : '';
+  const result = excercises.find((e) => e.exrId === id);
+  return result ? result.exrName : '';
 }
 
-function sortByExcercise(work: Work): Exr[] {
+function sortByExcercise(work: Work) {
   const exrIds = [...new Set(work.sets.map((set) => set.exrId))];
   return exrIds.map((exrId) => ({
     exrId,

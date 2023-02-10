@@ -11,12 +11,12 @@ import lombok.Setter;
 @Getter @Setter 
 public class SetDTO {
 
-	private Long exrID;
+	private Long exrId;
 	private Double weight;
-	private Long rep;
-	private Long restSec;
-	private Long totalSec;
+	private Long reps;
+	private Long restMs;
+	private Long totalMs;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private ZonedDateTime recordDate;
+	private ZonedDateTime recordTime;
 	
 }

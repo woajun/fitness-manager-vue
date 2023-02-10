@@ -1,7 +1,7 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import type { Excercise, Records } from '@/interfaces';
+import type { Exr, Set } from '@/interfaces';
 import { msToTimeText } from '../../components/helper';
 import JCollapse from '../../components/JCollapse.vue';
 
@@ -11,8 +11,8 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps<{
-  records: Records[],
-  excercises: Excercise[],
+  records: Set[],
+  excercises: Exr[],
   timeText: string,
   showSubmit?: boolean,
 }>();
@@ -22,12 +22,12 @@ function submit() {
 }
 
 function getExrIDsWithExrOrder() {
-  const exrIDs = props.records.map((e) => e.exrID);
+  const exrIDs = props.records.map((e) => e.exrId);
   return exrIDs.filter((e, i) => exrIDs.indexOf(e) === i);
 }
 
 function getExrName(id: number) {
-  return props.excercises.find((e) => e.id === id)?.label;
+  return props.excercises.find((e) => e.exrId === id)?.exrName;
 }
 
 const sets = computed(() => {
@@ -36,7 +36,7 @@ const sets = computed(() => {
     exrID,
     exrName: getExrName(exrID),
     order: i,
-    sets: props.records.filter((e) => e.exrID === exrID),
+    sets: props.records.filter((e) => e.exrId === exrID),
     apple: ref(false),
   }));
 
@@ -48,7 +48,7 @@ const sets = computed(() => {
   <div>
     <div class="text-3xl py-3 border-b-4">
       <div>{{ props.timeText }}</div>
-      <div>{{ props.records.length }} 세트 / {{ props.records.reduce((t, c) => t + c.rep, 0) }} 회 </div>
+      <div>{{ props.records.length }} 세트 / {{ props.records.reduce((t, c) => t + c.reps, 0) }} 회 </div>
     </div>
     <div class="text-xl h-80 overflow-auto">
       <div v-for="set in sets" :key="`exrID-${set.exrID}`" class="border-b-2">
@@ -65,10 +65,10 @@ const sets = computed(() => {
                 0-0kg
               </td>
               <td>
-                {{ set.sets.reduce((t, c) => t + c.rep, 0) }}rep
+                {{ set.sets.reduce((t, c) => t + c.reps, 0) }}rep
               </td>
               <td>
-                {{ msToTimeText(set.sets.reduce((t, c) => t + c.totalSec, 0)) }}
+                {{ msToTimeText(set.sets.reduce((t, c) => t + c.totalMs, 0)) }}
               </td>
             </tr>
           </table>
@@ -83,10 +83,10 @@ const sets = computed(() => {
                 {{ rep.weight }}kg
               </td>
               <td>
-                {{ rep.rep }}rep
+                {{ rep.reps }}rep
               </td>
               <td>
-                {{ msToTimeText(rep.totalSec) }}
+                {{ msToTimeText(rep.totalMs) }}
               </td>
             </tr>
           </table>

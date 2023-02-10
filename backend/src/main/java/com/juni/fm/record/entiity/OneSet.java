@@ -14,8 +14,7 @@ public class OneSet {
 
 	@Id @GeneratedValue
 	private Long id;
-	private Long exrKindId;
-	private Long workId;
+	private Long exrId;
 	private Long reps;
 	private Double weight;
 	private Long totalMs;

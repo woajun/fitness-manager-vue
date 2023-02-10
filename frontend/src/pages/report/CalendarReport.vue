@@ -8,17 +8,17 @@ import JInputText from '@/components/JInputText.vue';
 import JSvg from '@/components/JSvg.vue';
 import data from '@/data/calendarData';
 import excercises from '@/data/excercises';
-import type { Excercise, WorkSortedExr } from '@/interfaces';
+import type { Exr, WorkSortedExr } from '@/interfaces';
 import ExcerciseSelector from '@/pages/working/ExcerciseSelector.vue';
 import CalendarCell, { type CalendarCellProps } from './CalendarCell.vue';
 import DateReport from './DateReport.vue';
 import { convertExr } from './workConverter';
 // selectedExr - start ====
-const selectedExr = ref<Excercise>({id: -1, label: '전체'});
+const selectedExr = ref<Exr>({exrId: -1, exrName: '전체'});
 
 const showExcerciseSelector = ref(false);
 
-function changeExcercise(aExcercise: Excercise) {
+function changeExcercise(aExcercise: Exr) {
   selectedExr.value = aExcercise;
   showExcerciseSelector.value = false;
 }
@@ -62,7 +62,7 @@ function isSameDate(a: Date, b:Date) {
   return a.toDateString() === b.toDateString();
 }
 
-const works = computed<WorkSortedExr[]>(() => convertExr(data, selectedExr.value.id));
+const works = computed<WorkSortedExr[]>(() => convertExr(data, selectedExr.value.exrId));
 
 function findWorks(date?: number) {
   return date ? works.value.filter((e) => isSameDate(new Date(e.startTime), new Date(year.value, month.value - 1, date))) : [];
@@ -77,7 +77,7 @@ function getCalendarCellProps(date?: number) {
   r.date = date.toString();
   if (filteredWorks.length === 0) return r;
   const exrs = filteredWorks.map((e) => e.exrs).flat();
-  const filteredExrs = exrs.filter((e) => selectedExr.value.id === -1 || e.exrId === selectedExr.value.id);
+  const filteredExrs = exrs.filter((e) => selectedExr.value.exrId === -1 || e.exrId === selectedExr.value.exrId);
   if (filteredExrs.length === 0) return r;
   const mappedSets = filteredExrs.map((e) => e.sets).flat();
   r.time = msToTimeTextWithHour(mappedSets.reduce((t, c) => t + c.totalMs, 0));
@@ -111,7 +111,7 @@ async function cellClick(date?: number) {
       </div>
     </div>
     <div class="py-3" @click="showExcerciseSelector = true">
-      <JInputText v-model="selectedExr.label" readonly />
+      <JInputText v-model="selectedExr.exrName" readonly />
     </div>
     <div class="border-2 rounded-lg pt-3 pb-4 h-26rem">
       <table class="w-full text-center table-fixed">

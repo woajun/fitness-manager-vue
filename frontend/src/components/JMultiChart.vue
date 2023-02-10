@@ -36,8 +36,9 @@ const props = defineProps<{
 }>();
 
 function toData(data: ChartData[], dataKey: string) {
+  console.log('data', data);
   return data
-    .filter((e) => e.exrID === props.nowExrId)
+    .filter((e) => e.exrId === props.nowExrId)
     .map((e) => e[dataKey]);
 }
 
@@ -62,7 +63,7 @@ onMounted(() => {
       labels: [],
       datasets: [
         {
-          data: toData(props.data, 'rep'),
+          data: toData(props.data, 'reps'),
           borderColor: COLOR_PURPLE,
         }, {
           data: toData(props.data, 'weight'),
@@ -127,8 +128,8 @@ onMounted(() => {
 });
 
 watch(props, (aProps) => {
-  lineChart.data.labels = toLabel(aProps.data.reduce((t, c) => (c.exrID === props.nowExrId ? t + 1 : t), 0));
-  lineChart.data.datasets[0].data = toData(aProps.data, 'rep');
+  lineChart.data.labels = toLabel(aProps.data.reduce((t, c) => (c.exrId === props.nowExrId ? t + 1 : t), 0));
+  lineChart.data.datasets[0].data = toData(aProps.data, 'reps');
   lineChart.data.datasets[1].data = toData(aProps.data, 'weight');
   lineChart.update();
 });

@@ -1,23 +1,23 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { Excercise } from '@/interfaces';
+import type { Exr } from '@/interfaces';
 import searcherSearch from '../../components/searcher';
 
 const emit = defineEmits<{
   (e: 'cancel'):void
-  (e: 'doSelect', selected: Excercise):void
+  (e: 'doSelect', selected: Exr):void
 }>();
 
 const props = defineProps<{
-  modelValue: Excercise,
-  excercises: Excercise[],
+  modelValue: Exr,
+  excercises: Exr[],
   useEntire?: boolean,
 }>();
 
-const selected = ref<Excercise>(props.modelValue);
+const selected = ref<Exr>(props.modelValue);
 
-function select(exr: Excercise) {
+function select(exr: Exr) {
   selected.value = exr;
 }
 
@@ -25,12 +25,12 @@ function submit() {
   emit('doSelect', selected.value);
 }
 
-const list = ref<Excercise[]>(props.excercises);
+const list = ref<Exr[]>(props.excercises);
 function search(e:any) {
   list.value = searcherSearch(e.target.value, props.excercises, 'label');
 }
 
-const entire = {id: -1, label: '전체'};
+const entire = {exrId: -1, exrName: '전체'};
 
 </script>
 <template>
@@ -40,10 +40,10 @@ const entire = {id: -1, label: '전체'};
     </div>
     <div class="text-xl pt-5">
       <div v-if="props.useEntire" class="border-b" @click="()=> select(entire)">
-        <span :class="{ 'text-green-500': selected.id === entire.id }">{{ entire.label }}</span>
+        <span :class="{ 'text-green-500': selected.exrId === entire.exrId }">{{ entire.exrName }}</span>
       </div>
-      <div v-for="exr in list" :key="exr.id" @click="()=> select(exr)">
-        <span :class="{ 'text-green-500': selected.id === exr.id }">{{ exr.label }}</span>
+      <div v-for="exr in list" :key="exr.exrId" @click="()=> select(exr)">
+        <span :class="{ 'text-green-500': selected.exrId === exr.exrId }">{{ exr.exrName }}</span>
       </div>
     </div>
     <div class="grid gap-4 grid-cols-2 pt-5 my-3">

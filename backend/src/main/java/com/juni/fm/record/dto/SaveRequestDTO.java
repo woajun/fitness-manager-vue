@@ -12,10 +12,11 @@ import lombok.Setter;
 @Getter @Setter
 public class SaveRequestDTO {
 	
-	private Long memberID;
+	private Long id;
+	private Long memberId;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private ZonedDateTime startDate;
-	private Long totalTime;
+	private ZonedDateTime startTime;
+	private Long totalMs;
 	private List<SetDTO> sets;
 	
 }

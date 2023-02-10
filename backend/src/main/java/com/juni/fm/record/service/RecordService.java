@@ -19,20 +19,19 @@ public class RecordService {
 
 	public Work saveWork(SaveRequestDTO dto) {
 		Work work = new Work(
-				dto.getMemberID(),
-				dto.getStartDate().toInstant(), 
-				dto.getTotalTime());
+				dto.getMemberId(),
+				dto.getStartTime().toInstant(), 
+				dto.getTotalMs());
 		Work saved = works.save(work);
 		
 		Set<OneSet> collect = dto.getSets().stream().map(e -> {
 			OneSet oneSet = new OneSet();
-			oneSet.setExrKindId(e.getExrID());
-			oneSet.setWorkId(saved.getId());
-			oneSet.setReps(e.getRep());
+			oneSet.setExrId(e.getExrId());
+			oneSet.setReps(e.getReps());
 			oneSet.setWeight(e.getWeight());
-			oneSet.setTotalMs(e.getTotalSec());
-			oneSet.setRestMs(e.getRestSec());
-			oneSet.setRecordTime(e.getRecordDate().toInstant());
+			oneSet.setTotalMs(e.getTotalMs());
+			oneSet.setRestMs(e.getRestMs());
+			oneSet.setRecordTime(e.getRecordTime().toInstant());
 			return oneSet;
 		}).collect(Collectors.toSet());
 		

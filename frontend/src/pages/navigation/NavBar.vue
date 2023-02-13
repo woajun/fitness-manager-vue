@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 
 const props = defineProps<{
   modelValue: boolean
@@ -9,19 +10,26 @@ type Emit = {
 };
 const emit = defineEmits<Emit>();
 
+const checked = ref(false);
+
+function clickEvent(isInWork:boolean) {
+  emit('update:modelValue', isInWork);
+  checked.value = !checked.value;
+}
+
 </script>
 <template>
   <nav class="absolute">
     <div class="menuToggle">
-      <input type="checkbox" />
+      <input v-model="checked" type="checkbox" />
       <span />
       <span />
       <span />
       <ul class="menu">
-        <li @click="() => emit('update:modelValue', true)">
+        <li @click="() => clickEvent(true)">
           기록
         </li>
-        <li @click="() => emit('update:modelValue', false)">
+        <li @click="() => clickEvent(false)">
           캘린더
         </li>
       </ul>
@@ -37,8 +45,6 @@ const emit = defineEmits<Emit>();
   top: 25px;
   left: 25px;
   z-index: 1;
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 .menuToggle input

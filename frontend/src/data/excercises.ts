@@ -1,6 +1,4 @@
-import type { Exr } from '@/interfaces';
-
-const excercises: Exr[] = [
+const excercises = [
   { exrId: 0, exrName: '플랫 벤치 프레스' },
   { exrId: 1, exrName: '윗몸일으키기' },
   { exrId: 2, exrName: '행잉 레그 레이즈' },

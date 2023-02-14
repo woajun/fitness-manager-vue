@@ -8,5 +8,6 @@ const excercises = [
   { exrId: 6, exrName: '데드리프트' },
   { exrId: 7, exrName: '번지피지오' },
   { exrId: 8, exrName: 'AB슬라이드' },
+  { exrId: 9, exrName: '악력기' },
 ];
 export default excercises;

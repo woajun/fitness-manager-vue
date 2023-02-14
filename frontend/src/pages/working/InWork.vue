@@ -11,7 +11,7 @@ import selectorOptions from '../../data/selectorOptions';
 import JBottomSheet from '../../components/JBottomSheet.vue';
 import ExcerciseSelector from './ExcerciseSelector.vue';
 import RecordReport from './RecordReport.vue';
-import excercises from '../../data/excercises';
+import rawExcercises from '../../data/excercises';
 import JCircle from '../../components/JCircle.vue';
 import JInputText from '../../components/JInputText.vue';
 import JScrollPicker from '../../components/JScrollPicker.vue';
@@ -20,7 +20,8 @@ import JBottomRightSnackbar from '../../components/JBottomRightSnackbar.vue';
 import type { Exr, Set } from './interfaces';
 
 // excercise - start ====
-const excercise = ref<Exr>(excercises[0]);
+const excercises = computed(() => rawExcercises.sort((a, b) => a.exrName[0].localeCompare(b.exrName[0])));
+const excercise = ref<Exr>(excercises.value[0]);
 
 const showExcerciseSelector = ref(false);
 

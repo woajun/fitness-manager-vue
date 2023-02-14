@@ -1,36 +1,24 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-
-const props = defineProps<{
-  modelValue: boolean
-}>();
-
-type Emit = {
-  (e: 'update:modelValue', isInWork: boolean): void;
-};
-const emit = defineEmits<Emit>();
-
-const checked = ref(false);
-
-function clickEvent(isInWork:boolean) {
-  emit('update:modelValue', isInWork);
-  checked.value = !checked.value;
-}
 
 </script>
 <template>
   <nav class="absolute">
     <div class="menuToggle">
-      <input v-model="checked" type="checkbox" />
+      <input type="checkbox" />
       <span />
       <span />
       <span />
       <ul class="menu">
-        <li @click="() => clickEvent(true)">
-          기록
+        <li @click="() => $router.push('/timer')">
+          타이머
         </li>
-        <li @click="() => clickEvent(false)">
-          캘린더
+        <li @click="() => $router.push('/report')">
+          리포트
+        </li>
+        <li>
+          <button>
+            <img src="@/assets/kakao_login_medium_narrow.png" alt="">
+          </button>
         </li>
       </ul>
     </div>
@@ -104,7 +92,7 @@ function clickEvent(isInWork:boolean) {
 .menu
 {
   position: absolute;
-  width: 180px;
+  width: 300px;
   height: 400px;
   box-shadow: 0 0 10px #85888C;
   margin: -50px 0 0 -50px;

@@ -47,7 +47,6 @@
 		    <scope>provided</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -55,6 +54,55 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.6.0</version>
+					<configuration>
+						<executable>npm</executable>
+						<workingDirectory>../frontend</workingDirectory>
+					</configuration>
+					<executions>
+						<execution>
+							<id>npm build</id>
+							<phase>generate-resources</phase>
+							<goals>
+								<goal>exec</goal>
+							</goals>
+							<configuration>
+								<arguments>
+									<argument>run</argument>
+									<argument>build</argument>
+								</arguments>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+					<executions>
+						<execution>
+							<id>copy ui files</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+								<resources>
+									<resource>
+										<directory>../frontend/dist</directory>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>

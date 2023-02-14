@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import KakaoLogin from '@/components/KakaoLogin.vue';
 
 </script>
 <template>
@@ -16,9 +17,7 @@
           리포트
         </li>
         <li>
-          <button>
-            <img src="@/assets/kakao_login_medium_narrow.png" alt="">
-          </button>
+          <KakaoLogin />
         </li>
       </ul>
     </div>

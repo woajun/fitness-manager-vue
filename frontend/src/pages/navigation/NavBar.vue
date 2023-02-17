@@ -1,19 +1,28 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 import KakaoLogin from '@/components/KakaoLogin.vue';
+import router from '@/router';
+
+const isOpen = ref(false);
+
+function changeView(url: string) {
+  router.push(url);
+  isOpen.value = false;
+}
 
 </script>
 <template>
   <nav class="absolute">
     <div class="menuToggle">
-      <input type="checkbox" />
+      <input v-model="isOpen" type="checkbox" />
       <span />
       <span />
       <span />
       <ul class="menu">
-        <li @click="() => $router.push('/timer')">
+        <li @click="changeView('/timer')">
           타이머
         </li>
-        <li @click="() => $router.push('/report')">
+        <li @click="changeView('/report')">
           리포트
         </li>
         <li>

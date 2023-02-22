@@ -161,8 +161,8 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
 // computed - end ====
 </script>
 <template>
-  <div class="w-screen h-screen px-4 py-4 fixed">
-    <div class="flex justify-between pt-3">
+  <div class="w-screen h-screen px-4 py-4 fixed flex flex-col">
+    <div class="flex-auto flex justify-between pt-10">
       <div>
         <p>
           {{ message }}
@@ -185,11 +185,11 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
       </JCircle>
     </div>
 
-    <div class="mt-5 border max-h-52 chart-center">
+    <div class="flex-auto mt-5 border max-h-52 chart-center">
       <JMultiChart :data="records" :now-exr-id="excercise.exrId" />
     </div>
 
-    <div class="pt-5 grid grid-cols-5">
+    <div class="flex-auto pt-5 grid grid-cols-5">
       <div class="col-span-4" @click="showExcerciseSelector = true">
         <JInputText v-model="excercise.exrName" readonly />
       </div>
@@ -199,7 +199,8 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
         </div>
       </div>
     </div>
-    <div class="pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
+
+    <div class="flex-auto pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
       <JScrollPicker
         v-model="weight"
         label="중량(kg)"
@@ -220,7 +221,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
       />
     </div>
 
-    <div class="grid gap-4 grid-cols-2 pt-5 my-3 h-20">
+    <div class="flex-auto grid gap-4 grid-cols-2 pt-5 my-3 h-20">
       <JButton v-if="isRun" label="기록" :disabled="!isWorking" @click="btnRecord()" />
       <JButton v-else label="시작" color="green" @click="btnStart()" />
       <JButton v-if="isRun" label="정지" color="red" @click="btnStop()" />

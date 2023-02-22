@@ -5,7 +5,7 @@ import NavBar from './pages/navigation/NavBar.vue';
 <template>
   <div class="container h-screen font-semibold text-3xl text-gray-800 w-screen fixed">
     <NavBar />
-    <div class="pt-6">
+    <div>
       <RouterView />
     </div>
   </div>

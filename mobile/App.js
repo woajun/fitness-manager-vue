@@ -1,10 +1,13 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import MyWebView from './components/MyWebView';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <MyWebView />
+      {/* <Text>
+        Hello, I am your cat!
+      </Text> */}
     </View>
   );
 }

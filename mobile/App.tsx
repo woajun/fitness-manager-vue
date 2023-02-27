@@ -1,5 +1,5 @@
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import MyWebView from "./components/MyWebView";
 import Timer from "./pages/timer/Timer";
 
 export default function App() {

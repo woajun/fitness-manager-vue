@@ -12,7 +12,7 @@ export default function App() {
       style={tw`flex-1 items-center justify-center dark:bg-slate-800`}
     >
       <View>
-        <Text style={tw`dark:text-white`}>{`Try clicking me! ${colorScheme === 'dark' ? '🌙' : '🌞'}`}</Text>
+        <Text style={tw`dark:text-white text-2xl`}>{`Try clicking me! ${colorScheme === 'dark' ? '🌙' : '🌞'}`}</Text>
       </View>
     </Pressable>
   );

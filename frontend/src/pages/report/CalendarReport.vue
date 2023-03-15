@@ -28,7 +28,7 @@ const showDateReport = ref(false);
 const dayOfTheWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
 const year = ref(2023);
-const month = ref(2);
+const month = ref(3);
 
 function up() {
   month.value += 1;

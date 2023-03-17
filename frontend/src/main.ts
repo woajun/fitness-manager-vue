@@ -10,8 +10,7 @@ import './style.css';
 const baseURL = 'https://fitness-manager.shop/';
 const suffix = 'api/';
 axios.defaults.baseURL = baseURL + suffix;
-axios.defaults.headers.common['Content-Type'] =
-  'application/json;charset=UTF-8';
+axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 const app = createApp(App);
 app.use(router);

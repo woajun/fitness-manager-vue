@@ -4,10 +4,10 @@ import router from './router';
 import App from './App.vue';
 import './style.css';
 
-// const baseURL = 'http://localhost:5000/';
+const baseURL = 'http://localhost:5000/';
 // const baseURL =
 //   'http://hf-env-2.eba-bufwwxqz.ap-northeast-2.elasticbeanstalk.com/';
-const baseURL = 'https://eb.fitness-manager.shop/';
+// const baseURL = 'https://eb.fitness-manager.shop/';
 const suffix = 'api/';
 axios.defaults.baseURL = baseURL + suffix;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';

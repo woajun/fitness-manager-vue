@@ -6,8 +6,8 @@ import Timer from './timer/Timer';
 export default function ExcerLayout() {
   const [startTime, setStartTime] = useState(0);
   const [now, setNow] = useState(0);
-  const intervalRef = useRef(0);
   const [keepTime, setKeepTime] = useState(0);
+  const intervalRef = useRef(0);
 
   function handleStart() {
     setStartTime(Date.now());
@@ -20,6 +20,13 @@ export default function ExcerLayout() {
   }
   function handleStop() {
     setKeepTime(keepTime + ((now - startTime) / 1000));
+    setStartTime(0);
+    setNow(0);
+    clearInterval(intervalRef.current);
+  }
+
+  function handleReset() {
+    setKeepTime(0);
     setStartTime(0);
     setNow(0);
     clearInterval(intervalRef.current);
@@ -60,7 +67,7 @@ export default function ExcerLayout() {
             <MyButton
               style={{ flex: 1, marginLeft: 1 }}
               label="finish"
-              onPress={() => handleStop()}
+              onPress={() => handleReset()}
             />
           </View>
           <View style={{ flexDirection: 'row' }}>

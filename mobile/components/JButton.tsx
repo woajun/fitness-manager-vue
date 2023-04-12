@@ -11,7 +11,11 @@ export default function JButton() {
       style={tw`rounded-lg bg-slate-700`}
       onPress={toggleColorScheme}
     >
-      <Text style={tw`text-slate-50 dark:bg-red-800 text-2xl p-3 text-center`}>{`Try clicking me! ${colorScheme === 'dark' ? '🌙' : '🌞'}`}</Text>
+      <Text
+        style={tw`text-slate-50 dark:bg-red-800 text-2xl p-3 text-center`}
+      >
+        {`Try clicking me! ${colorScheme === 'dark' ? '🌙' : '🌞'}`}
+      </Text>
     </Pressable>
   );
 }

@@ -3,6 +3,7 @@ import {
   Alert, Button, Pressable, Text, View,
 } from 'react-native';
 import tw from 'twrnc';
+import MyButton from '../components/MyButton';
 
 export default function ExcerLayout() {
   return (
@@ -20,18 +21,16 @@ export default function ExcerLayout() {
           flexDirection: 'row',
         }}
         >
-          <Pressable
-            style={[{ flex: 1, paddingRight: 1 }, tw`rounded-lg bg-slate-700`]}
+          <MyButton
+            style={{ flex: 1, paddingRight: 1 }}
+            label="start"
             onPress={() => Alert.alert('Start button pressed')}
-          >
-            <Text>Start</Text>
-          </Pressable>
-          <View style={{ flex: 1, paddingLeft: 1 }}>
-            <Button
-              title="종료"
-              onPress={() => Alert.alert('Right button pressed')}
-            />
-          </View>
+          />
+          <MyButton
+            style={{ flex: 1, paddingLeft: 1 }}
+            label="end"
+            onPress={() => Alert.alert('End button pressed')}
+          />
         </View>
       </View>
     </View>

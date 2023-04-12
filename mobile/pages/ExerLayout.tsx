@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
-import {
-  Alert, Text, View,
-} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Text, View } from 'react-native';
 import MyButton from '../components/MyButton';
 import Timer from './timer/Timer';
 
 export default function ExcerLayout() {
   const [startTime, setStartTime] = useState(0);
   const [now, setNow] = useState(0);
+  const intervalRef = useRef(0);
 
   function handleStart() {
     setStartTime(Date.now());
     setNow(Date.now());
 
-    setInterval(() => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
       setNow(Date.now());
     }, 10);
+  }
+  function handleStop() {
+    clearInterval(intervalRef.current);
   }
 
   let secondsPassed = 0;
@@ -27,7 +30,7 @@ export default function ExcerLayout() {
     <View style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
           <Timer currentTime={secondsPassed.toFixed(3)} />
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>
@@ -50,7 +53,7 @@ export default function ExcerLayout() {
           <MyButton
             style={{ flex: 1, marginLeft: 1 }}
             label="end"
-            onPress={() => Alert.alert('End button pressed')}
+            onPress={() => handleStop()}
           />
         </View>
       </View>

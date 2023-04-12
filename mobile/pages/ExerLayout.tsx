@@ -3,18 +3,17 @@ import {
   Alert, Text, View,
 } from 'react-native';
 import MyButton from '../components/MyButton';
+import Timer from './timer/Timer';
 
 export default function ExcerLayout() {
   const [startTime, setStartTime] = useState(0);
   const [now, setNow] = useState(0);
 
   function handleStart() {
-    // Start counting.
     setStartTime(Date.now());
     setNow(Date.now());
 
     setInterval(() => {
-      // Update the current time every 10ms.
       setNow(Date.now());
     }, 10);
   }
@@ -29,7 +28,7 @@ export default function ExcerLayout() {
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1 }}>
-          <Text>{secondsPassed.toFixed(3)}</Text>
+          <Timer currentTime={secondsPassed.toFixed(3)} />
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>
           <Text>{ }</Text>

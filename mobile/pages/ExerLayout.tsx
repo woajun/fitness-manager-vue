@@ -42,19 +42,34 @@ export default function ExcerLayout() {
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'aqua' }} />
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
         <View style={{
-          flexDirection: 'row',
+          flexDirection: 'column',
         }}
         >
-          <MyButton
-            style={{ flex: 1, marginRight: 1 }}
-            label="start"
-            onPress={() => handleStart()}
-          />
-          <MyButton
-            style={{ flex: 1, marginLeft: 1 }}
-            label="end"
-            onPress={() => handleStop()}
-          />
+          <View style={{ flexDirection: 'row' }}>
+            <MyButton
+              style={{ flex: 1, marginRight: 1 }}
+              label="run
+              "
+              onPress={() => handleStart()}
+            />
+            <MyButton
+              style={{ flex: 1, marginLeft: 1 }}
+              label="finish"
+              onPress={() => handleStop()}
+            />
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <MyButton
+              style={{ flex: 1, marginRight: 1 }}
+              label="record"
+              onPress={() => handleStart()}
+            />
+            <MyButton
+              style={{ flex: 1, marginLeft: 1 }}
+              label="pause"
+              onPress={() => handleStop()}
+            />
+          </View>
         </View>
       </View>
     </View>

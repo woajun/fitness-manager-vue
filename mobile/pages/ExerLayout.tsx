@@ -7,6 +7,7 @@ export default function ExcerLayout() {
   const [startTime, setStartTime] = useState(0);
   const [now, setNow] = useState(0);
   const intervalRef = useRef(0);
+  const [keepTime, setKeepTime] = useState(0);
 
   function handleStart() {
     setStartTime(Date.now());
@@ -18,12 +19,15 @@ export default function ExcerLayout() {
     }, 10);
   }
   function handleStop() {
+    setKeepTime(keepTime + ((now - startTime) / 1000));
+    setStartTime(0);
+    setNow(0);
     clearInterval(intervalRef.current);
   }
 
   let secondsPassed = 0;
   if (startTime != null && now != null) {
-    secondsPassed = (now - startTime) / 1000;
+    secondsPassed = keepTime + ((now - startTime) / 1000);
   }
 
   return (
@@ -31,6 +35,7 @@ export default function ExcerLayout() {
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
+          {keepTime}
           <Timer currentTime={secondsPassed.toFixed(3)} />
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>

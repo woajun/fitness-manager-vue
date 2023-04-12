@@ -1,5 +1,7 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {
+  Alert, Button, Text, View,
+} from 'react-native';
 import tw from 'twrnc';
 
 function Timer() {
@@ -10,8 +12,12 @@ function Timer() {
         <Text style={tw`text-4xl`}>10:00:00</Text>
         <Text style={tw`text-2xl text-gray-500`}>00:10:00</Text>
       </View>
-      <View style={tw`flex flex-end`}>
+      <View style={tw`flex flex-end `}>
         <Text>얘는 오른쪽</Text>
+        <Button
+          title="시작"
+          onPress={() => Alert.alert('Left button pressed')}
+        />
       </View>
     </View>
   );

@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import MyButton from '../components/MyButton';
 import Timer from './timer/Timer';
 import Stopwatch from './stopwatch';
+import ScrollPicker from './ScrollPicker';
 
 export default function ExcerLayout() {
   const [time, setTime] = useState(0);
@@ -51,7 +52,18 @@ export default function ExcerLayout() {
       </View>
       <View style={{ flex: 3, justifyContent: 'center', backgroundColor: 'green' }} />
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'yellow' }} />
-      <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'aqua' }} />
+      <View style={{ flex: 2, flexDirection: 'row' }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>kg</Text>
+        </View>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>rep</Text>
+        </View>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>sec</Text>
+          <ScrollPicker />
+        </View>
+      </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
         {isRun ?
           <View style={{ flexDirection: 'row' }}>

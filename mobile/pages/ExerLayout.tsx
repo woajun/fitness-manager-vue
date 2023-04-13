@@ -25,11 +25,13 @@ export default function ExcerLayout() {
     setNow(0);
     clearInterval(intervalRef.current);
   }
-
+  
   function handleReset() {
     setKeepTime(0);
     setStartTime(0);
     setNow(0);
+    setTotalKeepTime(0);
+    record.current = [];
     clearInterval(intervalRef.current);
   }
 
@@ -45,7 +47,7 @@ export default function ExcerLayout() {
     record.current.push({
       time: seconds
     })
-    setTotalKeepTime(totalSeconds);
+    setTotalKeepTime(totalKeepTime + seconds);
     setKeepTime(0);
     setStartTime(Date.now());
     setNow(Date.now());

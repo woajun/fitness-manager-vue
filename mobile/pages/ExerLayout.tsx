@@ -70,6 +70,8 @@ export default function ExcerLayout() {
     console.log(record.current);
   }
 
+  const totalTime = ((record.current.reduce((t, c) => t + c, 0) + time) / 1000).toFixed(3)
+
   return (
     <View style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
@@ -77,7 +79,7 @@ export default function ExcerLayout() {
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Timer
             currentTime={(time / 1000).toFixed(3)}
-            totalTime={""}
+            totalTime={totalTime}
           />
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>

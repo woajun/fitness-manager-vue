@@ -60,6 +60,7 @@ export default function ExcerLayout() {
   }
 
   function handleReset() {
+    record.current = [];
     sw.current.reset();
   }
 

@@ -9,7 +9,7 @@ class Stopwatch {
   #intervalID = 0;
   #keepTime = 0;
 
-  constructor(setTime:any) {
+  constructor(setTime: any) {
     this.setTime = setTime;
   }
 
@@ -32,30 +32,33 @@ class Stopwatch {
   }
 
   reset() {
-      const result = this.getTime();
-      clearInterval(this.#intervalID);
-      this.#startTime = Date.now();
-      this.#intervalID = 0;
-      this.#keepTime = 0;
-      this.setTime(this.getTime());
-      return result;
+    const result = this.getTime();
+    clearInterval(this.#intervalID);
+    this.#startTime = Date.now();
+    this.#intervalID = 0;
+    this.#keepTime = 0;
+    this.setTime(this.getTime());
+    return result;
   }
 }
 
 export default function ExcerLayout() {
   const [time, setTime] = useState(0);
+  const [isRun, setIsRun] = useState(false);
 
   const sw = useRef(new Stopwatch(setTime));
   const record = useRef<any[]>([]);
 
   function handleRun() {
     sw.current.run();
+    setIsRun(true);
   }
 
   function handlePause() {
     sw.current.pause();
+    setIsRun(false);
   }
-  
+
   function handleReset() {
     sw.current.reset();
   }
@@ -72,10 +75,10 @@ export default function ExcerLayout() {
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Timer 
-            currentTime={(time/1000).toFixed(3)} 
-            totalTime={ "" }
-            />
+          <Timer
+            currentTime={(time / 1000).toFixed(3)}
+            totalTime={""}
+          />
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>
           <Text>{ }</Text>
@@ -85,22 +88,7 @@ export default function ExcerLayout() {
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'yellow' }} />
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'aqua' }} />
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
-        <View style={{
-          flexDirection: 'column',
-        }}
-        >
-          <View style={{ flexDirection: 'row' }}>
-            <MyButton
-              style={{ flex: 1, marginRight: 1 }}
-              label="run"
-              onPress={() => handleRun()}
-            />
-            <MyButton
-              style={{ flex: 1, marginLeft: 1 }}
-              label="finish"
-              onPress={() => handleReset()}
-            />
-          </View>
+        {isRun ?
           <View style={{ flexDirection: 'row' }}>
             <MyButton
               style={{ flex: 1, marginRight: 1 }}
@@ -113,7 +101,20 @@ export default function ExcerLayout() {
               onPress={() => handlePause()}
             />
           </View>
-        </View>
+          :
+          <View style={{ flexDirection: 'row' }}>
+            <MyButton
+              style={{ flex: 1, marginRight: 1 }}
+              label="run"
+              onPress={() => handleRun()}
+            />
+            <MyButton
+              style={{ flex: 1, marginLeft: 1 }}
+              label="finish"
+              onPress={() => handleReset()}
+            />
+          </View>
+        }
       </View>
     </View>
   );

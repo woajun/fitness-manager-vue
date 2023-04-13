@@ -3,55 +3,68 @@ import { Text, View } from 'react-native';
 import MyButton from '../components/MyButton';
 import Timer from './timer/Timer';
 
-export default function ExcerLayout() {
-  const [startTime, setStartTime] = useState(0);
-  const [now, setNow] = useState(0);
-  const [keepTime, setKeepTime] = useState(0);
-  const [totalKeepTime, setTotalKeepTime] = useState(0);
-  const intervalRef = useRef(0);
+class Stopwatch {
+  setTime: React.Dispatch<React.SetStateAction<number>>;
+  #startTime = 0;
+  #intervalID = 0;
+  #keepTime = 0;
 
-  function handleStart() {
-    setStartTime(Date.now());
-    setNow(Date.now());
-
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setNow(Date.now());
-    }, 10);
+  constructor(setTime:any) {
+    this.setTime = setTime;
   }
-  function handleStop() {
-    setKeepTime(keepTime + ((now - startTime) / 1000));
-    setStartTime(0);
-    setNow(0);
-    clearInterval(intervalRef.current);
+
+  getTime() {
+    return this.#keepTime + (Date.now() - this.#startTime);
+  }
+
+  run() {
+    this.#startTime = Date.now();
+
+    clearInterval(this.#intervalID);
+    this.#intervalID = setInterval(() => {
+      this.setTime(this.getTime());
+    }, 10)
+  }
+
+  pause() {
+    this.#keepTime = this.getTime();
+    clearInterval(this.#intervalID);
+  }
+
+  reset() {
+      const result = this.getTime();
+      clearInterval(this.#intervalID);
+      this.#startTime = Date.now();
+      this.#intervalID = 0;
+      this.#keepTime = 0;
+      this.setTime(this.getTime());
+      return result;
+  }
+}
+
+export default function ExcerLayout() {
+  const [time, setTime] = useState(0);
+
+  const sw = useRef(new Stopwatch(setTime));
+  const record = useRef<any[]>([]);
+
+  function handleRun() {
+    sw.current.run();
+  }
+
+  function handlePause() {
+    sw.current.pause();
   }
   
   function handleReset() {
-    setKeepTime(0);
-    setStartTime(0);
-    setNow(0);
-    setTotalKeepTime(0);
-    record.current = [];
-    clearInterval(intervalRef.current);
-  }
-
-  const record = useRef<any[]>([]);
-
-  let seconds =  keepTime + ((now - startTime) / 1000);
-  let totalSeconds = 0;
-  if(record.current.length > 0) {
-    totalSeconds = totalKeepTime + seconds;
+    sw.current.reset();
   }
 
   function handleRecord() {
-    record.current.push({
-      time: seconds
-    })
-    setTotalKeepTime(totalKeepTime + seconds);
-    setKeepTime(0);
-    setStartTime(Date.now());
-    setNow(Date.now());
-    console.log(record.current)
+    const ms = sw.current.reset();
+    record.current.push(ms);
+    sw.current.run();
+    console.log(record.current);
   }
 
   return (
@@ -60,8 +73,8 @@ export default function ExcerLayout() {
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Timer 
-            currentTime={seconds.toFixed(2)} 
-            totalTime={ totalSeconds.toFixed(0) }
+            currentTime={(time/1000).toFixed(3)} 
+            totalTime={ "" }
             />
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>
@@ -80,7 +93,7 @@ export default function ExcerLayout() {
             <MyButton
               style={{ flex: 1, marginRight: 1 }}
               label="run"
-              onPress={() => handleStart()}
+              onPress={() => handleRun()}
             />
             <MyButton
               style={{ flex: 1, marginLeft: 1 }}
@@ -97,7 +110,7 @@ export default function ExcerLayout() {
             <MyButton
               style={{ flex: 1, marginLeft: 1 }}
               label="pause"
-              onPress={() => handleStop()}
+              onPress={() => handlePause()}
             />
           </View>
         </View>

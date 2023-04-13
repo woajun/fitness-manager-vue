@@ -36,13 +36,16 @@ export default function ExcerLayout() {
   const record = useRef<any[]>([]);
 
   let seconds =  keepTime + ((now - startTime) / 1000);
-  let totalSeconds = totalKeepTime + seconds;
+  let totalSeconds = 0;
+  if(record.current.length > 0) {
+    totalSeconds = totalKeepTime + seconds;
+  }
 
   function handleRecord() {
     record.current.push({
       time: seconds
     })
-    setTotalKeepTime(seconds);
+    setTotalKeepTime(totalSeconds);
     setKeepTime(0);
     setStartTime(Date.now());
     setNow(Date.now());

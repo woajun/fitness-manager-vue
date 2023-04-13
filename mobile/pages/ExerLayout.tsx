@@ -7,6 +7,7 @@ export default function ExcerLayout() {
   const [startTime, setStartTime] = useState(0);
   const [now, setNow] = useState(0);
   const [keepTime, setKeepTime] = useState(0);
+  const [totalKeepTime, setTotalKeepTime] = useState(0);
   const intervalRef = useRef(0);
 
   function handleStart() {
@@ -32,9 +33,20 @@ export default function ExcerLayout() {
     clearInterval(intervalRef.current);
   }
 
-  let secondsPassed = 0;
-  if (startTime != null && now != null) {
-    secondsPassed = keepTime + ((now - startTime) / 1000);
+  const record = useRef<any[]>([]);
+
+  let seconds =  keepTime + ((now - startTime) / 1000);
+  let totalSeconds = totalKeepTime + seconds;
+
+  function handleRecord() {
+    record.current.push({
+      time: seconds
+    })
+    setTotalKeepTime(seconds);
+    setKeepTime(0);
+    setStartTime(Date.now());
+    setNow(Date.now());
+    console.log(record.current)
   }
 
   return (
@@ -42,8 +54,10 @@ export default function ExcerLayout() {
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          {keepTime}
-          <Timer currentTime={secondsPassed.toFixed(3)} />
+          <Timer 
+            currentTime={seconds.toFixed(2)} 
+            totalTime={ totalSeconds.toFixed(0) }
+            />
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>
           <Text>{ }</Text>
@@ -60,8 +74,7 @@ export default function ExcerLayout() {
           <View style={{ flexDirection: 'row' }}>
             <MyButton
               style={{ flex: 1, marginRight: 1 }}
-              label="run
-              "
+              label="run"
               onPress={() => handleStart()}
             />
             <MyButton
@@ -74,7 +87,7 @@ export default function ExcerLayout() {
             <MyButton
               style={{ flex: 1, marginRight: 1 }}
               label="record"
-              onPress={() => handleStart()}
+              onPress={() => handleRecord()}
             />
             <MyButton
               style={{ flex: 1, marginLeft: 1 }}

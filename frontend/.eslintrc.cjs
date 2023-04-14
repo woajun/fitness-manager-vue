@@ -16,6 +16,8 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
+    'no-alert': 'off',
+    'no-spaced-func': 'off',
     'linebreak-style': 'off',
     'vuejs-accessibility/form-control-has-label': 'off',
     'vue/html-button-has-type': 'off',

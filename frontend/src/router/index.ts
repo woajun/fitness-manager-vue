@@ -16,6 +16,11 @@ const routes = [
     name: 'report',
     component: () => import('@/pages/report/CalendarReport.vue'),
   },
+  {
+    path: '/slider',
+    name: 'slider',
+    component: () => import('@/components/JTimePicker.vue'),
+  },
 ];
 
 const router = createRouter({

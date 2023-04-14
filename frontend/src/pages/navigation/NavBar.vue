@@ -25,6 +25,9 @@ function changeView(url: string) {
         <li @click="changeView('/report')">
           리포트
         </li>
+        <li @click="changeView('/slider')">
+          슬라이더
+        </li>
         <li>
           <KakaoLogin />
         </li>

@@ -1,28 +1,16 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
-
-interface Item {
-  key: string,
-  isActive: boolean,
-}
+import { onMounted, ref } from 'vue';
 
 const props = defineProps<{
   items: string[]
   modelValue: string
 }>();
 
-defineEmits<{
+const emits = defineEmits<{
   (e: 'update:modelValue', value: string): void,
 }>();
 
-const cptItems = computed<Item[]>(() => props.items.map((key) => ({
-  key,
-  isActive: false,
-})));
-
-const currentItem = ref<Item>(cptItems.value[0]);
-
-const itemRefs = ref<HTMLLIElement[]>([]);
+const liEls = ref<HTMLLIElement[]>([]);
 const ulEl = ref<HTMLUListElement | null>(null);
 
 const startTop = ref(0);
@@ -30,17 +18,11 @@ const startPos = ref(0);
 const itemHeight = ref(0);
 
 function setItem(value: string, isMove = false) {
-  const targetItem = cptItems.value.find((e) => e.key === value);
-  if (targetItem === undefined) {
-    console.log(`Invalid slider value ${value}`);
-    return;
-  }
-  currentItem.value.isActive = false;
-  currentItem.value = targetItem;
-  currentItem.value.isActive = true;
+  const targetIdx = props.items.indexOf(value);
+  emits('update:modelValue', value);
 
   if (ulEl.value && isMove) {
-    ulEl.value.style.top = String(`${(cptItems.value.findIndex((e) => e.key === value) - 1) * -itemHeight.value}px`);
+    ulEl.value.style.top = String(`${(targetIdx - 1) * -itemHeight.value}px`);
   }
 }
 
@@ -63,22 +45,22 @@ function handleMove(e: TouchEvent) {
   }
   e.preventDefault();
   const offset = e.touches[0].pageY - startPos.value;
-  const minOffset = -(cptItems.value.length - 2) * 50;
+  const minOffset = -(props.items.length - 2) * 50;
 
   const newTop = Math.min(Math.max(startTop.value + offset, minOffset), 50);
   const newIdx = Number(((-newTop + 50) / 50).toFixed());
   ulEl.value.style.top = `${newTop.toFixed()}px`;
-  setItem(cptItems.value[newIdx].key);
+  setItem(props.items[newIdx]);
 }
 
 function handleEnd() {
   isTransition.value = true;
-  setItem(currentItem.value.key, true);
+  setItem(props.modelValue, true);
 }
 
 onMounted(() => {
-  itemHeight.value = itemRefs.value[0].offsetHeight;
-  setItem(cptItems.value[0].key, true);
+  itemHeight.value = liEls.value[0].offsetHeight;
+  setItem(props.modelValue, true);
 });
 
 </script>
@@ -93,14 +75,14 @@ onMounted(() => {
       @touchend="handleEnd"
     >
       <li
-        v-for="item in cptItems"
-        :key="item.key"
-        ref="itemRefs"
+        v-for="item in items"
+        :key="item"
+        ref="liEls"
         class="slider-item"
-        :class="{ active: item.isActive }"
-        @click="() => setItem(item.key)"
+        :class="{ active: modelValue === item }"
+        @click="() => setItem(item)"
       >
-        {{ item.key }}
+        {{ item }}
       </li>
     </ul>
   </div>

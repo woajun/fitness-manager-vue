@@ -17,22 +17,26 @@ const startTop = ref(0);
 const startPos = ref(0);
 const itemHeight = ref(0);
 
-function setItem(value: string, isMove = false) {
-  const targetIdx = props.items.indexOf(value);
-  emits('update:modelValue', value);
-
-  if (ulEl.value && isMove) {
-    ulEl.value.style.top = String(`${(targetIdx - 1) * -itemHeight.value}px`);
-  }
+function autoMove(item: string) {
+  if (!ulEl.value) return;
+  const itemH = itemHeight.value;
+  const order = props.items.indexOf(item) - 1;
+  ulEl.value.style.top = `${(order * -itemH)}px`;
 }
 
-const isTransition = ref(false);
+function setItem(value: string) {
+  emits('update:modelValue', value);
+}
+
+function setItemAndAutoMove(item: string) {
+  setItem(item);
+  autoMove(item);
+}
 
 function handleStart(e: TouchEvent) {
   if (ulEl.value === null) return;
   startTop.value = Number(ulEl.value.style.top.substring(0, ulEl.value.style.top.length - 2));
   startPos.value = e.touches[0].pageY;
-  isTransition.value = false;
 }
 
 function handleMove(e: TouchEvent) {
@@ -47,13 +51,12 @@ function handleMove(e: TouchEvent) {
 }
 
 function handleEnd() {
-  isTransition.value = true;
-  setItem(props.modelValue, true);
+  setItemAndAutoMove(props.modelValue);
 }
 
 onMounted(() => {
   itemHeight.value = liEls.value[0].offsetHeight;
-  setItem(props.modelValue, true);
+  setItemAndAutoMove(props.modelValue);
 });
 
 </script>
@@ -61,8 +64,7 @@ onMounted(() => {
   <div class="slider-container">
     <ul
       ref="ulEl"
-      class="slider-items"
-      :class="{ transition: isTransition }"
+      class="slider-items transition"
       @touchstart="handleStart"
       @touchmove="handleMove"
       @touchend="handleEnd"
@@ -73,14 +75,14 @@ onMounted(() => {
         ref="liEls"
         class="slider-item"
         :class="{ active: modelValue === item }"
-        @click="() => setItem(item)"
+        @click="() => setItemAndAutoMove(item)"
       >
         {{ item }}
       </li>
     </ul>
   </div>
 </template>
-<style>
+<style scoped>
 .slider-container {
   flex-grow: 1;
   height: 150px;
@@ -95,7 +97,7 @@ onMounted(() => {
   top: 0;
   position: absolute;
 }
-.slider-items.transition {
+.transition {
   transition: top .1s ease-out;
 }
 .slider-item {

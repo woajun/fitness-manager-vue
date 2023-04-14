@@ -1,7 +1,12 @@
+import React from 'react';
+
 export default class Stopwatch {
   setTime: React.Dispatch<React.SetStateAction<number>>;
+
   #startTime = 0;
+
   #intervalID = 0;
+
   #keepTime = 0;
 
   constructor(setTime: any) {
@@ -18,7 +23,7 @@ export default class Stopwatch {
     clearInterval(this.#intervalID);
     this.#intervalID = setInterval(() => {
       this.setTime(this.getTime());
-    }, 10)
+    }, 10);
   }
 
   pause() {

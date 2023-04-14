@@ -9,8 +9,8 @@ type TimerProps = {
   totalTime: string
 }
 
-function Item({sentence} : {sentence: string}) {
-  if(sentence !== '0') {
+function Item({ sentence } : {sentence: string}) {
+  if (sentence !== '0') {
     return <Text style={tw`text-xl text-gray-500`}>{ sentence }</Text>;
   }
   return null;

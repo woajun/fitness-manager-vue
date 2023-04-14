@@ -34,7 +34,7 @@ export default function ExcerLayout() {
     console.log(record.current);
   }
 
-  const totalTime = ((record.current.reduce((t, c) => t + c, 0) + time) / 1000).toFixed(3)
+  const totalTime = ((record.current.reduce((t, c) => t + c, 0) + time) / 1000).toFixed(3);
 
   return (
     <View style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
@@ -65,33 +65,35 @@ export default function ExcerLayout() {
         </View>
       </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
-        {isRun ?
-          <View style={{ flexDirection: 'row' }}>
-            <MyButton
-              style={{ flex: 1, marginRight: 1 }}
-              label="record"
-              onPress={() => handleRecord()}
-            />
-            <MyButton
-              style={{ flex: 1, marginLeft: 1 }}
-              label="pause"
-              onPress={() => handlePause()}
-            />
-          </View>
-          :
-          <View style={{ flexDirection: 'row' }}>
-            <MyButton
-              style={{ flex: 1, marginRight: 1 }}
-              label="run"
-              onPress={() => handleRun()}
-            />
-            <MyButton
-              style={{ flex: 1, marginLeft: 1 }}
-              label="finish"
-              onPress={() => handleReset()}
-            />
-          </View>
-        }
+        {isRun
+          ? (
+            <View style={{ flexDirection: 'row' }}>
+              <MyButton
+                style={{ flex: 1, marginRight: 1 }}
+                label="record"
+                onPress={() => handleRecord()}
+              />
+              <MyButton
+                style={{ flex: 1, marginLeft: 1 }}
+                label="pause"
+                onPress={() => handlePause()}
+              />
+            </View>
+          )
+          : (
+            <View style={{ flexDirection: 'row' }}>
+              <MyButton
+                style={{ flex: 1, marginRight: 1 }}
+                label="run"
+                onPress={() => handleRun()}
+              />
+              <MyButton
+                style={{ flex: 1, marginLeft: 1 }}
+                label="finish"
+                onPress={() => handleReset()}
+              />
+            </View>
+          )}
       </View>
     </View>
   );

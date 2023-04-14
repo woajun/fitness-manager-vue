@@ -29,24 +29,17 @@ function setItem(value: string, isMove = false) {
 const isTransition = ref(false);
 
 function handleStart(e: TouchEvent) {
-  if (ulEl.value === null) {
-    alert('error');
-    return;
-  }
+  if (ulEl.value === null) return;
   startTop.value = Number(ulEl.value.style.top.substring(0, ulEl.value.style.top.length - 2));
   startPos.value = e.touches[0].pageY;
   isTransition.value = false;
 }
 
 function handleMove(e: TouchEvent) {
-  if (ulEl.value === null) {
-    alert('error');
-    return;
-  }
+  if (ulEl.value === null) return;
   e.preventDefault();
   const offset = e.touches[0].pageY - startPos.value;
   const minOffset = -(props.items.length - 2) * 50;
-
   const newTop = Math.min(Math.max(startTop.value + offset, minOffset), 50);
   const newIdx = Number(((-newTop + 50) / 50).toFixed());
   ulEl.value.style.top = `${newTop.toFixed()}px`;

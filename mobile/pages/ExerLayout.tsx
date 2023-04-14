@@ -61,7 +61,7 @@ export default function ExcerLayout() {
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text>sec</Text>
-          <ScrollPicker />
+          <ScrollPicker items={['00', '10', '20', '30', '40', '50', '60']} />
         </View>
       </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>

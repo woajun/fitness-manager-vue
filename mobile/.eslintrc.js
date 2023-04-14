@@ -19,6 +19,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    'react/jsx-no-bind': 'off',
     'linebreak-style': [
       'off',
       'windows',

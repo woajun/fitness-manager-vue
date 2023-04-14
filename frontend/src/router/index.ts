@@ -19,7 +19,7 @@ const routes = [
   {
     path: '/slider',
     name: 'slider',
-    component: () => import('@/components/JTimePicker.vue'),
+    component: () => import('@/pages/test/SliderTest.vue'),
   },
 ];
 

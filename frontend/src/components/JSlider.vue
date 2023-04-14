@@ -28,7 +28,8 @@ function setValue(value: string) {
     return;
   }
   currentItem.value.isActive = false;
-  targetItem.isActive = true;
+  currentItem.value = targetItem;
+  currentItem.value.isActive = true;
 }
 
 const itemRefs = ref<HTMLLIElement[]>([]);
@@ -54,6 +55,7 @@ function handleStart(e: TouchEvent) {
   startPos.value = e.touches[0].pageY;
   isTransition.value = false;
 }
+
 function handleMove(e: TouchEvent) {
   if (ulEl.value === null) {
     alert('error');
@@ -68,10 +70,12 @@ function handleMove(e: TouchEvent) {
   ulEl.value.style.top = `${newTop.toFixed()}px`;
   setValue(cptItems.value[newIdx].key);
 }
+
 function handleEnd() {
   isTransition.value = true;
   setValue(currentItem.value.key);
 }
+
 </script>
 <template>
   <div class="flex-grow slider-container">
@@ -87,7 +91,7 @@ function handleEnd() {
         v-for="item in cptItems"
         :key="item.key"
         ref="itemRefs"
-        class="sliter-item"
+        class="slider-item"
         :class="{ active: item.isActive }"
         @click="() => setValue(item.key)"
       >
@@ -97,6 +101,9 @@ function handleEnd() {
   </div>
 </template>
 <style>
+.flex-grow {
+  flex-grow: 1;
+}
 .slider-container {
   flex-grow: 1;
   height: 150px;

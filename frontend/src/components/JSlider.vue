@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 const props = defineProps<{
   items: string[]
   modelValue: string
+  itemH: number
 }>();
 
 const emits = defineEmits<{
@@ -43,9 +44,9 @@ function handleMove(e: TouchEvent) {
   if (ulEl.value === null) return;
   e.preventDefault();
   const offset = e.touches[0].pageY - startPos.value;
-  const minOffset = -(props.items.length - 2) * 50;
-  const newTop = Math.min(Math.max(startTop.value + offset, minOffset), 50);
-  const newIdx = Number(((-newTop + 50) / 50).toFixed());
+  const minOffset = -(props.items.length - 2) * props.itemH;
+  const newTop = Math.min(Math.max(startTop.value + offset, minOffset), props.itemH);
+  const newIdx = Number(((-newTop + props.itemH) / props.itemH).toFixed());
   ulEl.value.style.top = `${newTop.toFixed()}px`;
   setItem(props.items[newIdx]);
 }
@@ -61,7 +62,10 @@ onMounted(() => {
 
 </script>
 <template>
-  <div class="slider-container">
+  <div
+    class="slider-container"
+    :style="{ height: `${itemH * 3}px` }"
+  >
     <ul
       ref="ulEl"
       class="slider-items transition"
@@ -75,6 +79,7 @@ onMounted(() => {
         ref="liEls"
         class="slider-item"
         :class="{ active: modelValue === item }"
+        :style="{ height: `${itemH}px` }"
         @click="() => setItemAndAutoMove(item)"
       >
         {{ item }}
@@ -85,7 +90,6 @@ onMounted(() => {
 <style scoped>
 .slider-container {
   flex-grow: 1;
-  height: 150px;
   overflow: hidden;
   position: relative;
 }
@@ -107,7 +111,6 @@ onMounted(() => {
   color: #c8c8c8;
   font-size: 2.5rem;
   font-weight: 500;
-  height: 50px;
   font-family: "SpoqaB", serif;
 }
 

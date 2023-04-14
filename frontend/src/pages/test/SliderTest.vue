@@ -12,5 +12,6 @@ const sltItem = ref('40');
   <JSlider
     v-model="sltItem"
     :items="items"
+    :item-h="40"
   />
 </template>

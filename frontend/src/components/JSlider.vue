@@ -28,7 +28,7 @@ const startTop = ref(0);
 const startPos = ref(0);
 const itemHeight = ref(0);
 
-function setValue(value: string, isMove = false) {
+function setItem(value: string, isMove = false) {
   const targetItem = cptItems.value.find((e) => e.key === value);
   if (targetItem === undefined) {
     console.log(`Invalid slider value ${value}`);
@@ -42,11 +42,6 @@ function setValue(value: string, isMove = false) {
     ulEl.value.style.top = String(`${(cptItems.value.findIndex((e) => e.key === value) - 1) * -itemHeight.value}px`);
   }
 }
-
-onMounted(() => {
-  itemHeight.value = itemRefs.value[0].offsetHeight;
-  setValue(cptItems.value[0].key, true);
-});
 
 const isTransition = ref(false);
 
@@ -72,17 +67,22 @@ function handleMove(e: TouchEvent) {
   const newTop = Math.min(Math.max(startTop.value + offset, minOffset), 50);
   const newIdx = Number(((-newTop + 50) / 50).toFixed());
   ulEl.value.style.top = `${newTop.toFixed()}px`;
-  setValue(cptItems.value[newIdx].key);
+  setItem(cptItems.value[newIdx].key);
 }
 
 function handleEnd() {
   isTransition.value = true;
-  setValue(currentItem.value.key, true);
+  setItem(currentItem.value.key, true);
 }
+
+onMounted(() => {
+  itemHeight.value = itemRefs.value[0].offsetHeight;
+  setItem(cptItems.value[0].key, true);
+});
 
 </script>
 <template>
-  <div class="flex-grow slider-container">
+  <div class="slider-container">
     <ul
       ref="ulEl"
       class="slider-items"
@@ -97,7 +97,7 @@ function handleEnd() {
         ref="itemRefs"
         class="slider-item"
         :class="{ active: item.isActive }"
-        @click="() => setValue(item.key)"
+        @click="() => setItem(item.key)"
       >
         {{ item.key }}
       </li>
@@ -105,9 +105,6 @@ function handleEnd() {
   </div>
 </template>
 <style>
-.flex-grow {
-  flex-grow: 1;
-}
 .slider-container {
   flex-grow: 1;
   height: 150px;
@@ -139,5 +136,4 @@ function handleEnd() {
 .slider-item.active {
   color: #2f2f2f;
 }
-
 </style>

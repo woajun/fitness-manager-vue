@@ -21,27 +21,31 @@ const cptItems = computed<Item[]>(() => props.items.map((key) => ({
 
 const currentItem = ref<Item>(cptItems.value[0]);
 
-function setValue(value: string) {
+const itemRefs = ref<HTMLLIElement[]>([]);
+const ulEl = ref<HTMLUListElement | null>(null);
+
+const startTop = ref(0);
+const startPos = ref(0);
+const itemHeight = ref(0);
+
+function setValue(value: string, isMove = false) {
   const targetItem = cptItems.value.find((e) => e.key === value);
   if (targetItem === undefined) {
-    alert(`Invalid slider value ${value}`);
+    console.log(`Invalid slider value ${value}`);
     return;
   }
   currentItem.value.isActive = false;
   currentItem.value = targetItem;
   currentItem.value.isActive = true;
+
+  if (ulEl.value && isMove) {
+    ulEl.value.style.top = String(`${(cptItems.value.findIndex((e) => e.key === value) - 1) * -itemHeight.value}px`);
+  }
 }
 
-const itemRefs = ref<HTMLLIElement[]>([]);
-const ulEl = ref<HTMLUListElement | null>(null);
-
-setValue(cptItems.value[0].key);
-
-const startTop = ref(0);
-const startPos = ref(0);
-
 onMounted(() => {
-  // const itemHeight = itemRefs.value[0].offsetHeight;
+  itemHeight.value = itemRefs.value[0].offsetHeight;
+  setValue(cptItems.value[0].key, true);
 });
 
 const isTransition = ref(false);
@@ -73,7 +77,7 @@ function handleMove(e: TouchEvent) {
 
 function handleEnd() {
   isTransition.value = true;
-  setValue(currentItem.value.key);
+  setValue(currentItem.value.key, true);
 }
 
 </script>

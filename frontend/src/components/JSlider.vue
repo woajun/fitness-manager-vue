@@ -8,10 +8,11 @@ interface Item {
 
 const props = defineProps<{
   items: string[]
+  modelValue: string
 }>();
 
 defineEmits<{
-  (e: 'onValueChanged', value: string): void,
+  (e: 'update:modelValue', value: string): void,
 }>();
 
 const cptItems = computed<Item[]>(() => props.items.map((key) => ({

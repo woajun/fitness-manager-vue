@@ -18,41 +18,48 @@ const items = [
 
 const itemHeight = 50; // Change this value based on your item height
 
+const displayItemNum = 10;
+
 function MyPicker() {
   const [selectedValue, setSelectedValue] = useState(items[0]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const scrollViewRef = useRef<ScrollView | null>(null);
 
-  const handleScroll = (event : NativeSyntheticEvent<NativeScrollEvent>) => {
+  function handleScroll(event : NativeSyntheticEvent<NativeScrollEvent>) {
     const { y } = event.nativeEvent.contentOffset;
     const index = Math.round(y / itemHeight);
     setSelectedValue(items[index]);
     setSelectedIndex(index);
-  };
+  }
 
-  const handleItemPress = (index: number) => {
-    setSelectedValue(items[index]);
-    setSelectedIndex(index);
+  function scrollFix(i: number) {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({
-        y: index * itemHeight,
+        y: i * itemHeight,
         animated: true,
       });
     }
-  };
+  }
+
+  function handleItemPress(index: number) {
+    setSelectedValue(items[index]);
+    setSelectedIndex(index);
+    scrollFix(index);
+  }
 
   return (
     <View>
       <Text>Select an item:</Text>
       <ScrollView
         ref={scrollViewRef}
-        style={{ height: itemHeight * 5 }} // Change this value based on your design
+        style={{ height: itemHeight * displayItemNum }} // Change this value based on your design
         showsVerticalScrollIndicator={false}
         snapToInterval={itemHeight}
         decelerationRate="fast"
         onScroll={handleScroll}
+        onScrollEndDrag={() => scrollFix(selectedIndex)}
       >
-        <View style={{ height: itemHeight * 2 }} />
+        <View style={{ height: itemHeight * ((displayItemNum - 1) / 2) }} />
         {items.map((item, index) => (
           <TouchableOpacity
             key={item}
@@ -73,7 +80,7 @@ function MyPicker() {
             </Text>
           </TouchableOpacity>
         ))}
-        <View style={{ height: itemHeight * 2 }} />
+        <View style={{ height: itemHeight * ((displayItemNum - 1) / 2) }} />
       </ScrollView>
       <Text>
         Selected value:

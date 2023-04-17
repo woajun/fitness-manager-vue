@@ -14,21 +14,34 @@ const items = [
   'Item 8',
   'Item 9',
   'Item 10',
+  'Item 11',
+  'Item 12',
+  'Item 13',
+  'Item 14',
+  'Item 15',
+  'Item 16',
+  'Item 17',
+  'Item 18',
+  'Item 19',
+  'Item 20',
+  'Item 21',
+  'Item 22',
+  'Item 23',
+  'Item 24',
+  'Item 25',
+  'Item 26',
+  'Item 27',
+  'Item 28',
+  'Item 29',
 ];
 
 const itemHeight = 30; // Change this value based on your item height
 
-const displayItemNum = 5;
+const displayItemNum = 10;
 
 function MyPicker() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const scrollViewRef = useRef<ScrollView | null>(null);
-
-  function handleScroll(event : NativeSyntheticEvent<NativeScrollEvent>) {
-    const { y } = event.nativeEvent.contentOffset;
-    const index = Math.round(y / itemHeight);
-    setSelectedIndex(index);
-  }
 
   function scrollFix(i: number) {
     if (scrollViewRef.current) {
@@ -36,6 +49,15 @@ function MyPicker() {
         y: i * itemHeight,
         animated: true,
       });
+    }
+  }
+
+  function handleScroll(event : NativeSyntheticEvent<NativeScrollEvent>, useFix = false) {
+    const { y } = event.nativeEvent.contentOffset;
+    const index = Math.round(y / itemHeight);
+    setSelectedIndex(index);
+    if (useFix) {
+      scrollFix(index);
     }
   }
 
@@ -53,7 +75,7 @@ function MyPicker() {
         snapToInterval={itemHeight}
         decelerationRate="fast"
         onScroll={handleScroll}
-        onScrollEndDrag={() => scrollFix(selectedIndex)}
+        onMomentumScrollEnd={(e) => handleScroll(e, true)}
       >
         <View style={{ height: itemHeight * ((displayItemNum - 1) / 2) }} />
         {items.map((item, index) => (

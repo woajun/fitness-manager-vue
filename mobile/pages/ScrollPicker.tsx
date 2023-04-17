@@ -16,19 +16,17 @@ const items = [
   'Item 10',
 ];
 
-const itemHeight = 50; // Change this value based on your item height
+const itemHeight = 30; // Change this value based on your item height
 
-const displayItemNum = 10;
+const displayItemNum = 5;
 
 function MyPicker() {
-  const [selectedValue, setSelectedValue] = useState(items[0]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const scrollViewRef = useRef<ScrollView | null>(null);
 
   function handleScroll(event : NativeSyntheticEvent<NativeScrollEvent>) {
     const { y } = event.nativeEvent.contentOffset;
     const index = Math.round(y / itemHeight);
-    setSelectedValue(items[index]);
     setSelectedIndex(index);
   }
 
@@ -42,14 +40,16 @@ function MyPicker() {
   }
 
   function handleItemPress(index: number) {
-    setSelectedValue(items[index]);
     setSelectedIndex(index);
     scrollFix(index);
   }
 
   return (
     <View>
-      <Text>Select an item:</Text>
+      <Text>
+        Selected value:
+        {items[selectedIndex]}
+      </Text>
       <ScrollView
         ref={scrollViewRef}
         style={{ height: itemHeight * displayItemNum }} // Change this value based on your design
@@ -82,10 +82,6 @@ function MyPicker() {
         ))}
         <View style={{ height: itemHeight * ((displayItemNum - 1) / 2) }} />
       </ScrollView>
-      <Text>
-        Selected value:
-        {selectedValue}
-      </Text>
     </View>
   );
 }

@@ -46,10 +46,6 @@ function MyPicker() {
 
   return (
     <View>
-      <Text>
-        Selected value:
-        {items[selectedIndex]}
-      </Text>
       <ScrollView
         ref={scrollViewRef}
         style={{ height: itemHeight * displayItemNum }} // Change this value based on your design

@@ -1,152 +1,86 @@
-/* eslint-disable react/require-default-props */
-/* eslint react/no-unused-prop-types: "warn" */
-/* eslint-disable react/destructuring-assignment */
-import React, { useRef, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
-  Dimensions,
-  LayoutChangeEvent,
-  NativeScrollEvent, NativeSyntheticEvent, Platform, ScrollView, Text, View,
+  View, Text, ScrollView, TouchableOpacity, NativeScrollEvent, NativeSyntheticEvent,
 } from 'react-native';
 
-type ContainerProps = {
-  wrapperHeight: number,
-  wrapperWidth: number,
-  wrapperBackground: string,
-  children: any,
-}
+const items = [
+  'Item 1',
+  'Item 2',
+  'Item 3',
+  'Item 4',
+  'Item 5',
+  'Item 6',
+  'Item 7',
+  'Item 8',
+  'Item 9',
+  'Item 10',
+];
 
-type ScrollPickerProps = Partial<ContainerProps> & {
-  style: any,
-  dataSource?: any[],
-  selectedIndex: number,
-  onValueChange: () => void,
-  renderItem: () => void,
-  highlightColor?: string,
-  itemHeight?: number,
-  highlightWidth?: number,
-  highlightBorderWidth?: number,
-  itemTextStyle?: any,
-  activeItemTextStyle?: any,
-  onMomentumScrollEnd?: () => void,
-  onScrollEndDrag?: () => void,
-}
+const itemHeight = 50; // Change this value based on your item height
 
-function Container(props: ContainerProps) {
-  return (
-    <View style={{
-      flex: 1,
-      overflow: 'hidden',
-      alignSelf: 'center',
-      height: props.wrapperHeight,
-      backgroundColor: props.wrapperBackground,
-    }}
-    >
-      {props.children}
-    </View>
-  );
-}
+function MyPicker() {
+  const [selectedValue, setSelectedValue] = useState(items[0]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const scrollViewRef = useRef<ScrollView | null>(null);
 
-function SelectedItem({ children, itemHeight }: {children: any, itemHeight: number}) {
-  return (
-    <View style={{
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: itemHeight,
-    }}
-    >
-      {children}
-    </View>
-  );
-}
-export default function ScrollPicker({
-  wrapperHeight = 180,
-  wrapperWidth = 150,
-  wrapperBackground = '#FFFFFF',
-  dataSource = ['00', '10', '20', '30', '40', '50'],
-  itemTextStyle = {
-    fontSize: 20, lineHeight: 26, textAlign: 'center', color: '#B4B4B4',
-  },
-  activeItemTextStyle = {
-    fontSize: 20, lineHeight: 26, textAlign: 'center', color: '#222121',
-  },
-  itemHeight = 30,
-} : ScrollPickerProps) {
-  const sview = useRef<ScrollView | null>(null);
-  const momentumStarted = useRef(false);
-  const timer = useRef(0);
-  const isScrollTo = useRef(false);
-  const dragStarted = useRef(false);
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const handleScroll = (event : NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { y } = event.nativeEvent.contentOffset;
+    const index = Math.round(y / itemHeight);
+    setSelectedValue(items[index]);
+    setSelectedIndex(index);
+  };
 
-  function onMomentumScrollBegin() {
-    momentumStarted.current = true;
-    if (timer.current) {
-      clearTimeout(timer.current);
+  const handleItemPress = (index: number) => {
+    setSelectedValue(items[index]);
+    setSelectedIndex(index);
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({
+        y: index * itemHeight,
+        animated: true,
+      });
     }
-  }
-
-  function scrollFix(e:NativeSyntheticEvent<NativeScrollEvent>) {
-    let verticalY = 0;
-    const h = itemHeight;
-    if (e.nativeEvent.contentOffset) {
-      verticalY = e.nativeEvent.contentOffset.y;
-    }
-    const aSltIdx = Math.round(verticalY / h);
-    const verticalElem = aSltIdx * h;
-    if (verticalElem !== verticalY) {
-      if (Platform.OS === 'ios') {
-        isScrollTo.current = true;
-      }
-      if (sview.current) {
-        sview.current.scrollTo({ y: verticalElem });
-      }
-    }
-    if (selectedIndex === aSltIdx) {
-      return;
-    }
-    setSelectedIndex(aSltIdx);
-  }
-
-  function onMomentumScrollEnd(e:NativeSyntheticEvent<NativeScrollEvent>) {
-    momentumStarted.current = false;
-    if (!isScrollTo.current && !momentumStarted.current && !dragStarted.current) {
-      scrollFix(e);
-    }
-  }
+  };
 
   return (
-    <Container
-      wrapperHeight={wrapperHeight}
-      wrapperWidth={wrapperWidth}
-      wrapperBackground={wrapperBackground}
-    >
+    <View>
+      <Text>Select an item:</Text>
       <ScrollView
-        ref={sview}
-        bounces={false}
+        ref={scrollViewRef}
+        style={{ height: itemHeight * 5 }} // Change this value based on your design
         showsVerticalScrollIndicator={false}
-        onMomentumScrollBegin={onMomentumScrollBegin}
-        onMomentumScrollEnd={onMomentumScrollEnd}
+        snapToInterval={itemHeight}
+        decelerationRate="fast"
+        onScroll={handleScroll}
       >
-        {dataSource.map((d, i) => {
-          const isSelected = i === selectedIndex;
-          const item = <Text style={isSelected ? activeItemTextStyle : itemTextStyle}>{d}</Text>;
-          return (
-            <SelectedItem itemHeight={itemHeight} key={d}>
+        <View style={{ height: itemHeight * 2 }} />
+        {items.map((item, index) => (
+          <TouchableOpacity
+            key={item}
+            style={{
+              height: itemHeight,
+              justifyContent: 'center',
+              backgroundColor: index === selectedIndex ? '#f0f0f0' : '#fff',
+            }}
+            onPress={() => handleItemPress(index)}
+          >
+            <Text
+              style={{
+                textAlign: 'center',
+                fontWeight: index === selectedIndex ? 'bold' : 'normal',
+              }}
+            >
               {item}
-            </SelectedItem>
-          );
-        })}
+            </Text>
+          </TouchableOpacity>
+        ))}
+        <View style={{ height: itemHeight * 2 }} />
       </ScrollView>
-    </Container>
+      <Text>
+        Selected value:
+        {selectedValue}
+      </Text>
+    </View>
   );
 }
 
-ScrollPicker.defaultProps = {
-  highlightWidth: Dimensions.get('window').width,
-  highlightBorderWidth: 2,
-  highlightColor: '#333',
-  onMomentumScrollEnd: () => {
-  },
-  onScrollEndDrag: () => {
-  },
-};
+export default MyPicker;

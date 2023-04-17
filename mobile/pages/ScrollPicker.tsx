@@ -1,51 +1,62 @@
+/* eslint react/no-unused-prop-types: "warn" */
+/* eslint-disable react/destructuring-assignment */
 import React, { useRef } from 'react';
 import {
+  Dimensions,
   LayoutChangeEvent,
   NativeScrollEvent, NativeSyntheticEvent, ScrollView, Text, View,
 } from 'react-native';
 
 type ScrollPickerProps = {
-  items: string[]
+  style: any,
+  dataSource?: any[],
+  selectedIndex: number,
+  onValueChange: () => void,
+  renderItem: () => void,
+  highlightColor?: string,
+  itemHeight?: number,
+  wrapperBackground?: string,
+  wrapperWidth?: number,
+  wrapperHeight?: number,
+  highlightWidth?: number,
+  highlightBorderWidth?: number,
+  itemTextStyle?: any,
+  activeItemTextStyle?: any,
+  onMomentumScrollEnd?: () => void,
+  onScrollEndDrag?: () => void,
 }
 
-export default function ScrollPicker({ items } : ScrollPickerProps) {
-  const sview = useRef<ScrollView>(null);
-  const itemH = useRef(0);
-
-  function scrollFix(e: NativeSyntheticEvent<NativeScrollEvent>) {
-    let verticalY = 0;
-    if (e.nativeEvent.contentOffset) {
-      verticalY = e.nativeEvent.contentOffset.y;
-    }
-    console.log(verticalY);
-    console.log(itemH.current);
-    // sview.current?.scrollTo({ y: 0 });
-  }
-
-  function onMomentumScrollEnd(e: NativeSyntheticEvent<NativeScrollEvent>) {
-    scrollFix(e);
-  }
-
-  function setHeight(e: LayoutChangeEvent) {
-    const { height } = e.nativeEvent.layout;
-    if (itemH.current === 0) {
-      itemH.current = height;
-    }
-  }
+export default function ScrollPicker(props : ScrollPickerProps) {
   return (
-    <ScrollView
-      ref={sview}
-      showsVerticalScrollIndicator={false}
-      onScroll={(e) => onMomentumScrollEnd(e)}
-      onScrollEndDrag={(e) => onMomentumScrollEnd(e)}
-    >
-      {
-        items.map((item) => (
-          <View onLayout={setHeight} key={item}>
-            <Text>{ item }</Text>
-          </View>
-        ))
-      }
-    </ScrollView>
+    <View style={{
+      flex: 1,
+      overflow: 'hidden',
+      alignSelf: 'center',
+      height: props.wrapperHeight,
+      width: props.wrapperWidth,
+      backgroundColor: props.wrapperBackground,
+    }}
+    />
   );
 }
+
+ScrollPicker.defaultProps = {
+  dataSource: [1, 2, 3],
+  itemHeight: 60,
+  wrapperBackground: '#FFFFFF',
+  wrapperHeight: 180,
+  wrapperWidth: 150,
+  highlightWidth: Dimensions.get('window').width,
+  highlightBorderWidth: 2,
+  highlightColor: '#333',
+  onMomentumScrollEnd: () => {
+  },
+  onScrollEndDrag: () => {
+  },
+  itemTextStyle: {
+    fontSize: 20, lineHeight: 26, textAlign: 'center', color: '#B4B4B4',
+  },
+  activeItemTextStyle: {
+    fontSize: 20, lineHeight: 26, textAlign: 'center', color: '#222121',
+  },
+};

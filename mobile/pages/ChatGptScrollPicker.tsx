@@ -1,7 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {
-  View, Text, ScrollView, StyleSheet,
+  View, Text, ScrollView, StyleSheet, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent,
 } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scrollContainer: {
+    width: '100%',
+  },
+  itemText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
 
 const items = Array.from({ length: 30 }, (v, i) => `Item ${i + 1}`);
 const itemHeight = 50; // Change this value based on your item height
@@ -9,11 +24,12 @@ const paddingTop = itemHeight * 2; // Extra padding at the top
 const paddingBottom = itemHeight * 2; // Extra padding at the bottom
 
 function MyPicker() {
-  const scrollViewRef = useRef(null);
+  const scrollViewRef = useRef<ScrollView>(null);
   const [selectedItem, setSelectedItem] = useState('');
   const [scrollOffset, setScrollOffset] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
 
-  const handleScroll = (event) => {
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { y } = event.nativeEvent.contentOffset;
     setScrollOffset(y);
     const index = Math.round(y / itemHeight);
@@ -24,7 +40,7 @@ function MyPicker() {
     if (scrollViewRef.current) {
       const index = Math.round(scrollOffset / itemHeight);
       const y = index * itemHeight;
-      if (y + scrollViewRef.current.layoutMeasurement.height >= scrollViewRef.current.contentSize.height) {
+      if (y + containerHeight >= scrollViewRef.current?.scrollContentHeight) {
         scrollViewRef.current.scrollToEnd({ animated: true });
       } else {
         scrollViewRef.current.scrollTo({ y, animated: true });
@@ -32,8 +48,12 @@ function MyPicker() {
     }
   };
 
+  const handleContainerLayout = (event: LayoutChangeEvent) => {
+    setContainerHeight(event.nativeEvent.layout.height);
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={handleContainerLayout}>
       <ScrollView
         ref={scrollViewRef}
         style={styles.scrollContainer}
@@ -73,21 +93,5 @@ function MyPicker() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  scrollContainer: {
-    height: itemHeight * 5, // Show 5 items at a time
-    width: '100%',
-  },
-  itemText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});
 
 export default MyPicker;

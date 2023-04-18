@@ -23,7 +23,7 @@ export default class Stopwatch {
     clearInterval(this.#intervalID);
     this.#intervalID = setInterval(() => {
       this.setTime(this.getTime());
-    }, 10);
+    }, 1000);
   }
 
   pause() {

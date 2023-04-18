@@ -18,6 +18,8 @@ function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {
   const [selectedIndex, setSelectedIndex] = useState(items.indexOf(selectedItem));
   const scrollViewRef = useRef<ScrollView | null>(null);
 
+  console.log('aa');
+
   function scrollFix(i: number) {
     scrollViewRef.current?.scrollTo({
       y: i * itemHeight,

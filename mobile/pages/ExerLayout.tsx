@@ -59,7 +59,7 @@ export default function ExcerLayout() {
     console.log(record.current);
   }
 
-  const totalTime = ((record.current.reduce((t, c) => t + c, 0) + time) / 1000).toFixed(3);
+  const totalTime = ((record.current.reduce((t, c) => t + c, 0) + time) / 1000).toFixed(0);
 
   const [secModalVisible, setSecModalVisible] = useState(false);
 
@@ -71,7 +71,7 @@ export default function ExcerLayout() {
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Timer
-            currentTime={(time / 1000).toFixed(3)}
+            currentTime={(Number(sec) - (time / 1000)).toFixed(0)}
             totalTime={totalTime}
           />
         </View>
@@ -90,17 +90,6 @@ export default function ExcerLayout() {
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text>sec</Text>
-          <Modal
-            animationType="slide"
-            visible={secModalVisible}
-          >
-            <Text>select seconds</Text>
-            <ScrollPicker items={secs} handleItem={setSec} selectedItem={sec} />
-            <MyButton
-              label="close"
-              onPress={() => setSecModalVisible(false)}
-            />
-          </Modal>
           <Pressable onPress={() => setSecModalVisible(true)}>
             <Text>{sec}</Text>
           </Pressable>
@@ -137,6 +126,17 @@ export default function ExcerLayout() {
             </View>
           )}
       </View>
+      <Modal
+        animationType="slide"
+        visible={secModalVisible}
+      >
+        <Text>select seconds</Text>
+        <ScrollPicker items={secs} handleItem={setSec} selectedItem={sec} />
+        <MyButton
+          label="close"
+          onPress={() => setSecModalVisible(false)}
+        />
+      </Modal>
     </View>
   );
 }

@@ -5,6 +5,7 @@ import {
 import MyButton from '../components/MyButton';
 import Timer from './timer/Timer';
 import Stopwatch from './stopwatch';
+import ScrollPicker from './ScrollPicker';
 
 export default function ExcerLayout() {
   const [time, setTime] = useState(0);
@@ -68,6 +69,7 @@ export default function ExcerLayout() {
             visible={secModalVisible}
           >
             <Text>Hello World</Text>
+            <ScrollPicker />
             <MyButton
               label="close"
               onPress={() => setSecModalVisible(false)}

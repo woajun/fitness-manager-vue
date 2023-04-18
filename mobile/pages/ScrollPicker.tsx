@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  View, Text, ScrollView, TouchableOpacity, NativeScrollEvent, NativeSyntheticEvent,
+  View, Text, ScrollView, TouchableOpacity,
 } from 'react-native';
 
 const itemHeight = 30; // Change this value based on your item height

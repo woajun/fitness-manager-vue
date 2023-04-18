@@ -65,10 +65,6 @@ export default function ExcerLayout() {
 
   const [sec, setSec] = useState('40');
 
-  const handleSec = (data: string) => {
-    setSec(data);
-  };
-
   return (
     <View style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
@@ -98,17 +94,15 @@ export default function ExcerLayout() {
             animationType="slide"
             visible={secModalVisible}
           >
-            <Text>Hello World</Text>
-            <ScrollPicker items={secs} handleItem={handleSec} selectedItem={sec} />
+            <Text>select seconds</Text>
+            <ScrollPicker items={secs} handleItem={setSec} selectedItem={sec} />
             <MyButton
               label="close"
               onPress={() => setSecModalVisible(false)}
             />
-
           </Modal>
           <Pressable onPress={() => setSecModalVisible(true)}>
             <Text>{sec}</Text>
-            <Text>Show Modal</Text>
           </Pressable>
         </View>
       </View>

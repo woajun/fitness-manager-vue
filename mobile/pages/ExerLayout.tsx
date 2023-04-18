@@ -7,6 +7,29 @@ import Timer from './timer/Timer';
 import Stopwatch from './stopwatch';
 import ScrollPicker from './ScrollPicker';
 
+const secs = [
+  '00',
+  '10',
+  '20',
+  '30',
+  '40',
+  '50',
+  '60',
+  '70',
+  '80',
+  '90',
+  '100',
+  '110',
+  '120',
+  '130',
+  '140',
+  '150',
+  '160',
+  '170',
+  '180',
+  '190',
+];
+
 export default function ExcerLayout() {
   const [time, setTime] = useState(0);
   const [isRun, setIsRun] = useState(false);
@@ -39,6 +62,13 @@ export default function ExcerLayout() {
   const totalTime = ((record.current.reduce((t, c) => t + c, 0) + time) / 1000).toFixed(3);
 
   const [secModalVisible, setSecModalVisible] = useState(false);
+
+  const [sec, setSec] = useState('40');
+
+  const handleSec = (data: string) => {
+    setSec(data);
+  };
+
   return (
     <View style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
@@ -69,7 +99,7 @@ export default function ExcerLayout() {
             visible={secModalVisible}
           >
             <Text>Hello World</Text>
-            <ScrollPicker />
+            <ScrollPicker items={secs} handleItem={handleSec} selectedItem={sec} />
             <MyButton
               label="close"
               onPress={() => setSecModalVisible(false)}
@@ -77,6 +107,7 @@ export default function ExcerLayout() {
 
           </Modal>
           <Pressable onPress={() => setSecModalVisible(true)}>
+            <Text>{sec}</Text>
             <Text>Show Modal</Text>
           </Pressable>
         </View>

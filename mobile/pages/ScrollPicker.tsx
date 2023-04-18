@@ -42,6 +42,7 @@ const displayItemNum = 10;
 function MyPicker() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const scrollViewRef = useRef<ScrollView | null>(null);
+  const isPress = useRef(false);
 
   function scrollFix(i: number) {
     if (scrollViewRef.current) {
@@ -52,18 +53,31 @@ function MyPicker() {
     }
   }
 
-  function handleScroll(event : NativeSyntheticEvent<NativeScrollEvent>, useFix = false) {
+  function handleScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
+    if (isPress.current) return;
     const { y } = event.nativeEvent.contentOffset;
     const index = Math.round(y / itemHeight);
     setSelectedIndex(index);
-    if (useFix) {
-      scrollFix(index);
-    }
   }
 
   function handleItemPress(index: number) {
+    isPress.current = true;
     setSelectedIndex(index);
     scrollFix(index);
+  }
+
+  function onScrollEndDrag(event: NativeSyntheticEvent<NativeScrollEvent>) {
+    const { y } = event.nativeEvent.contentOffset;
+    const index = Math.round(y / itemHeight);
+    scrollFix(index);
+  }
+
+  function onScrollBeginDrag() { // android
+    isPress.current = false;
+  }
+
+  function onTouchStart() { // web, android
+    console.log('onTouchStart');
   }
 
   return (
@@ -74,8 +88,11 @@ function MyPicker() {
         showsVerticalScrollIndicator={false}
         snapToInterval={itemHeight}
         decelerationRate="fast"
+        scrollEventThrottle={16}
         onScroll={handleScroll}
-        onMomentumScrollEnd={(e) => handleScroll(e, true)}
+        onScrollEndDrag={onScrollEndDrag}
+        onScrollBeginDrag={onScrollBeginDrag}
+        onTouchStart={onTouchStart}
       >
         <View style={{ height: itemHeight * ((displayItemNum - 1) / 2) }} />
         {items.map((item, index) => (
@@ -84,7 +101,6 @@ function MyPicker() {
             style={{
               height: itemHeight,
               justifyContent: 'center',
-              backgroundColor: index === selectedIndex ? '#f0f0f0' : '#fff',
             }}
             onPress={() => handleItemPress(index)}
           >
@@ -92,6 +108,7 @@ function MyPicker() {
               style={{
                 textAlign: 'center',
                 fontWeight: index === selectedIndex ? 'bold' : 'normal',
+                opacity: index === selectedIndex ? 1 : 0.5,
               }}
             >
               {item}

@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { Text, View } from 'react-native';
+import {
+  Modal, Pressable, Text, View,
+} from 'react-native';
 import MyButton from '../components/MyButton';
 import Timer from './timer/Timer';
 import Stopwatch from './stopwatch';
@@ -35,6 +37,7 @@ export default function ExcerLayout() {
 
   const totalTime = ((record.current.reduce((t, c) => t + c, 0) + time) / 1000).toFixed(3);
 
+  const [secModalVisible, setSecModalVisible] = useState(false);
   return (
     <View style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
@@ -60,6 +63,20 @@ export default function ExcerLayout() {
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text>sec</Text>
+          <Modal
+            animationType="slide"
+            visible={secModalVisible}
+          >
+            <Text>Hello World</Text>
+            <MyButton
+              label="close"
+              onPress={() => setSecModalVisible(false)}
+            />
+
+          </Modal>
+          <Pressable onPress={() => setSecModalVisible(true)}>
+            <Text>Show Modal</Text>
+          </Pressable>
         </View>
       </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>

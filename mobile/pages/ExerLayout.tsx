@@ -29,6 +29,30 @@ const secs = [
   '190',
 ];
 
+export function to00(r: number) {
+  return r < 10 ? `0${r}` : `${r}`;
+}
+
+function msTo(ms: number) {
+  const rawH = ms / 1000 / 60 / 60;
+  const h = Math.floor(rawH);
+  const m = Math.floor((rawH - h) * 60);
+  const s = Math.floor(((rawH - h) * 60 - m) * 60);
+  const sss = Math.floor((ms % 1000) / 10);
+  return {
+    h, m, s, sss,
+  };
+}
+function msToHHMMSS(ms: number) {
+  const { h, m, s } = msTo(ms);
+  return `${to00(h)}:${to00(m)}:${to00(s)}`;
+}
+
+function msToMMSSsss(ms:number) {
+  const { m, s, sss } = msTo(ms);
+  return `${to00(m)}:${to00(s)}.${to00(sss)}`;
+}
+
 export default function ExcerLayout() {
   const [totalTime, setTotalTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -38,9 +62,9 @@ export default function ExcerLayout() {
     let intervalId = 0;
     if (isRunning) {
       intervalId = setInterval(() => {
-        setCurrentTime((c) => c + 100);
-        setTotalTime((t) => t + 100);
-      }, 100);
+        setCurrentTime((c) => c + 10);
+        setTotalTime((t) => t + 10);
+      }, 10);
     }
     return () => {
       clearInterval(intervalId);
@@ -75,8 +99,8 @@ export default function ExcerLayout() {
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text style={tw`text-2xl`}>시작</Text>
-          <Text style={tw`text-2xl`}>{ currentTime }</Text>
-          <Text style={tw`text-xl text-gray-500`}>{ totalTime }</Text>
+          <Text style={tw`text-2xl`}>{ msToMMSSsss(currentTime) }</Text>
+          <Text style={tw`text-xl text-gray-500`}>{ msToHHMMSS(totalTime) }</Text>
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>
           <Text>{ }</Text>

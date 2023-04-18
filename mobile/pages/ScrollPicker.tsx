@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  View, Text, ScrollView, TouchableOpacity,
+  View, Text, ScrollView, TouchableOpacity, Pressable,
 } from 'react-native';
 
 const itemHeight = 30; // Change this value based on your item height
@@ -17,8 +17,6 @@ type ScrollPickerProps ={
 function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {
   const [selectedIndex, setSelectedIndex] = useState(items.indexOf(selectedItem));
   const scrollViewRef = useRef<ScrollView | null>(null);
-
-  console.log('aa');
 
   function scrollFix(i: number) {
     scrollViewRef.current?.scrollTo({
@@ -53,7 +51,7 @@ function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {
       >
         <View style={{ height: itemHeight * ((displayItemNum - 1) / 2) }} />
         {items.map((item, index) => (
-          <TouchableOpacity
+          <Pressable
             key={item}
             style={{
               height: itemHeight,
@@ -70,7 +68,7 @@ function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {
             >
               {item}
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         ))}
         <View style={{ height: itemHeight * ((displayItemNum - 1) / 2) }} />
       </ScrollView>

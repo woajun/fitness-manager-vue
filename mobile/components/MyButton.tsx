@@ -11,7 +11,6 @@ type MyButtonProps = {
 }
 
 export default function MyButton({ style, label, onPress }: MyButtonProps) {
-  console.log('b');
   return (
     <Pressable
       style={[style, tw`rounded-lg bg-slate-700`]}

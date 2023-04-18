@@ -1,10 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal, Pressable, Text, View,
 } from 'react-native';
+import tw from 'twrnc';
 import MyButton from '../components/MyButton';
-import Timer from './timer/Timer';
-import Stopwatch from './stopwatch';
 import ScrollPicker from './ScrollPicker';
 
 const secs = [
@@ -31,35 +30,40 @@ const secs = [
 ];
 
 export default function ExcerLayout() {
-  const [time, setTime] = useState(0);
-  const [isRun, setIsRun] = useState(false);
+  const [totalTime, setTotalTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
 
-  const sw = useRef(new Stopwatch(setTime));
-  const record = useRef<any[]>([]);
+  useEffect(() => {
+    let intervalId = 0;
+    if (isRunning) {
+      intervalId = setInterval(() => {
+        setCurrentTime((c) => c + 100);
+        setTotalTime((t) => t + 100);
+      }, 100);
+    }
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [isRunning]);
 
   function handleRun() {
-    sw.current.run();
-    setIsRun(true);
+    setIsRunning(true);
   }
 
   function handlePause() {
-    sw.current.pause();
-    setIsRun(false);
+    setIsRunning(false);
   }
 
   function handleReset() {
-    record.current = [];
-    sw.current.reset();
+    setIsRunning(false);
+    setCurrentTime(0);
+    setTotalTime(0);
   }
 
   function handleRecord() {
-    const ms = sw.current.reset();
-    record.current.push(ms);
-    sw.current.run();
-    console.log(record.current);
+    setCurrentTime(0);
   }
-
-  const totalTime = ((record.current.reduce((t, c) => t + c, 0) + time) / 1000).toFixed(0);
 
   const [secModalVisible, setSecModalVisible] = useState(false);
 
@@ -70,10 +74,9 @@ export default function ExcerLayout() {
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Timer
-            currentTime={(Number(sec) - (time / 1000)).toFixed(0)}
-            totalTime={totalTime}
-          />
+          <Text style={tw`text-2xl`}>시작</Text>
+          <Text style={tw`text-2xl`}>{ currentTime }</Text>
+          <Text style={tw`text-xl text-gray-500`}>{ totalTime }</Text>
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>
           <Text>{ }</Text>
@@ -96,7 +99,7 @@ export default function ExcerLayout() {
         </View>
       </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
-        {isRun
+        {isRunning
           ? (
             <View style={{ flexDirection: 'row' }}>
               <MyButton

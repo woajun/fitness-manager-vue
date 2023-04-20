@@ -30,6 +30,7 @@ export default function ExcerLayout() {
   }
 
   function handlePause() {
+    console.log('pause');
     setIsRunning(false);
   }
 
@@ -40,6 +41,7 @@ export default function ExcerLayout() {
   }
 
   function handleRecord() {
+    console.log('record');
     setCurrentTime(0);
   }
 
@@ -76,12 +78,12 @@ export default function ExcerLayout() {
               <MyButton
                 style={{ flex: 1, marginRight: 1 }}
                 label="record"
-                onPress={() => handleRecord()}
+                onPress={handleRecord}
               />
               <MyButton
                 style={{ flex: 1, marginLeft: 1 }}
                 label="pause"
-                onPress={() => handlePause()}
+                onPress={handlePause}
               />
             </View>
           )
@@ -90,12 +92,12 @@ export default function ExcerLayout() {
               <MyButton
                 style={{ flex: 1, marginRight: 1 }}
                 label="run"
-                onPress={() => handleRun()}
+                onPress={handleRun}
               />
               <MyButton
                 style={{ flex: 1, marginLeft: 1 }}
                 label="finish"
-                onPress={() => handleReset()}
+                onPress={handleReset}
               />
             </View>
           )}

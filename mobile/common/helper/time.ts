@@ -7,7 +7,7 @@ export function msTo(ms: number) {
   const h = Math.floor(rawH);
   const m = Math.floor((rawH - h) * 60);
   const s = Math.floor(((rawH - h) * 60 - m) * 60);
-  const sss = Math.floor((ms % 1000) / 10);
+  const sss = Math.floor((ms % 1000) / 100);
   return {
     h, m, s, sss,
   };
@@ -19,5 +19,5 @@ export function msToHHMMSS(ms: number) {
 
 export function msToMMSSsss(ms:number) {
   const { m, s, sss } = msTo(ms);
-  return `${to00(m)}:${to00(s)}.${to00(sss)}`;
+  return `${to00(m)}:${to00(s)}.${sss}`;
 }

@@ -16,9 +16,9 @@ export default function ExcerLayout() {
     let intervalId = 0;
     if (isRunning) {
       intervalId = setInterval(() => {
-        setCurrentTime((c) => c + 10);
-        setTotalTime((t) => t + 10);
-      }, 10);
+        setCurrentTime((c) => c + 100);
+        setTotalTime((t) => t + 100);
+      }, 100);
     }
     return () => {
       clearInterval(intervalId);

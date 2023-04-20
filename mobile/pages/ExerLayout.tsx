@@ -60,10 +60,10 @@ export default function ExcerLayout() {
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'yellow' }} />
       <View style={{ flex: 2, flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text>kg</Text>
+          <ButtonWithScrollPicker />
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text>rep</Text>
+          <ButtonWithScrollPicker />
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker />

@@ -1,34 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Modal, Pressable, Text, View,
+  Text, View,
 } from 'react-native';
 import tw from 'twrnc';
 import MyButton from '../components/MyButton';
-import ScrollPicker from './ScrollPicker';
 import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
-
-const secs = [
-  '00',
-  '10',
-  '20',
-  '30',
-  '40',
-  '50',
-  '60',
-  '70',
-  '80',
-  '90',
-  '100',
-  '110',
-  '120',
-  '130',
-  '140',
-  '150',
-  '160',
-  '170',
-  '180',
-  '190',
-];
+import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
 
 export default function ExcerLayout() {
   const [totalTime, setTotalTime] = useState(0);
@@ -66,10 +43,6 @@ export default function ExcerLayout() {
     setCurrentTime(0);
   }
 
-  const [secModalVisible, setSecModalVisible] = useState(false);
-
-  const [sec, setSec] = useState('40');
-
   return (
     <View style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
@@ -93,10 +66,7 @@ export default function ExcerLayout() {
           <Text>rep</Text>
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text>sec</Text>
-          <Pressable onPress={() => setSecModalVisible(true)}>
-            <Text>{sec}</Text>
-          </Pressable>
+          <ButtonWithScrollPicker />
         </View>
       </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
@@ -130,17 +100,6 @@ export default function ExcerLayout() {
             </View>
           )}
       </View>
-      <Modal
-        animationType="slide"
-        visible={secModalVisible}
-      >
-        <Text>select seconds</Text>
-        <ScrollPicker items={secs} handleItem={setSec} selectedItem={sec} />
-        <MyButton
-          label="close"
-          onPress={() => setSecModalVisible(false)}
-        />
-      </Modal>
     </View>
   );
 }

@@ -5,6 +5,7 @@ import {
 import tw from 'twrnc';
 import MyButton from '../components/MyButton';
 import ScrollPicker from './ScrollPicker';
+import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
 
 const secs = [
   '00',
@@ -28,30 +29,6 @@ const secs = [
   '180',
   '190',
 ];
-
-export function to00(r: number) {
-  return r < 10 ? `0${r}` : `${r}`;
-}
-
-function msTo(ms: number) {
-  const rawH = ms / 1000 / 60 / 60;
-  const h = Math.floor(rawH);
-  const m = Math.floor((rawH - h) * 60);
-  const s = Math.floor(((rawH - h) * 60 - m) * 60);
-  const sss = Math.floor((ms % 1000) / 10);
-  return {
-    h, m, s, sss,
-  };
-}
-function msToHHMMSS(ms: number) {
-  const { h, m, s } = msTo(ms);
-  return `${to00(h)}:${to00(m)}:${to00(s)}`;
-}
-
-function msToMMSSsss(ms:number) {
-  const { m, s, sss } = msTo(ms);
-  return `${to00(m)}:${to00(s)}.${to00(sss)}`;
-}
 
 export default function ExcerLayout() {
   const [totalTime, setTotalTime] = useState(0);

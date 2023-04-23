@@ -18,6 +18,6 @@ export function msToHHMMSS(ms: number) {
 }
 
 export function msToMMSSsss(ms:number) {
-  const { m, s, sss } = msTo(ms);
+  const { m, s, sss } = ms < 0 ? msTo(-ms) : msTo(ms);
   return `${to00(m)}:${to00(s)}.${sss}`;
 }

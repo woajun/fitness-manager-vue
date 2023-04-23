@@ -40,12 +40,25 @@ export default function ExcerLayout() {
   const [curEx, setCurEx] = useState<Exercise>();
   const [exData, setExData] = useState<Exercise[]>([]);
 
-  const [sec, setSec] = useState(0);
+  const [sec, setSec] = useState(60);
+  const [kg, setKg] = useState(0);
+  const [kgs, setKgs] = useState([0]);
 
   useEffect(() => {
     setExData(exDatas);
     setCurEx(exDatas[0]);
   }, []);
+
+  useEffect(() => {
+    if (curEx) {
+      setKg(curEx.kgStart);
+      const aKgs = [];
+      for (let i = curEx.kgMin; i <= curEx.kgMax; i += curEx.kgUnit) {
+        aKgs.push(i);
+      }
+      setKgs(aKgs);
+    }
+  }, [curEx]);
 
   useEffect(() => {
     let intervalId = 0;
@@ -86,7 +99,7 @@ export default function ExcerLayout() {
       <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text style={tw`text-2xl`}>시작</Text>
-          <Text style={tw`text-2xl`}>{ msToMMSSsss(currentTime) }</Text>
+          <Text style={tw`text-2xl`}>{ msToMMSSsss((sec * 1000) - currentTime) }</Text>
           <Text style={tw`text-xl text-gray-500`}>{ msToHHMMSS(totalTime) }</Text>
         </View>
         <View style={{ flex: 1, backgroundColor: 'blue' }}>
@@ -100,18 +113,28 @@ export default function ExcerLayout() {
       <View style={{ flex: 2, flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker
+            items={kgs}
+            label="kg"
+            setSlt={setKg}
+            slt={kg}
+          />
+        </View>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ButtonWithScrollPicker
             items={secs}
             label="sec"
             setSlt={setSec}
             slt={sec}
           />
         </View>
-        {/* <View style={{ flex: 1, justifyContent: 'center' }}>
-          <ButtonWithScrollPicker />
-        </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <ButtonWithScrollPicker />
-        </View> */}
+          <ButtonWithScrollPicker
+            items={secs}
+            label="sec"
+            setSlt={setSec}
+            slt={sec}
+          />
+        </View>
       </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
         {isRunning

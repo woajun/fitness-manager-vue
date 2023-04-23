@@ -9,6 +9,29 @@ import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
 import { Condtions, Exercise } from './Definitions';
 import exDatas from '../mock/ExData';
 
+const secs = [
+  0,
+  10,
+  20,
+  30,
+  40,
+  50,
+  60,
+  70,
+  80,
+  90,
+  100,
+  110,
+  120,
+  130,
+  140,
+  150,
+  160,
+  170,
+  180,
+  190,
+];
+
 export default function ExcerLayout() {
   const [totalTime, setTotalTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -17,11 +40,7 @@ export default function ExcerLayout() {
   const [curEx, setCurEx] = useState<Exercise>();
   const [exData, setExData] = useState<Exercise[]>([]);
 
-  const [con, setCon] = useState<Condtions>({
-    kg: 0,
-    rep: 0,
-    rest: 0,
-  });
+  const [sec, setSec] = useState(0);
 
   useEffect(() => {
     setExData(exDatas);
@@ -79,15 +98,20 @@ export default function ExcerLayout() {
         <Text>{curEx?.name}</Text>
       </View>
       <View style={{ flex: 2, flexDirection: 'row' }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ButtonWithScrollPicker
+            items={secs}
+            label="sec"
+            setSlt={setSec}
+            slt={sec}
+          />
+        </View>
         {/* <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker />
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker />
         </View> */}
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <ButtonWithScrollPicker />
-        </View>
       </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
         {isRunning

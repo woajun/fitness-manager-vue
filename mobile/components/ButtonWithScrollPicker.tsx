@@ -5,45 +5,30 @@ import {
 import ScrollPicker from './ScrollPicker';
 import MyButton from './MyButton';
 
-const secs = [
-  '00',
-  '10',
-  '20',
-  '30',
-  '40',
-  '50',
-  '60',
-  '70',
-  '80',
-  '90',
-  '100',
-  '110',
-  '120',
-  '130',
-  '140',
-  '150',
-  '160',
-  '170',
-  '180',
-  '190',
-];
+type Props = {
+  items: number[]
+  slt: number
+  setSlt: React.Dispatch<React.SetStateAction<number>>
+  label: string
+}
 
-export default function ButtonWithScrollPicker() {
+export default function ButtonWithScrollPicker({
+  items, slt, setSlt, label,
+} : Props) {
   const [secModalVisible, setSecModalVisible] = useState(false);
-  const [sec, setSec] = useState('40');
 
   return (
     <View>
-      <Text>sec</Text>
+      <Text>{label}</Text>
       <Pressable onPress={() => setSecModalVisible(true)}>
-        <Text>{sec}</Text>
+        <Text>{slt}</Text>
       </Pressable>
       <Modal
         animationType="slide"
         visible={secModalVisible}
       >
         <Text>select seconds</Text>
-        <ScrollPicker items={secs} handleItem={setSec} selectedItem={sec} />
+        <ScrollPicker items={items} handleItem={setSlt} selectedItem={slt} />
         <MyButton
           label="close"
           onPress={() => setSecModalVisible(false)}

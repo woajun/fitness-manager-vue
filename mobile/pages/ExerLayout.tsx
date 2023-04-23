@@ -109,6 +109,12 @@ export default function ExcerLayout() {
       <View style={{ flex: 3, justifyContent: 'center', backgroundColor: 'green' }} />
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'yellow' }}>
         <Text>{curEx?.name}</Text>
+        <ButtonWithScrollPicker
+          items={exData}
+          label="excercise"
+          setSlt={setCurEx}
+          slt={curEx}
+        />
       </View>
       <View style={{ flex: 2, flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>

@@ -9,9 +9,9 @@ const itemHeight = 30; // Change this value based on your item height
 const displayItemNum = 20;
 
 type ScrollPickerProps ={
-  items: number[]
-  handleItem: React.Dispatch<React.SetStateAction<number>>
-  selectedItem: number
+  items: string[]
+  handleItem: (sltItem: string) => void
+  selectedItem: string
 }
 
 function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {

@@ -19,10 +19,12 @@ function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {
   const scrollViewRef = useRef<ScrollView | null>(null);
 
   function scrollFix(i: number) {
-    scrollViewRef.current?.scrollTo({
-      y: i * itemHeight,
-      animated: true,
-    });
+    setTimeout(() => {
+      scrollViewRef.current?.scrollTo({
+        y: i * itemHeight,
+        animated: true,
+      });
+    }, 0);
   }
 
   useEffect(() => {

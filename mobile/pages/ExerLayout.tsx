@@ -32,6 +32,8 @@ const secs = [
   190,
 ];
 
+const reps = Array(100).fill(0).map((e, i) => i);
+
 export default function ExcerLayout() {
   const [totalTime, setTotalTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -41,6 +43,7 @@ export default function ExcerLayout() {
   const [exData, setExData] = useState<Excercise[]>([]);
 
   const [sec, setSec] = useState(60);
+  const [rep, setRep] = useState(0);
   const [kg, setKg] = useState(0);
   const [kgs, setKgs] = useState([0]);
 
@@ -52,6 +55,7 @@ export default function ExcerLayout() {
   useEffect(() => {
     if (curEx) {
       setKg(curEx.kgStart);
+      setRep(curEx.repStart);
       const aKgs = [];
       for (let i = curEx.kgMin; i <= curEx.kgMax; i += curEx.kgUnit) {
         aKgs.push(i);
@@ -127,10 +131,10 @@ export default function ExcerLayout() {
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker
-            items={secs}
-            label="sec"
-            setSlt={setSec}
-            slt={sec}
+            items={reps}
+            label="rep"
+            setSlt={setRep}
+            slt={rep}
           />
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>

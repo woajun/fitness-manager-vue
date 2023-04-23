@@ -1,13 +1,6 @@
-export type Exercise = {
-    id: number,
-    name: string,
-    kgStart: number,
-    kgMin: number,
-    kgMax: number,
-    kgUnit: number
-}
+import { Exercise } from '../pages/Definitions';
 
-export const exDatas: Exercise[] = [
+const exDatas: Exercise[] = [
   {
     id: 0,
     name: '바벨컬',
@@ -65,3 +58,5 @@ export const exDatas: Exercise[] = [
     kgUnit: 5,
   },
 ];
+
+export default exDatas;

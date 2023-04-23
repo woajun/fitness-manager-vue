@@ -6,14 +6,22 @@ import tw from 'twrnc';
 import MyButton from '../components/MyButton';
 import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
 import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
-import { Exercise, exDatas } from '../mock/ExcerciseInfo';
+import { Condtions, Exercise } from './Definitions';
+import exDatas from '../mock/ExData';
 
 export default function ExcerLayout() {
   const [totalTime, setTotalTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+
   const [curEx, setCurEx] = useState<Exercise>();
   const [exData, setExData] = useState<Exercise[]>([]);
+
+  const [con, setCon] = useState<Condtions>({
+    kg: 0,
+    rep: 0,
+    rest: 0,
+  });
 
   useEffect(() => {
     setExData(exDatas);

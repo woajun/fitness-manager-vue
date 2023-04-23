@@ -6,11 +6,19 @@ import tw from 'twrnc';
 import MyButton from '../components/MyButton';
 import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
 import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
+import { Exercise, exDatas } from '../mock/ExcerciseInfo';
 
 export default function ExcerLayout() {
   const [totalTime, setTotalTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [curEx, setCurEx] = useState<Exercise>();
+  const [exData, setExData] = useState<Exercise[]>([]);
+
+  useEffect(() => {
+    setExData(exDatas);
+    setCurEx(exDatas[0]);
+  }, []);
 
   useEffect(() => {
     let intervalId = 0;
@@ -59,7 +67,9 @@ export default function ExcerLayout() {
         </View>
       </View>
       <View style={{ flex: 3, justifyContent: 'center', backgroundColor: 'green' }} />
-      <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'yellow' }} />
+      <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'yellow' }}>
+        <Text>{curEx?.name}</Text>
+      </View>
       <View style={{ flex: 2, flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker />

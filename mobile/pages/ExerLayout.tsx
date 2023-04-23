@@ -79,12 +79,12 @@ export default function ExcerLayout() {
         <Text>{curEx?.name}</Text>
       </View>
       <View style={{ flex: 2, flexDirection: 'row' }}>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        {/* <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker />
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker />
-        </View>
+        </View> */}
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <ButtonWithScrollPicker />
         </View>

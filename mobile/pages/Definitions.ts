@@ -5,6 +5,7 @@ export type Exercise = {
     kgMin: number,
     kgMax: number,
     kgUnit: number
+    repStart: number,
 }
 
 export type Condtions = {

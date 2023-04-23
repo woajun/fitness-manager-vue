@@ -8,6 +8,7 @@ const exDatas: Exercise[] = [
     kgMin: 10,
     kgMax: 100,
     kgUnit: 5,
+    repStart: 15,
   },
   {
     id: 1,
@@ -16,6 +17,7 @@ const exDatas: Exercise[] = [
     kgMin: 0,
     kgMax: 150,
     kgUnit: 5,
+    repStart: 10,
   },
   {
     id: 2,
@@ -24,6 +26,7 @@ const exDatas: Exercise[] = [
     kgMin: 4,
     kgMax: 100,
     kgUnit: 2,
+    repStart: 15,
   },
   {
     id: 3,
@@ -32,6 +35,7 @@ const exDatas: Exercise[] = [
     kgMin: 4,
     kgMax: 100,
     kgUnit: 2,
+    repStart: 15,
   },
   {
     id: 4,
@@ -40,6 +44,7 @@ const exDatas: Exercise[] = [
     kgMin: 0,
     kgMax: 100,
     kgUnit: 2,
+    repStart: 6,
   },
   {
     id: 5,
@@ -48,6 +53,7 @@ const exDatas: Exercise[] = [
     kgMin: 0,
     kgMax: 100,
     kgUnit: 5,
+    repStart: 5,
   },
   {
     id: 6,
@@ -56,6 +62,7 @@ const exDatas: Exercise[] = [
     kgMin: 0,
     kgMax: 100,
     kgUnit: 5,
+    repStart: 4,
   },
 ];
 

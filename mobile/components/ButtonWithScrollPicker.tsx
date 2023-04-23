@@ -27,7 +27,6 @@ export default function ButtonWithScrollPicker({
         animationType="slide"
         visible={secModalVisible}
       >
-        <Text>select seconds</Text>
         <ScrollPicker items={items} handleItem={setSlt} selectedItem={slt} />
         <MyButton
           label="close"

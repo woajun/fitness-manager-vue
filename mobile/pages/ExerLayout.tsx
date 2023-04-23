@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Text, View,
+  Text, Touchable, TouchableOpacity, View,
 } from 'react-native';
 import tw from 'twrnc';
 import MyButton from '../components/MyButton';
 import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
 import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
-import { Condtions, Exercise } from './Definitions';
+import { Condtions, Excercise } from './Definitions';
 import exDatas from '../mock/ExData';
 
 const secs = [
@@ -37,8 +37,8 @@ export default function ExcerLayout() {
   const [currentTime, setCurrentTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
-  const [curEx, setCurEx] = useState<Exercise>();
-  const [exData, setExData] = useState<Exercise[]>([]);
+  const [curEx, setCurEx] = useState<Excercise>();
+  const [exData, setExData] = useState<Excercise[]>([]);
 
   const [sec, setSec] = useState(60);
   const [kg, setKg] = useState(0);

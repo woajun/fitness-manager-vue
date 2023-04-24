@@ -9,6 +9,7 @@ import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
 import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
 import { Excercise, Record } from './Definitions';
 import exDatas from '../mock/ExData';
+import s from './Styles';
 
 const secs = Array(20).fill(0).map((e, i) => i * 10);
 const reps = Array(100).fill(0).map((e, i) => i);
@@ -94,19 +95,19 @@ export default function ExcerLayout() {
   }
 
   return (
-    <View style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
-      <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'aqua' }} />
-      <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row' }}>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+    <View style={[s.f, s.col, s.p20]}>
+      <View style={[s.f, s.vc, s.aqua]} />
+      <View style={[s.f2, s.vc, s.row]}>
+        <View style={[s.f, s.vc]}>
           <Text style={tw`text-2xl`}>시작</Text>
           <Text style={tw`text-2xl`}>{ msToMMSSsss((sec * 1000) - currentTime) }</Text>
           <Text style={tw`text-xl text-gray-500`}>{ msToHHMMSS(totalTime) }</Text>
         </View>
-        <View style={{ flex: 1, backgroundColor: 'blue' }}>
+        <View style={[s.f, s.blue]}>
           <Text>{ }</Text>
         </View>
       </View>
-      <View style={{ flex: 3, justifyContent: 'center', backgroundColor: 'green' }}>
+      <View style={[s.f3, s.vc, s.green]}>
         <ScrollView>
           {
           records.map((record) => (
@@ -124,8 +125,8 @@ export default function ExcerLayout() {
           }
         </ScrollView>
       </View>
-      <View style={{ flex: 2, flexDirection: 'row', backgroundColor: 'yellow' }}>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+      <View style={[s.f2, s.row, s.yellow]}>
+        <View style={[s.f, s.vc]}>
           <ButtonWithScrollPicker
             items={exData}
             label="exercise"
@@ -133,12 +134,12 @@ export default function ExcerLayout() {
             slt={curEx}
           />
         </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={[s.f, s.vc]}>
           <Text>5Set / 98rep</Text>
         </View>
       </View>
-      <View style={{ flex: 2, flexDirection: 'row' }}>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+      <View style={[s.f2, s.row]}>
+        <View style={[s.f, s.vc]}>
           <ButtonWithScrollPicker
             items={kgs}
             label="kg"
@@ -146,7 +147,7 @@ export default function ExcerLayout() {
             slt={kg}
           />
         </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={[s.f, s.vc]}>
           <ButtonWithScrollPicker
             items={reps}
             label="rep"
@@ -154,7 +155,7 @@ export default function ExcerLayout() {
             slt={rep}
           />
         </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={[s.f, s.vc]}>
           <ButtonWithScrollPicker
             items={secs}
             label="sec"
@@ -163,31 +164,31 @@ export default function ExcerLayout() {
           />
         </View>
       </View>
-      <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'white' }}>
+      <View style={[s.f2, s.vc]}>
         {isRunning
           ? (
-            <View style={{ flexDirection: 'row' }}>
+            <View style={[s.row]}>
               <MyButton
-                style={{ flex: 1, marginRight: 1 }}
+                style={[s.f, s.mr]}
                 label="record"
                 onPress={handleRecord}
               />
               <MyButton
-                style={{ flex: 1, marginLeft: 1 }}
+                style={[s.f, s.ml]}
                 label="pause"
                 onPress={handlePause}
               />
             </View>
           )
           : (
-            <View style={{ flexDirection: 'row' }}>
+            <View style={[s.row]}>
               <MyButton
-                style={{ flex: 1, marginRight: 1 }}
+                style={[s.f, s.mr]}
                 label="run"
                 onPress={handleRun}
               />
               <MyButton
-                style={{ flex: 1, marginLeft: 1 }}
+                style={[s.f, s.ml]}
                 label="finish"
                 onPress={handleReset}
               />

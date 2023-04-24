@@ -94,6 +94,7 @@ export default function ExcerLayout() {
     return found ? found.name : '';
   }
 
+  const curExRecords = records.filter((e) => e.exrId === curEx?.id);
   return (
     <View style={[s.f, s.col, s.p20]}>
       <View style={[s.f, s.vc, s.aqua]} />
@@ -138,7 +139,12 @@ export default function ExcerLayout() {
         </View>
         <View style={[s.f, s.vc]}>
           <Text>(last 10Set/ 100rep)</Text>
-          <Text>5Set / 98rep</Text>
+          <Text>
+            {curExRecords.length}
+            Set /
+            {curExRecords.reduce((t, e) => t + e.rep, 0)}
+            rep
+          </Text>
         </View>
       </View>
       <View style={[s.f2, s.row]}>

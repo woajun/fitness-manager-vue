@@ -9,12 +9,16 @@ const itemHeight = 30; // Change this value based on your item height
 const displayItemNum = 15;
 
 type ScrollPickerProps ={
-  items: number[]
-  handleItem: React.Dispatch<React.SetStateAction<number>>
-  selectedItem: number
+  items: unknown[];
+  handleItem: (item: any) => void;
+  selectedItem: unknown;
+  show: (item: any) => string;
+  setkey: (item: any) => string;
 }
 
-function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {
+function ScrollPicker({
+  items, handleItem, selectedItem, show, setkey,
+}: ScrollPickerProps) {
   const [selectedIndex, setSelectedIndex] = useState(items.indexOf(selectedItem));
   const scrollViewRef = useRef<ScrollView | null>(null);
 
@@ -54,7 +58,7 @@ function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {
         <View style={{ height: itemHeight * ((displayItemNum - 1) / 2) }} />
         {items.map((item, index) => (
           <Pressable
-            key={item}
+            key={setkey(item)}
             style={{
               height: itemHeight,
               justifyContent: 'center',
@@ -68,7 +72,7 @@ function ScrollPicker({ items, handleItem, selectedItem }: ScrollPickerProps) {
                 opacity: index === selectedIndex ? 1 : 0.5,
               }}
             >
-              {item}
+              {show(item)}
             </Text>
           </Pressable>
         ))}

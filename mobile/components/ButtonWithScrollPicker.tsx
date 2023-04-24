@@ -9,7 +9,7 @@ type Props = {
   items: number[]
   slt: number
   setSlt: React.Dispatch<React.SetStateAction<number>>
-  label: string
+  label: number
 }
 
 export default function ButtonWithScrollPicker({
@@ -17,6 +17,9 @@ export default function ButtonWithScrollPicker({
 } : Props) {
   const [secModalVisible, setSecModalVisible] = useState(false);
 
+  function key(item: string) {
+    return item;
+  }
   return (
     <View>
       <Text>{label}</Text>
@@ -27,7 +30,13 @@ export default function ButtonWithScrollPicker({
         animationType="slide"
         visible={secModalVisible}
       >
-        <ScrollPicker items={items} handleItem={setSlt} selectedItem={slt} />
+        <ScrollPicker
+          items={items}
+          handleItem={setSlt}
+          selectedItem={slt}
+          setkey={key}
+          show={(item) => item}
+        />
         <MyButton
           label="close"
           onPress={() => setSecModalVisible(false)}

@@ -4,51 +4,30 @@ import {
 } from 'react-native';
 import ScrollPicker from './ScrollPicker';
 import MyButton from './MyButton';
-import { Excercise } from '../pages/Definitions';
 
-type NumberProps = {
+type Props = {
   items: number[]
   slt: number
   setSlt: React.Dispatch<React.SetStateAction<number>>
   label: string
 }
 
-type ExcerciseProps = {
-  items: Excercise[]
-  slt: Excercise | undefined
-  setSlt: React.Dispatch<React.SetStateAction<Excercise | undefined>>
-  label: string
-}
-
 export default function ButtonWithScrollPicker({
   items, slt, setSlt, label,
-} : NumberProps | ExcerciseProps) {
+} : Props) {
   const [secModalVisible, setSecModalVisible] = useState(false);
-
-  const computedItems = items.map((item) => (typeof item === 'number' ? `${item}` : item.name));
-
-  const handleItem = (sltItem: string) => {
-    if (typeof slt === 'number') {
-      setSlt(Number(sltItem) as any);
-    } else {
-      const sltEx = (items as Excercise[]).find((e) => e.name === sltItem);
-      setSlt(sltEx as any);
-    }
-  };
-
-  const computedSlt = `${typeof slt === 'number' ? slt : slt?.name}`;
 
   return (
     <View>
       <Text>{label}</Text>
       <Pressable onPress={() => setSecModalVisible(true)}>
-        <Text>{computedSlt}</Text>
+        <Text>{slt}</Text>
       </Pressable>
       <Modal
         animationType="slide"
         visible={secModalVisible}
       >
-        <ScrollPicker items={computedItems} handleItem={handleItem} selectedItem={computedSlt} />
+        <ScrollPicker items={items} handleItem={setSlt} selectedItem={slt} />
         <MyButton
           label="close"
           onPress={() => setSecModalVisible(false)}

@@ -130,12 +130,12 @@ export default function ExcerLayout() {
       </View>
       <View style={[s.f2, s.row, s.yellow]}>
         <View style={[s.f, s.vc]}>
-          <ButtonWithScrollPicker
+          {/* <ButtonWithScrollPicker
             items={exData}
             label="exercise"
             setSlt={setCurEx}
             slt={curEx}
-          />
+          /> */}
         </View>
         <View style={[s.f, s.vc]}>
           <Text>(last 10Set/ 100rep)</Text>

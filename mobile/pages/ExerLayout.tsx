@@ -99,7 +99,7 @@ export default function ExcerLayout() {
       <View style={[s.f, s.vc, s.aqua]} />
       <View style={[s.f2, s.vc, s.row]}>
         <View style={[s.f, s.vc]}>
-          <Text style={tw`text-2xl`}>시작</Text>
+          <Text style={tw`text-2xl`}>Start</Text>
           <Text style={tw`text-2xl`}>{ msToMMSSsss((sec * 1000) - currentTime) }</Text>
           <Text style={tw`text-xl text-gray-500`}>{ msToHHMMSS(totalTime) }</Text>
         </View>
@@ -109,6 +109,8 @@ export default function ExcerLayout() {
       </View>
       <View style={[s.f3, s.vc, s.green]}>
         <ScrollView>
+          <Text>벤트오버 레터럴레이즈 - 10Set/87rep/10:17min</Text>
+          <Text>풀업 - 10Set/87rep/10:17min</Text>
           {
           records.map((record) => (
             <View key={record.at.getTime()}>
@@ -135,6 +137,7 @@ export default function ExcerLayout() {
           />
         </View>
         <View style={[s.f, s.vc]}>
+          <Text>(last 10Set/ 100rep)</Text>
           <Text>5Set / 98rep</Text>
         </View>
       </View>

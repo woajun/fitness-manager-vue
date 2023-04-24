@@ -8,8 +8,11 @@ export type Excercise = {
     repStart: number,
 }
 
-export type Condtions = {
+export type Record = {
+    userId: string,
+    exrId: number,
     kg: number,
     rep: number,
-    rest: number,
+    ms: number,
+    at: Date
 }

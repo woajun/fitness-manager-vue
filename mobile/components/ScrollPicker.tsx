@@ -6,7 +6,7 @@ import {
 
 const itemHeight = 30; // Change this value based on your item height
 
-const displayItemNum = 20;
+const displayItemNum = 15;
 
 type ScrollPickerProps ={
   items: string[]

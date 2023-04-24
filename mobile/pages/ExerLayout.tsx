@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Text, Touchable, TouchableOpacity, View,
+  Text, View,
 } from 'react-native';
 import tw from 'twrnc';
 import MyButton from '../components/MyButton';
 import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
 import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
-import { Condtions, Excercise } from './Definitions';
+import { Excercise, Record } from './Definitions';
 import exDatas from '../mock/ExData';
 
 const secs = [
@@ -46,6 +46,8 @@ export default function ExcerLayout() {
   const [rep, setRep] = useState(0);
   const [kg, setKg] = useState(0);
   const [kgs, setKgs] = useState([0]);
+
+  const [records, setRecords] = useState<Record[]>([]);
 
   useEffect(() => {
     setExData(exDatas);
@@ -90,11 +92,26 @@ export default function ExcerLayout() {
     setIsRunning(false);
     setCurrentTime(0);
     setTotalTime(0);
+    setRecords([]);
   }
 
   function handleRecord() {
     console.log('record');
+    if (!curEx) return;
+    setRecords([...records, {
+      userId: 'hi',
+      exrId: curEx.id,
+      at: new Date(),
+      kg,
+      rep,
+      ms: currentTime,
+    }]);
     setCurrentTime(0);
+  }
+
+  function getExName(id: number) {
+    const found = exData.find((e) => e.id === id);
+    return found ? found.name : '';
   }
 
   return (
@@ -110,7 +127,22 @@ export default function ExcerLayout() {
           <Text>{ }</Text>
         </View>
       </View>
-      <View style={{ flex: 3, justifyContent: 'center', backgroundColor: 'green' }} />
+      <View style={{ flex: 3, justifyContent: 'center', backgroundColor: 'green' }}>
+        {
+          records.map((record) => (
+            <View key={record.at.getTime()}>
+              <Text>
+                {getExName(record.exrId)}
+                {record.kg}
+                /
+                {record.rep}
+                /
+                {record.ms / 1000}
+              </Text>
+            </View>
+          ))
+        }
+      </View>
       <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'yellow' }}>
         <Text>{curEx?.name}</Text>
         <ButtonWithScrollPicker

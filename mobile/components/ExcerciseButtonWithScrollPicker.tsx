@@ -4,11 +4,12 @@ import {
 } from 'react-native';
 import ScrollPicker from './ScrollPicker';
 import MyButton from './MyButton';
+import { Excercise } from '../pages/Definitions';
 
 type Props = {
-  items: number[]
-  slt: number
-  setSlt: React.Dispatch<React.SetStateAction<number>>
+  items: Excercise[]
+  slt: Excercise | undefined
+  setSlt: React.Dispatch<React.SetStateAction<Excercise| undefined>>
   label: string
 }
 
@@ -17,14 +18,14 @@ export default function ButtonWithScrollPicker({
 } : Props) {
   const [secModalVisible, setSecModalVisible] = useState(false);
 
-  function key(item: string) {
-    return item;
+  function key(item: Excercise) {
+    return String(item.id);
   }
   return (
     <View>
       <Text>{label}</Text>
       <Pressable onPress={() => setSecModalVisible(true)}>
-        <Text>{slt}</Text>
+        <Text>{slt?.name}</Text>
       </Pressable>
       <Modal
         animationType="slide"
@@ -35,7 +36,7 @@ export default function ButtonWithScrollPicker({
           handleItem={setSlt}
           selectedItem={slt}
           setkey={key}
-          show={(item) => item}
+          show={(item: Excercise) => item.name}
         />
         <MyButton
           label="close"

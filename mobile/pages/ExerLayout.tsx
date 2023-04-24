@@ -7,6 +7,7 @@ import tw from 'twrnc';
 import MyButton from '../components/MyButton';
 import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
 import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
+import ExcerciseButtonWithScrollPicker from '../components/ExcerciseButtonWithScrollPicker';
 import { Excercise, Record } from './Definitions';
 import exDatas from '../mock/ExData';
 import s from './Styles';
@@ -130,12 +131,12 @@ export default function ExcerLayout() {
       </View>
       <View style={[s.f2, s.row, s.yellow]}>
         <View style={[s.f, s.vc]}>
-          {/* <ButtonWithScrollPicker
+          <ExcerciseButtonWithScrollPicker
             items={exData}
             label="exercise"
             setSlt={setCurEx}
             slt={curEx}
-          /> */}
+          />
         </View>
         <View style={[s.f, s.vc]}>
           <Text>(last 10Set/ 100rep)</Text>

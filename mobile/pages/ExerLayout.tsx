@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
+  ScrollView,
   Text, View,
 } from 'react-native';
 import tw from 'twrnc';
@@ -9,29 +10,7 @@ import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
 import { Excercise, Record } from './Definitions';
 import exDatas from '../mock/ExData';
 
-const secs = [
-  0,
-  10,
-  20,
-  30,
-  40,
-  50,
-  60,
-  70,
-  80,
-  90,
-  100,
-  110,
-  120,
-  130,
-  140,
-  150,
-  160,
-  170,
-  180,
-  190,
-];
-
+const secs = Array(20).fill(0).map((e, i) => i * 10);
 const reps = Array(100).fill(0).map((e, i) => i);
 
 export default function ExcerLayout() {
@@ -128,7 +107,8 @@ export default function ExcerLayout() {
         </View>
       </View>
       <View style={{ flex: 3, justifyContent: 'center', backgroundColor: 'green' }}>
-        {
+        <ScrollView>
+          {
           records.map((record) => (
             <View key={record.at.getTime()}>
               <Text>
@@ -141,16 +121,21 @@ export default function ExcerLayout() {
               </Text>
             </View>
           ))
-        }
+          }
+        </ScrollView>
       </View>
-      <View style={{ flex: 2, justifyContent: 'center', backgroundColor: 'yellow' }}>
-        <Text>{curEx?.name}</Text>
-        <ButtonWithScrollPicker
-          items={exData}
-          label="excercise"
-          setSlt={setCurEx}
-          slt={curEx}
-        />
+      <View style={{ flex: 2, flexDirection: 'row', backgroundColor: 'yellow' }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ButtonWithScrollPicker
+            items={exData}
+            label="exercise"
+            setSlt={setCurEx}
+            slt={curEx}
+          />
+        </View>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>5Set / 98rep</Text>
+        </View>
       </View>
       <View style={{ flex: 2, flexDirection: 'row' }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>

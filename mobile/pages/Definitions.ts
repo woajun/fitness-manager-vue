@@ -11,6 +11,7 @@ export type Excercise = {
 export type Record = {
     userId: string,
     exrId: number,
+    exrName: string,
     kg: number,
     rep: number,
     ms: number,

@@ -1,8 +1,8 @@
 import React from 'react';
-import ExcerLayout from './pages/ExerLayout';
+import ModalAndTimer from './pages/measure/ModalAndTimer';
 
 export default function App() {
   return (
-    <ExcerLayout />
+    <ModalAndTimer />
   );
 }

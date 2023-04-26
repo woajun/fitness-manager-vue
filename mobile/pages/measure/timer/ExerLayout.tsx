@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import tw from 'twrnc';
-import MyButton from '../components/MyButton';
-import { msToHHMMSS, msToMMSSsss } from '../common/helper/time';
-import ButtonWithScrollPicker from '../components/ButtonWithScrollPicker';
-import ExcerciseButtonWithScrollPicker from '../components/ExcerciseButtonWithScrollPicker';
-import { Excercise, Record } from './Definitions';
-import exDatas from '../mock/ExData';
-import s from './Styles';
+import MyButton from '../../../components/MyButton';
+import { msToHHMMSS, msToMMSSsss } from '../../../common/helper/time';
+import ButtonWithScrollPicker from '../../../components/ButtonWithScrollPicker';
+import ExcerciseButtonWithScrollPicker from '../../../components/ExcerciseButtonWithScrollPicker';
+import { Excercise, Record } from '../../Definitions';
+import exDatas from '../../../mock/ExData';
+import s from '../../Styles';
 import ShowRecords from './ShowRecords';
 
 const secs = Array(20).fill(0).map((e, i) => i * 10);
@@ -47,7 +47,7 @@ export default function ExcerLayout() {
 
   useEffect(() => {
     let intervalId = 0;
-    const timeUnit = 1000;
+    const timeUnit = 100;
     if (isRunning) {
       intervalId = setInterval(() => {
         setCurrentTime((c) => c + timeUnit);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { Record } from './Definitions';
+import { Record } from '../../Definitions';
 
 type ShowRecordsProps = {
  records : Record[]

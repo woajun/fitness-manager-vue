@@ -1,8 +1,8 @@
 import React from 'react';
-import ModalAndTimer from './pages/measure/ModalAndTimer';
+import Measure from './pages/measure/Measure';
 
 export default function App() {
   return (
-    <ModalAndTimer />
+    <Measure />
   );
 }

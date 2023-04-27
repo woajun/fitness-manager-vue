@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   navBar: {
-    height: 60,
+    height: 90,
     backgroundColor: '#f2f2f2',
     alignItems: 'flex-end',
     justifyContent: 'center',
@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
     right: 0,
   },
   navButton: {
-    paddingTop: 10,
+    paddingTop: 40,
     fontSize: 16,
     fontWeight: 'bold',
   },
   menu: {
     backgroundColor: '#f2f2f2',
     position: 'absolute',
-    top: 60,
+    top: 90,
     left: 0,
     right: 0,
     overflow: 'hidden',
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginTop: 60,
+    marginTop: 90,
   },
 });
 

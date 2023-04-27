@@ -51,7 +51,7 @@ export default function ModalAndTimer() {
       rep={rep}
       sec={sec}
     >
-      <View style={[s.f3, s.vc, s.green]}>
+      <View style={[s.f3, s.vc]}>
         <ShowRecords records={records} />
       </View>
       <View style={[s.f2, s.row, s.yellow]}>

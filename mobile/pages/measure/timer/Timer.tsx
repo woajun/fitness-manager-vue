@@ -77,7 +77,6 @@ export default function ExcerLayout({
 
   return (
     <View style={[s.f, s.col, s.p20]}>
-      <View style={[s.f, s.vc, s.aqua]} />
       <View style={[s.f2, s.vc, s.row]}>
         <View style={[s.f, s.vc]}>
           <Text style={tw`text-2xl`}>Start</Text>

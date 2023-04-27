@@ -2,10 +2,8 @@ import React, { useState, useRef, ReactNode } from 'react';
 import {
   View, Text, TouchableOpacity, StyleSheet, Animated,
 } from 'react-native';
+import { PageName } from '../../App';
 
-type Props = {
-    children: ReactNode
-}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -43,7 +41,13 @@ const styles = StyleSheet.create({
   },
 });
 
-function NavBar({ children }: Props) {
+type Props = {
+    children: ReactNode
+    // eslint-disable-next-line no-unused-vars
+    navigate: (pn: PageName) => void;
+}
+
+function NavBar({ children, navigate }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuHeight = useRef(new Animated.Value(0)).current;
 
@@ -64,6 +68,11 @@ function NavBar({ children }: Props) {
     }
   };
 
+  function onNavigate(pn: PageName) {
+    navigate(pn);
+    toggleMenu();
+  }
+
   const menuStyle = {
     height: menuHeight,
   };
@@ -79,10 +88,10 @@ function NavBar({ children }: Props) {
         {children}
       </View>
       <Animated.View style={[styles.menu, menuStyle]}>
-        <TouchableOpacity style={styles.menuItem} onPress={toggleMenu}>
+        <TouchableOpacity style={styles.menuItem} onPress={() => onNavigate('Measure')}>
           <Text>Measure</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem} onPress={toggleMenu}>
+        <TouchableOpacity style={styles.menuItem} onPress={() => onNavigate('Calendar')}>
           <Text>Calendar</Text>
         </TouchableOpacity>
       </Animated.View>

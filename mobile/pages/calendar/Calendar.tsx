@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { generateUUID } from '../../common/helper/uuid';
 
-const daysInMonth = (month, year) => new Date(year, month, 0).getDate();
+const daysInMonth = (month: number, year: number) => new Date(year, month, 0).getDate();
+
+type Day = {
+  id: string;
+  date: number | null;
+}
+
+const generateDay = (date: number | null) => ({
+  id: generateUUID(),
+  date,
+});
 
 function Calendar() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<number | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const daysArray = [];
+  const daysArray: Day[] = [];
 
-  // Get the number of days in the current month
   const numDaysInMonth = daysInMonth(
     currentMonth.getMonth() + 1,
     currentMonth.getFullYear(),
@@ -23,23 +33,31 @@ function Calendar() {
   ).getDay();
 
   // Add empty days to the start of the array to align weekdays
-  for (let i = 0; i < monthStartDay; i++) {
-    daysArray.push(null);
+  for (let i = 0; i < monthStartDay; i += 1) {
+    daysArray.push(generateDay(null));
   }
 
   // Add days of the month to the array
-  for (let i = 1; i <= numDaysInMonth; i++) {
-    daysArray.push(i);
+  for (let i = 1; i <= numDaysInMonth; i += 1) {
+    daysArray.push(generateDay(i));
   }
 
   return (
     <View>
       <View>
-        <TouchableOpacity onPress={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}>
+        <TouchableOpacity
+          onPress={
+            () => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))
+          }
+        >
           <Text>{'<'}</Text>
         </TouchableOpacity>
         <Text>{currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
-        <TouchableOpacity onPress={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}>
+        <TouchableOpacity
+          onPress={
+            () => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))
+          }
+        >
           <Text>{'>'}</Text>
         </TouchableOpacity>
       </View>
@@ -51,16 +69,16 @@ function Calendar() {
         <Text style={{ width: '14.28%' }}>Thu</Text>
         <Text style={{ width: '14.28%' }}>Fri</Text>
         <Text style={{ width: '14.28%' }}>Sat</Text>
-        {daysArray.map((day, index) => (
+        {daysArray.map((day) => (
           <TouchableOpacity
-            key={index}
+            key={day.id}
             style={{
               width: '14.28%', height: 50, justifyContent: 'center', alignItems: 'center',
             }}
-            onPress={() => setSelectedDate(day)}
+            onPress={() => setSelectedDate(day.date)}
           >
-            {day ? (
-              <Text style={{ color: selectedDate === day ? 'blue' : 'black' }}>{day}</Text>
+            {day.date ? (
+              <Text style={{ color: selectedDate === day.date ? 'blue' : 'black' }}>{day.date}</Text>
             ) : (
               <Text>&nbsp;</Text>
             )}

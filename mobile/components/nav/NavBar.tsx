@@ -51,22 +51,27 @@ function NavBar({ children, navigate }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuHeight = useRef(new Animated.Value(0)).current;
 
-  const toggleMenu = () => {
-    if (isMenuOpen) {
-      Animated.timing(menuHeight, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start(() => setIsMenuOpen(false));
-    } else {
-      setIsMenuOpen(true);
-      Animated.timing(menuHeight, {
-        toValue: 100,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-    }
+  const closeMenu = () => {
+    if (!isMenuOpen) return;
+    Animated.timing(menuHeight, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start(() => setIsMenuOpen(false));
   };
+
+  function toggleMenu() {
+    if (isMenuOpen) {
+      closeMenu();
+      return;
+    }
+    setIsMenuOpen(true);
+    Animated.timing(menuHeight, {
+      toValue: 100,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }
 
   function onNavigate(pn: PageName) {
     navigate(pn);
@@ -84,7 +89,7 @@ function NavBar({ children, navigate }: Props) {
           <Text style={styles.navButton}>{isMenuOpen ? 'Close' : 'Menu'}</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.content}>
+      <View style={styles.content} onTouchStart={closeMenu}>
         {children}
       </View>
       <Animated.View style={[styles.menu, menuStyle]}>

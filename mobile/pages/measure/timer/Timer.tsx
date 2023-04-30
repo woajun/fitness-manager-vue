@@ -29,6 +29,7 @@ export default function ExcerLayout({
   const [totalTime, setTotalTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [status, setStatus] = useState<'READY' | 'RUN' | 'STOP'>('READY');
 
   useEffect(() => {
     let intervalId = 0;
@@ -46,11 +47,12 @@ export default function ExcerLayout({
 
   function handleRun() {
     setIsRunning(true);
+    setStatus('RUN');
   }
 
   function handlePause() {
-    console.log('pause');
     setIsRunning(false);
+    setStatus('STOP');
   }
 
   function handleReset() {
@@ -58,10 +60,10 @@ export default function ExcerLayout({
     setCurrentTime(0);
     setTotalTime(0);
     setRecords([]);
+    setStatus('READY');
   }
 
   function handleRecord() {
-    console.log('record');
     if (!curEx) return;
     setRecords([...records, {
       userId: 'hi',
@@ -75,12 +77,15 @@ export default function ExcerLayout({
     setCurrentTime(0);
   }
 
+  const runTime = (sec * 1000) - currentTime;
+  const showStatus = (status === 'RUN' && runTime > 0) ? 'REST' : status;
+
   return (
     <View style={[s.f, s.col, s.p20]}>
       <View style={[s.f2, s.vc, s.row]}>
         <View style={[s.f, s.vc]}>
-          <Text style={tw`text-2xl`}>Start</Text>
-          <Text style={tw`text-2xl`}>{ msToMMSSsss((sec * 1000) - currentTime) }</Text>
+          <Text style={tw`text-2xl`}>{showStatus}</Text>
+          <Text style={tw`text-2xl`}>{msToMMSSsss(runTime)}</Text>
           <Text style={tw`text-xl text-gray-500`}>{ msToHHMMSS(totalTime) }</Text>
         </View>
         <View style={[s.f, s.blue]}>

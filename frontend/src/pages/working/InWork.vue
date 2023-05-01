@@ -161,8 +161,8 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
 // computed - end ====
 </script>
 <template>
-  <div class="w-screen h-screen px-4 py-4 fixed flex flex-col">
-    <div class="flex-auto flex justify-between pt-10">
+  <div class="px-4 pe-4 flex flex-col">
+    <div class="flex-auto flex justify-between">
       <div>
         <p>
           {{ message }}
@@ -221,7 +221,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
       />
     </div>
 
-    <div class="flex-auto grid gap-4 grid-cols-2 pt-5 my-3 h-20">
+    <div class="flex-auto grid gap-4 grid-cols-2 pt-5 h-20">
       <JButton v-if="isRun" label="기록" :disabled="!isWorking" @click="btnRecord()" />
       <JButton v-else label="시작" color="green" @click="btnStart()" />
       <JButton v-if="isRun" label="정지" color="red" @click="btnStop()" />

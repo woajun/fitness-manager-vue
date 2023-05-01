@@ -3,10 +3,32 @@ import NavBar from './pages/navigation/NavBar.vue';
 
 </script>
 <template>
-  <div class="container h-screen font-semibold text-3xl text-gray-800 w-screen fixed">
-    <NavBar />
-    <div>
+  <div class="new-container">
+    <div class="header">
+      <NavBar />
+    </div>
+    <div class="main">
       <RouterView />
     </div>
+    <div class="footer" />
   </div>
 </template>
+<style>
+.new-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 60px;
+}
+
+.main {
+  flex: 1;
+}
+
+.footer {
+  height: 90px;
+}
+</style>

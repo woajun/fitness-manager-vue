@@ -18,6 +18,7 @@ import NavBar from './pages/navigation/NavBar.vue';
   height: 100vh;
   display: flex;
   flex-direction: column;
+  position: fixed;
 }
 
 .header {

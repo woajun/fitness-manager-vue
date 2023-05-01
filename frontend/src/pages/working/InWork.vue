@@ -18,6 +18,7 @@ import JScrollPicker from '../../components/JScrollPicker.vue';
 import JButton from '../../components/JButton.vue';
 import JBottomRightSnackbar from '../../components/JBottomRightSnackbar.vue';
 import type { Exr, Set } from './interfaces';
+import MyTimer from './timer/MyTimer.vue';
 
 // excercise - start ====
 const excercises = computed(() => rawExcercises.sort((a, b) => a.exrName[0].localeCompare(b.exrName[0])));
@@ -93,19 +94,19 @@ function btnStart() {
 
 const isSnackbarShow = ref({ value: false });
 
-function btnRecord() {
-  records.value.push({
-    exrId: excercise.value.exrId,
-    weight: weight.value,
-    reps: rep.value,
-    restMs: sec.value,
-    totalMs: presentTimer.getMs(),
-    recordTime: new Date(),
-  });
-  presentTimer.reset();
-  presentTimer.start();
-  isSnackbarShow.value = { value: true };
-}
+// function btnRecord() {
+//   records.value.push({
+//     exrId: excercise.value.exrId,
+//     weight: weight.value,
+//     reps: rep.value,
+//     restMs: sec.value,
+//     totalMs: presentTimer.getMs(),
+//     recordTime: new Date(),
+//   });
+//   presentTimer.reset();
+//   presentTimer.start();
+//   isSnackbarShow.value = { value: true };
+// }
 
 function cancelRecord() {
   const popped = records.value.pop();
@@ -158,33 +159,11 @@ const circleColor = computed(() => {
 });
 const nowExcerciseRep = computed(() => records.value.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + c.reps : t), 0));
 const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + 1 : t), 0));
+const circlePercent = computed(() => totalTimer.getMs() - getNowRestTime());
 // computed - end ====
 </script>
 <template>
-  <div class="px-4 pe-4 flex flex-col">
-    <div class="flex-auto flex justify-between">
-      <div>
-        <p>
-          {{ message }}
-        </p>
-        <p class="text-4xl">
-          {{ presentTimeText }}
-        </p>
-        <p class="text-2xl text-gray-500">
-          {{ totalTimeText }}
-        </p>
-      </div>
-      <JCircle :is-red="isWorking" :color="circleColor" @click="btnCircle">
-        <p>
-          <span class="text-4xl">{{ nowExcerciseSet }}</span>
-          <span class="text-lg">/{{ records.length }}</span>
-        </p>
-        <p class="text-2xl">
-          Set
-        </p>
-      </JCircle>
-    </div>
-
+  <MyTimer :rest-sec="sec">
     <div class="flex-auto mt-5 border max-h-52 chart-center">
       <JMultiChart :data="records" :now-exr-id="excercise.exrId" />
     </div>
@@ -220,14 +199,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
         color="green"
       />
     </div>
-
-    <div class="flex-auto grid gap-4 grid-cols-2 pt-5 h-20">
-      <JButton v-if="isRun" label="기록" :disabled="!isWorking" @click="btnRecord()" />
-      <JButton v-else label="시작" color="green" @click="btnStart()" />
-      <JButton v-if="isRun" label="정지" color="red" @click="btnStop()" />
-      <JButton v-else label="종료" @click="btnReset()" />
-    </div>
-  </div>
+  </MyTimer>
 
   <Teleport to="body">
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true || showRecordReport === true">

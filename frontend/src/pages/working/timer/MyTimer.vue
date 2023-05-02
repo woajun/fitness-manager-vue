@@ -78,7 +78,7 @@ const circleBackground = computed(() => {
 });
 </script>
 <template>
-  <div class="px-4 pe-4 flex flex-col">
+  <div class="flex-auto flex flex-col">
     <div class="flex-auto flex justify-between">
       <div>
         <p class="text-3xl">

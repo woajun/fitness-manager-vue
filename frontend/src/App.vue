@@ -7,10 +7,9 @@ import NavBar from './pages/navigation/NavBar.vue';
     <div class="header">
       <NavBar />
     </div>
-    <div class="main">
+    <div class="main p-3">
       <RouterView />
     </div>
-    <div class="footer" />
   </div>
 </template>
 <style>
@@ -27,10 +26,11 @@ import NavBar from './pages/navigation/NavBar.vue';
 }
 
 .main {
-  flex: 1;
+  flex: 1 1 auto;
+  display: flex;
 }
 
 .footer {
-  height: 90px;
+  height: 30px;
 }
 </style>

@@ -10,12 +10,12 @@ const emit = defineEmits<{ (e: 'close'): void
 <template>
   <Transition name="modal">
     <div v-if="props.show" class="modal-mask">
-      <div class="modal-container">
+      <div class="modal-container flex">
         <div class="modal-header">
           <slot name="header" />
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body flex-auto flex">
           <slot name="body">
             default body
           </slot>

@@ -34,11 +34,11 @@ const entire = {exrId: -1, exrName: '전체'};
 
 </script>
 <template>
-  <div>
-    <div>
+  <div class="flex-auto flex flex-col">
+    <div class="flex-auto">
       <input class="text-xl border-2 rounded-xl w-full h-12 px-3" @keyup="search">
     </div>
-    <div class="text-xl pt-5">
+    <div class="flex-auto overflow-auto text-xl mt-5">
       <div v-if="props.useEntire" class="border-b" @click="()=> select(entire)">
         <span :class="{ 'text-green-500': selected.exrId === entire.exrId }">{{ entire.exrName }}</span>
       </div>
@@ -46,7 +46,7 @@ const entire = {exrId: -1, exrName: '전체'};
         <span :class="{ 'text-green-500': selected.exrId === exr.exrId }">{{ exr.exrName }}</span>
       </div>
     </div>
-    <div class="grid gap-4 grid-cols-2 pt-5 my-3">
+    <div class="flex-auto grid gap-4 grid-cols-2 pt-5 my-3">
       <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="emit('cancel')">
         취소
       </button>

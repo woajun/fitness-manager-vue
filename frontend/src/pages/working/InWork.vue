@@ -52,13 +52,13 @@ function submit() {
 
 const isSnackbarShow = ref({ value: false });
 
-function btnRecord() {
+function record(ms: number) {
   records.value.push({
     exrId: excercise.value.exrId,
     weight: weight.value,
     reps: rep.value,
     restMs: sec.value,
-    totalMs: 10,
+    totalMs: ms,
     recordTime: new Date(),
   });
   isSnackbarShow.value = { value: true };
@@ -80,7 +80,7 @@ const nowExcerciseRep = computed(() => records.value.reduce((t, c) => (c.exrId =
 const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + 1 : t), 0));
 </script>
 <template>
-  <MyTimer :rest-sec="sec">
+  <MyTimer :rest-sec="sec" @record="record" @finish="finish">
     <div class="flex-auto mt-5 border max-h-52 chart-center">
       <JMultiChart :data="records" :now-exr-id="excercise.exrId" />
     </div>

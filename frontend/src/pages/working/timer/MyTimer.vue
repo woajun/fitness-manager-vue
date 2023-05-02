@@ -1,12 +1,16 @@
 <!-- eslint-disable vue/max-len -->
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import JCircle from '@/components/JCircle.vue';
 import { msToTimeText, msToTimeTextWithHour } from '@/components/helper';
 import JButton from '@/components/JButton.vue';
 
 const props = defineProps<{
   restSec: number;
+}>();
+
+const emits = defineEmits<{
+  (e: 'record', ms:number): void
+  (e: 'finish'): void
 }>();
 
 const totalTime = ref(0);
@@ -34,12 +38,14 @@ function handlePause() {
 }
 
 function handleReset() {
+  emits('finish');
   status.value = 'READY';
   currentTime.value = 0;
   totalTime.value = 0;
 }
 
 function handleRecord() {
+  emits('record', currentTime.value);
   currentTime.value = 0;
 }
 

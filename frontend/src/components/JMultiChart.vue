@@ -36,7 +36,6 @@ const props = defineProps<{
 }>();
 
 function toData(data: ChartData[], dataKey: string) {
-  console.log('data', data);
   return data
     .filter((e) => e.exrId === props.nowExrId)
     .map((e) => e[dataKey]);

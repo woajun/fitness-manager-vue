@@ -91,7 +91,9 @@ const circleBackground = computed(() => {
           {{ msToTimeTextWithHour(totalTime) }}
         </p>
       </div>
-      <div class="w-28 h-28 text-center rounded-full text-white pt-3 bg-red-600 border-red-700" :style="circleBackground" />
+      <div class="w-28 h-28 text-center rounded-full text-white pt-3 bg-red-600 border-red-700" :style="circleBackground">
+        <slot name="circle" />
+      </div>
     </div>
 
     <slot />

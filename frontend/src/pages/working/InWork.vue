@@ -81,6 +81,20 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
 </script>
 <template>
   <MyTimer :rest-sec="sec" @record="record" @finish="finish">
+    <template #circle>
+      <p
+        @click="() => {
+          showSubmit = false;
+          showRecordReport = true;
+        }"
+      >
+        <span class="text-4xl">{{ nowExcerciseSet }}</span>
+        <span class="text-lg">/{{ records.length }}</span>
+      </p>
+      <p class="text-2xl">
+        Set
+      </p>
+    </template>
     <div class="flex-auto mt-5 border max-h-52 chart-center">
       <JMultiChart :data="records" :now-exr-id="excercise.exrId" />
     </div>
@@ -121,8 +135,22 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
   <Teleport to="body">
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true || showRecordReport === true">
       <template #body>
-        <ExcerciseSelector v-if="showExcerciseSelector" v-model="excercise" :excercises="excercises" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
-        <RecordReport v-else-if="showRecordReport" :records="records" :excercises="excercises" :time-text="totalTimeText" :show-submit="showSubmit" @cancel="showRecordReport = false" @submit="finish" />
+        <ExcerciseSelector
+          v-if="showExcerciseSelector"
+          v-model="excercise"
+          :excercises="excercises"
+          @cancel="showExcerciseSelector = false"
+          @do-select="changeExcercise"
+        />
+        <RecordReport
+          v-else-if="showRecordReport"
+          :records="records"
+          :excercises="excercises"
+          :time-text="totalTimeText"
+          :show-submit="showSubmit"
+          @cancel="showRecordReport = false"
+          @submit="finish"
+        />
       </template>
     </JBottomSheet>
   </Teleport>

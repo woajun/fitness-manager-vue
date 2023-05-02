@@ -7,37 +7,32 @@ import selectorOptions from '../../data/selectorOptions';
 import JBottomSheet from '../../components/JBottomSheet.vue';
 import ExcerciseSelector from './ExcerciseSelector.vue';
 import RecordReport from './RecordReport.vue';
-import rawExcercises from '../../data/excercises';
+import excercises from '../../data/excercises';
 import JInputText from '../../components/JInputText.vue';
 import JScrollPicker from '../../components/JScrollPicker.vue';
 import JBottomRightSnackbar from '../../components/JBottomRightSnackbar.vue';
 import type { Exr, Set } from './interfaces';
 import MyTimer from './timer/MyTimer.vue';
 
-// excercise - start ====
-const excercises = computed(() => rawExcercises.sort((a, b) => a.exrName[0].localeCompare(b.exrName[0])));
-const excercise = ref<Exr>(excercises.value[0]);
+const excercise = ref<Exr>(excercises[0]);
 
-const showExcerciseSelector = ref(false);
+const visibleExrModal = ref(false);
 
-function changeExcercise(aExcercise: Exr) {
-  excercise.value = aExcercise;
-  showExcerciseSelector.value = false;
-}
-// excercise - end ====
-// RecordReport - start ===
 const records = ref<Set[]>([]);
 
 const showRecordReport = ref(false);
 const showSubmit = ref(false);
-// RecordReport - end ===
 
-const weight = ref(0);
-const rep = ref(15);
-const sec = ref(90);
+const weight = ref(excercise.value.kgStart);
+const rep = ref(excercise.value.repStart);
+const sec = ref(60);
 
-// totalTimeText & stopWatch - start ====
-const totalTimeText = ref('');
+function selectExcercise(aExcercise: Exr) {
+  weight.value = aExcercise.kgStart;
+  rep.value = aExcercise.repStart;
+  excercise.value = aExcercise;
+  visibleExrModal.value = false;
+}
 
 const startDate = ref<Date>(new Date());
 function submit() {
@@ -100,7 +95,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
     </div>
 
     <div class="flex-auto pt-5 grid grid-cols-5">
-      <div class="col-span-4" @click="showExcerciseSelector = true">
+      <div class="col-span-4" @click="visibleExrModal = true">
         <JInputText v-model="excercise.exrName" readonly />
       </div>
       <div class=" text-gray-500 text-2xl relative break-keep">
@@ -133,25 +128,26 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
   </MyTimer>
 
   <Teleport to="body">
-    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true || showRecordReport === true">
-      <template #body>
-        <ExcerciseSelector
-          v-if="showExcerciseSelector"
-          v-model="excercise"
-          :excercises="excercises"
-          @cancel="showExcerciseSelector = false"
-          @do-select="changeExcercise"
-        />
-        <RecordReport
-          v-else-if="showRecordReport"
-          :records="records"
-          :excercises="excercises"
-          :time-text="totalTimeText"
-          :show-submit="showSubmit"
-          @cancel="showRecordReport = false"
-          @submit="finish"
-        />
-      </template>
+    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="visibleExrModal">
+      <ExcerciseSelector
+        v-model="excercise"
+        :excercises="excercises"
+        @cancel="visibleExrModal = false"
+        @do-select="selectExcercise"
+      />
+    </JBottomSheet>
+  </Teleport>
+
+  <Teleport to="body">
+    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showRecordReport">
+      <RecordReport
+        :records="records"
+        :excercises="excercises"
+        :time-text="''"
+        :show-submit="showSubmit"
+        @cancel="showRecordReport = false"
+        @submit="finish"
+      />
     </JBottomSheet>
   </Teleport>
 

@@ -16,7 +16,7 @@ const emit = defineEmits<{ (e: 'close'): void
         </div>
 
         <div class="modal-body flex-auto flex">
-          <slot name="body">
+          <slot name="default">
             default body
           </slot>
         </div>

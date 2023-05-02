@@ -11,6 +11,11 @@ export type Set = {
 export type Exr = {
   exrId: number,
   exrName: string,
+  kgStart: number,
+  kgMin: number,
+  kgMax: number,
+  kgUnit: number,
+  repStart: number,
 };
 
 export type Work = {

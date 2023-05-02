@@ -9,8 +9,9 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'record', ms:number): void
-  (e: 'finish'): void
+  (e: 'start'): void
+  (e: 'record', ms: number): void
+  (e: 'finish', ms: number): void
 }>();
 
 const totalTime = ref(0);
@@ -30,6 +31,7 @@ watch(status, (newStatus) => {
 });
 
 function handleRun() {
+  if (status.value === 'READY') emits('start');
   status.value = 'RUN';
 }
 
@@ -38,7 +40,7 @@ function handlePause() {
 }
 
 function handleReset() {
-  emits('finish');
+  emits('finish', totalTime.value);
   status.value = 'READY';
   currentTime.value = 0;
   totalTime.value = 0;

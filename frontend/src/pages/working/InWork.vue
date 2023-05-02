@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/max-len -->
 <script setup lang="ts">
 import axios from 'axios';
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import JMultiChart from '../../components/JMultiChart.vue';
 import selectorOptions from '../../data/selectorOptions';
 import JBottomSheet from '../../components/JBottomSheet.vue';
@@ -18,8 +18,6 @@ const excercise = ref<Exr>(excercises[0]);
 
 const visibleExrModal = ref(false);
 
-const records = ref<Set[]>([]);
-
 const showRecordReport = ref(false);
 const showSubmit = ref(false);
 
@@ -34,21 +32,28 @@ function selectExcercise(aExcercise: Exr) {
   visibleExrModal.value = false;
 }
 
-const startDate = ref<Date>(new Date());
-function submit() {
-  const dto = {
-    memberId: 0,
-    startTime: startDate.value,
-    totalMs: 10,
-    sets: records.value,
-  };
-  axios.post('/record', dto);
-}
-
 const isSnackbarShow = ref({ value: false });
 
+type Result = {
+  memberId: number,
+  startTime: Date,
+  totalMs: number,
+  sets: Set[],
+};
+
+const result = reactive<Result>({
+  memberId: 0,
+  startTime: new Date(),
+  totalMs: 10,
+  sets: [],
+});
+
+function start() {
+  result.startTime = new Date();
+}
+
 function record(ms: number) {
-  records.value.push({
+  result.sets.push({
     exrId: excercise.value.exrId,
     weight: weight.value,
     reps: rep.value,
@@ -60,22 +65,35 @@ function record(ms: number) {
 }
 
 function cancelRecord() {
-  const popped = records.value.pop();
+  const popped = result.sets.pop();
   if (!popped) return;
   isSnackbarShow.value = { value: false };
 }
 
-function finish() {
-  submit();
-  records.value = [];
-  showRecordReport.value = false;
+function showResult() {
+  showRecordReport.value = true;
 }
 
-const nowExcerciseRep = computed(() => records.value.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + c.reps : t), 0));
-const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + 1 : t), 0));
+function finish(ms: number) {
+  result.totalMs = ms;
+  axios.post('/record', result);
+  showResult();
+}
+
+function reset() {
+  result.sets = [];
+}
+
+const nowExcerciseRep = computed(() => result.sets.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + c.reps : t), 0));
+const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + 1 : t), 0));
 </script>
 <template>
-  <MyTimer :rest-sec="sec" @record="record" @finish="finish">
+  <MyTimer
+    :rest-sec="sec"
+    @start="start"
+    @record="record"
+    @finish="finish"
+  >
     <template #circle>
       <p
         @click="() => {
@@ -84,14 +102,14 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
         }"
       >
         <span class="text-4xl">{{ nowExcerciseSet }}</span>
-        <span class="text-lg">/{{ records.length }}</span>
+        <span class="text-lg">/{{ result.sets.length }}</span>
       </p>
       <p class="text-2xl">
         Set
       </p>
     </template>
     <div class="flex-auto mt-5 border max-h-52 chart-center">
-      <JMultiChart :data="records" :now-exr-id="excercise.exrId" />
+      <JMultiChart :data="result.sets" :now-exr-id="excercise.exrId" />
     </div>
 
     <div class="flex-auto pt-5 grid grid-cols-5">
@@ -141,7 +159,7 @@ const nowExcerciseSet = computed(() => records.value.reduce((t, c) => (c.exrId =
   <Teleport to="body">
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showRecordReport">
       <RecordReport
-        :records="records"
+        :records="result.sets"
         :excercises="excercises"
         :time-text="''"
         :show-submit="showSubmit"

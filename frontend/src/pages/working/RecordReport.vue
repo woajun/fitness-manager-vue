@@ -45,12 +45,12 @@ const sets = computed(() => {
 
 </script>
 <template>
-  <div>
-    <div class="text-3xl py-3 border-b-4">
+  <div class="report-container">
+    <div class="report-header">
       <div>{{ props.timeText }}</div>
       <div>{{ props.records.length }} 세트 / {{ props.records.reduce((t, c) => t + c.reps, 0) }} 회 </div>
     </div>
-    <div class="text-xl h-80 overflow-auto">
+    <div class="report-body">
       <div v-for="set in sets" :key="`exrID-${set.exrID}`" class="border-b-2">
         <div @click="set.apple.value = !set.apple.value">
           <label>
@@ -93,13 +93,40 @@ const sets = computed(() => {
         </JCollapse>
       </div>
     </div>
-  </div>
-  <div class="grid gap-4 pt-5 my-3" :class="{ 'grid-cols-2': showSubmit }">
-    <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="emit('cancel')">
-      뒤로
-    </button>
-    <button v-if="showSubmit" class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="submit">
-      운동종료
-    </button>
+    <div class="report-footer grid gap-4 pt-5 my-3" :class="{ 'grid-cols-2': showSubmit }">
+      <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="emit('cancel')">
+        뒤로
+      </button>
+      <button v-if="showSubmit" class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="submit">
+        운동종료
+      </button>
+    </div>
   </div>
 </template>
+<style scoped>
+.report-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.report-header {
+  flex: 0 0 0%;
+  font-size: 1.875rem;
+  border-bottom-width: 4px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.report-body {
+  flex: 1 0 0%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-size: 1.25rem;
+}
+
+.report-footer {
+  flex: 0 0 0%;
+}
+
+</style>

@@ -15,7 +15,7 @@ const emit = defineEmits<{ (e: 'close'): void
           <slot name="header" />
         </div>
 
-        <div class="modal-body flex-auto flex">
+        <div class="modal-body">
           <slot name="default">
             default body
           </slot>
@@ -29,7 +29,7 @@ const emit = defineEmits<{ (e: 'close'): void
   </Transition>
 </template>
 
-<style>
+<style scoped>
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -59,6 +59,9 @@ const emit = defineEmits<{ (e: 'close'): void
 }
 
 .modal-body {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 }
 
 .modal-default-button {

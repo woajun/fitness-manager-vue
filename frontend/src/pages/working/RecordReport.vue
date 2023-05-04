@@ -51,12 +51,12 @@ const sets = computed(() => {
       <div>{{ props.records.length }} 세트 / {{ props.records.reduce((t, c) => t + c.reps, 0) }} 회 </div>
     </div>
     <div class="report-body">
-      <div v-for="set in sets" :key="`exrID-${set.exrID}`" class="border-b-2">
-        <div @click="set.apple.value = !set.apple.value">
+      <template v-for="set in sets" :key="`exrID-${set.exrID}`">
+        <div class="report-item" @click="set.apple.value = !set.apple.value">
           <label>
             {{ set.exrName }}
           </label>
-          <table class="table-auto w-full">
+          <table>
             <tr>
               <td>
                 {{ set.sets.length }}set
@@ -73,8 +73,8 @@ const sets = computed(() => {
             </tr>
           </table>
         </div>
-        <JCollapse :show="set.apple.value" class="font-light bg-gray-50">
-          <table class="table-auto w-full ml-3">
+        <JCollapse :show="set.apple.value">
+          <table class="report-list">
             <tr v-for="(rep, i) in set.sets" :key="`kkk-${i}`">
               <td>
                 {{ i + 1 }}set
@@ -91,13 +91,13 @@ const sets = computed(() => {
             </tr>
           </table>
         </JCollapse>
-      </div>
+      </template>
     </div>
-    <div class="report-footer grid gap-4 pt-5 my-3" :class="{ 'grid-cols-2': showSubmit }">
-      <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="emit('cancel')">
+    <div class="report-footer">
+      <button class="text-slate-50 rounded-lg bg-slate-700 text-xl" @click="emit('cancel')">
         뒤로
       </button>
-      <button v-if="showSubmit" class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="submit">
+      <button v-if="showSubmit" class="text-slate-50 rounded-lg bg-green-500 text-xl" @click="submit">
         운동종료
       </button>
     </div>
@@ -119,10 +119,17 @@ const sets = computed(() => {
 }
 
 .report-body {
-  flex: 1 0 0%;
+  flex: 0 0 70%;
   overflow-x: hidden;
   overflow-y: scroll;
+}
+
+.report-item {
   font-size: 1.25rem;
+}
+
+.report-list {
+  font-size: 0.8rem;
 }
 
 .report-footer {

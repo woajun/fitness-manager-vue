@@ -17,9 +17,7 @@ import MyTimer from './timer/MyTimer.vue';
 const excercise = ref<Exr>(excercises[0]);
 
 const visibleExrModal = ref(false);
-
-const showRecordReport = ref(false);
-const showSubmit = ref(false);
+const visibleReportModal = ref(false);
 
 const weight = ref(excercise.value.kgStart);
 const rep = ref(excercise.value.repStart);
@@ -48,11 +46,11 @@ const result = reactive<Result>({
   sets: [],
 });
 
-function start() {
+function onTimerStart() {
   result.startTime = new Date();
 }
 
-function record(ms: number) {
+function onTimerRecord(ms: number) {
   result.sets.push({
     exrId: excercise.value.exrId,
     weight: weight.value,
@@ -70,18 +68,15 @@ function cancelRecord() {
   isSnackbarShow.value = { value: false };
 }
 
-function showResult() {
-  showRecordReport.value = true;
-}
-
-function finish(ms: number) {
+function onTimerFinish(ms: number) {
   result.totalMs = ms;
   axios.post('/record', result);
-  showResult();
+  visibleReportModal.value = true;
 }
 
-function reset() {
+function onCheckedReport() {
   result.sets = [];
+  visibleReportModal.value = false;
 }
 
 const nowExcerciseRep = computed(() => result.sets.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + c.reps : t), 0));
@@ -90,15 +85,14 @@ const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId ===
 <template>
   <MyTimer
     :rest-sec="sec"
-    @start="start"
-    @record="record"
-    @finish="finish"
+    @start="onTimerStart"
+    @record="onTimerRecord"
+    @finish="onTimerFinish"
   >
     <template #circle>
       <p
         @click="() => {
-          showSubmit = false;
-          showRecordReport = true;
+          visibleReportModal = true;
         }"
       >
         <span class="text-4xl">{{ nowExcerciseSet }}</span>
@@ -157,14 +151,14 @@ const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId ===
   </Teleport>
 
   <Teleport to="body">
-    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showRecordReport">
+    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="visibleReportModal">
       <RecordReport
         :records="result.sets"
         :excercises="excercises"
         :time-text="''"
-        :show-submit="showSubmit"
-        @cancel="showRecordReport = false"
-        @submit="finish"
+        :show-submit="true"
+        @cancel="visibleReportModal = false"
+        @submit="onCheckedReport"
       />
     </JBottomSheet>
   </Teleport>

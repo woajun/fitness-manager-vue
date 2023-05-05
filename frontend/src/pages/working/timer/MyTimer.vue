@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/max-len -->
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { msToTimeText, msToTimeTextWithHour } from '@/components/helper';
@@ -100,14 +99,16 @@ const circleBackground = computed(() => {
 
     <slot />
 
-    <div class="flex-auto grid gap-4 grid-cols-2 pt-5 h-20">
+    <div class="btn-container">
       <template v-if="status !== 'RUN'">
         <JButton
+          class="btns"
           label="run"
           color="green"
           @click="handleRun"
         />
         <JButton
+          class="btns"
           label="finish"
           :disabled="totalTime === 0"
           @click="handleReset"
@@ -115,11 +116,13 @@ const circleBackground = computed(() => {
       </template>
       <template v-else>
         <JButton
+          class="btns"
           label="record"
           :disabled="runTime > 0"
           @click="handleRecord"
         />
         <JButton
+          class="btns"
           label="pause"
           color="red"
           @click="handlePause"
@@ -171,6 +174,18 @@ const circleBackground = computed(() => {
   border-radius: 9999px;
   width: 7rem;
   height: 7rem;
+}
+
+.btn-container {
+  flex: 1 1 auto;
+  display: flex;
+  gap: 0.5rem
+}
+
+.btns {
+  flex: 1 0 0%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 </style>

@@ -1,6 +1,6 @@
 <!-- eslint-disable no-spaced-func -->
 <script lang="ts" setup>
-import { TransitionGroup, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { Exr, Set } from './interfaces';
 import { msToTimeText } from '../../components/helper';
 import JCollapse from '../../components/JCollapse.vue';
@@ -160,14 +160,6 @@ const sets = computed(() => {
   flex: 1 1 0%;
   color: rgb(248 250 252);
   border-radius: 0.5rem;
-}
-
-.bg-slate {
-  background-color: rgb(51 65 85);
-}
-
-.bg-green {
-  background-color: rgb(34 197 94);
 }
 
 </style>

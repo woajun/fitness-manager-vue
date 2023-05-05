@@ -73,4 +73,12 @@ import NavBar from './pages/navigation/NavBar.vue';
 .txt-gray {
   color: rgb(107 114 128);
 }
+
+.bg-slate {
+  background-color: rgb(51 65 85);
+}
+
+.bg-green {
+  background-color: rgb(34 197 94);
+}
 </style>

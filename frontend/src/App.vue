@@ -15,10 +15,10 @@ import NavBar from './pages/navigation/NavBar.vue';
 <style scoped>
 .app-container {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
-  /* position: fixed; */
+  position: fixed;
 }
 
 .header {

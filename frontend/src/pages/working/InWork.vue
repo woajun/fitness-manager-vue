@@ -21,7 +21,7 @@ const visibleReportModal = ref(false);
 
 const weight = ref(excercise.value.kgStart);
 const rep = ref(excercise.value.repStart);
-const sec = ref(60);
+const sec = ref(0);
 
 function selectExcercise(aExcercise: Exr) {
   weight.value = aExcercise.kgStart;

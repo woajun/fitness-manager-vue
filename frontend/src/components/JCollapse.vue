@@ -1,24 +1,45 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  show: boolean,
-}>();
+import { Transition, ref } from 'vue';
+
+const collapsed = ref(false);
+
+function toggle() {
+  collapsed.value = !collapsed.value;
+}
+
 </script>
 <template>
   <div>
-    <slot name="header" />
-  </div>
-  <div class="overflow-hidden">
-    <div class="expandable" :class="{ expanded: props.show }">
-      <slot />
+    <div @click="toggle">
+      <slot name="header" />
     </div>
+    <Transition name="collapse" mode="out-in">
+      <div v-if="collapsed" class="collapseDIV">
+        <slot />
+      </div>
+    </Transition>
   </div>
 </template>
-<style>
-.expandable {
-  margin-top: -100%;
-  transition: all 0.5s;
+<style scoped>
+.collapseDIV {
+  transform-origin: top;
 }
-.expandable.expanded {
-  margin-top: 0;
+
+.collapse-enter-active {
+  animation: collapse reverse 500ms ease;
+}
+.collapse-leave-active {
+  animation: collapse 500ms ease;
+}
+
+@keyframes collapse {
+  from {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  to {
+    transform: scaleY(0);
+    opacity: 0;
+  }
 }
 </style>

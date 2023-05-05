@@ -52,28 +52,30 @@ const sets = computed(() => {
     </div>
     <div class="report-body">
       <template v-for="set in sets" :key="`exrID-${set.exrID}`">
-        <div class="report-item" @click="set.apple.value = !set.apple.value">
-          <label>
-            {{ set.exrName }}
-          </label>
-          <table>
-            <tr>
-              <td>
-                {{ set.sets.length }}set
-              </td>
-              <td>
-                0-0kg
-              </td>
-              <td>
-                {{ set.sets.reduce((t, c) => t + c.reps, 0) }}rep
-              </td>
-              <td>
-                {{ msToTimeText(set.sets.reduce((t, c) => t + c.totalMs, 0)) }}
-              </td>
-            </tr>
-          </table>
-        </div>
-        <JCollapse :show="set.apple.value">
+        <JCollapse>
+          <template #header>
+            <div class="report-item" @click="set.apple.value = !set.apple.value">
+              <label>
+                {{ set.exrName }}
+              </label>
+              <table>
+                <tr>
+                  <td>
+                    {{ set.sets.length }}set
+                  </td>
+                  <td>
+                    0-0kg
+                  </td>
+                  <td>
+                    {{ set.sets.reduce((t, c) => t + c.reps, 0) }}rep
+                  </td>
+                  <td>
+                    {{ msToTimeText(set.sets.reduce((t, c) => t + c.totalMs, 0)) }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </template>
           <table class="report-list">
             <tr v-for="(rep, i) in set.sets" :key="`kkk-${i}`">
               <td>
@@ -108,6 +110,8 @@ const sets = computed(() => {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  flex-wrap: wrap;
+  overflow-y: scroll;
 }
 
 .report-header {

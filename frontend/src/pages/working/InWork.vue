@@ -95,47 +95,52 @@ const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId ===
           visibleReportModal = true;
         }"
       >
-        <span class="text-4xl">{{ nowExcerciseSet }}</span>
-        <span class="text-lg">/{{ result.sets.length }}</span>
+        <span class="fs-22">{{ nowExcerciseSet }}</span>
+        <span class="fs-12">/{{ result.sets.length }}</span>
       </p>
-      <p class="text-2xl">
+      <p class="fs-12">
         Set
       </p>
     </template>
-    <div class="flex-auto mt-5 border max-h-52 chart-center">
+    <div class="chart-container">
       <JMultiChart :data="result.sets" :now-exr-id="excercise.exrId" />
     </div>
 
-    <div class="flex-auto pt-5 grid grid-cols-5">
-      <div class="col-span-4" @click="visibleExrModal = true">
+    <div class="excercise-container">
+      <div class="excercise-input" @click="visibleExrModal = true">
         <JInputText v-model="excercise.exrName" readonly />
       </div>
-      <div class=" text-gray-500 text-2xl relative break-keep">
-        <div class="absolute bottom-0 right-0">
-          {{ nowExcerciseRep }}<span class="text-xl">rep</span>
-        </div>
+      <div class="excercise-current txt-gray">
+        <span class="fs-15"> {{ nowExcerciseRep }} </span>
+        <span class="fs-12">rep</span>
       </div>
     </div>
 
-    <div class="flex-auto pt-5 grid grid-cols-3 text-center gap-1 text-lg text-gray-500">
-      <JScrollPicker
-        v-model="weight"
-        label="kg"
-        :options="selectorOptions.weight"
-        color="red"
-      />
-      <JScrollPicker
-        v-model="rep"
-        label="rep"
-        :options="selectorOptions.rep"
-        color="purple"
-      />
-      <JScrollPicker
-        v-model="sec"
-        label="sec"
-        :options="selectorOptions.sec"
-        color="green"
-      />
+    <div class="condition-container">
+      <div class="condition">
+        <JScrollPicker
+          v-model="weight"
+          label="kg"
+          :options="selectorOptions.weight"
+          color="red"
+        />
+      </div>
+      <div class="condition">
+        <JScrollPicker
+          v-model="rep"
+          label="rep"
+          :options="selectorOptions.rep"
+          color="purple"
+        />
+      </div>
+      <div class="condition">
+        <JScrollPicker
+          v-model="sec"
+          label="sec"
+          :options="selectorOptions.sec"
+          color="green"
+        />
+      </div>
     </div>
   </MyTimer>
 
@@ -168,7 +173,36 @@ const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId ===
   </Teleport>
 </template>
 <style>
-.chart-center {
-  text-align: -webkit-center;
+.chart-container {
+  flex: 1 0 0%;
+  border-width: 1px;
+  margin-top: 1.25rem;
+}
+
+.excercise-container {
+  flex: 1 0 0%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.excercise-input {
+  flex: 1 0 0%;
+}
+
+.excercise-current {
+  flex: 0 1 0%;
+}
+
+.condition-container {
+  flex: 1 0 0%;
+  display: flex;
+  gap: 1rem;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.condition {
+  flex: 1 0 0%;
 }
 </style>

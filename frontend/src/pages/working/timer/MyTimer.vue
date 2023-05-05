@@ -80,7 +80,7 @@ const circleBackground = computed(() => {
 </script>
 <template>
   <div class="timer">
-    <div class="timer-header">
+    <div class="timer-container">
       <div class="times fs-18">
         <div>
           {{ (status === 'RUN' && runTime > 0) ? 'REST' : status }}
@@ -138,8 +138,8 @@ const circleBackground = computed(() => {
   display: flex;
 }
 
-.timer-header {
-  flex: 1 1 auto;
+.timer-container {
+  flex: 1 0 0%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -168,7 +168,7 @@ const circleBackground = computed(() => {
 }
 
 .btn-container {
-  flex: 1 1 auto;
+  flex: 0 0 0%;
   display: flex;
   gap: 0.5rem
 }

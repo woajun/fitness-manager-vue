@@ -50,6 +50,10 @@ import NavBar from './pages/navigation/NavBar.vue';
   font-size: 1.875rem;
 }
 
+.fs-15 {
+  font-size: 1.5rem;
+}
+
 .fs-12 {
   font-size: 1.25rem;
 }
@@ -62,4 +66,7 @@ import NavBar from './pages/navigation/NavBar.vue';
   font-size: 0.8rem;
 }
 
+.txt-gray {
+  color: rgb(107 114 128);
+}
 </style>

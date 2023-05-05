@@ -184,6 +184,7 @@ const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId ===
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding-top: 1rem;
 }
 
 .excercise-input {

@@ -80,20 +80,20 @@ const circleBackground = computed(() => {
 });
 </script>
 <template>
-  <div class="flex-auto flex flex-col">
-    <div class="flex-auto flex justify-between">
-      <div>
-        <p class="text-3xl">
+  <div class="timer">
+    <div class="timer-header">
+      <div class="times">
+        <div class="status">
           {{ (status === 'RUN' && runTime > 0) ? 'REST' : status }}
-        </p>
-        <p class="text-4xl">
+        </div>
+        <div class="current">
           {{ msToTimeText(runTime) }}
-        </p>
-        <p class="text-3xl text-gray-500">
+        </div>
+        <div class="total">
           {{ msToTimeTextWithHour(totalTime) }}
-        </p>
+        </div>
       </div>
-      <div class="w-28 h-28 text-center rounded-full text-white pt-3 bg-red-600 border-red-700" :style="circleBackground">
+      <div class="circle" :style="circleBackground">
         <slot name="circle" />
       </div>
     </div>
@@ -128,3 +128,49 @@ const circleBackground = computed(() => {
     </div>
   </div>
 </template>
+<style scoped>
+.timer {
+  flex: 1 1 auto;
+  flex-direction: column;
+  display: flex;
+}
+
+.timer-header {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.times {
+  flex: 1 1 auto;
+  line-height: 2.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.status {
+  font-size: 1.875rem;
+}
+
+.current {
+  font-size: 2.25rem;
+}
+
+.total {
+  font-size: 1.875rem;
+  color: rgb(107 114 128);
+}
+
+.circle {
+  flex: 0 1 auto;
+  color: rgb(255 255 255);
+  text-align: center;
+  padding-top: 0.75rem;
+  background-color: rgb(220 38 38);
+  border-radius: 9999px;
+  width: 7rem;
+  height: 7rem;
+}
+
+</style>

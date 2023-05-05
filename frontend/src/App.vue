@@ -66,6 +66,10 @@ import NavBar from './pages/navigation/NavBar.vue';
   font-size: 0.8rem;
 }
 
+.fw-6 {
+  font-weight: 600;
+}
+
 .txt-gray {
   color: rgb(107 114 128);
 }

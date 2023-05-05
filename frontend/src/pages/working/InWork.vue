@@ -145,7 +145,7 @@ const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId ===
   </MyTimer>
 
   <Teleport to="body">
-    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="visibleExrModal">
+    <JBottomSheet :show="visibleExrModal">
       <ExcerciseSelector
         v-model="excercise"
         :excercises="excercises"
@@ -156,7 +156,7 @@ const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId ===
   </Teleport>
 
   <Teleport to="body">
-    <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="visibleReportModal">
+    <JBottomSheet :show="visibleReportModal">
       <RecordReport
         :records="result.sets"
         :excercises="excercises"

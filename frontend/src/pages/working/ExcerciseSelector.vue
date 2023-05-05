@@ -30,7 +30,15 @@ function search(e:any) {
   list.value = searcherSearch(e.target.value, props.excercises, 'label');
 }
 
-const entire = {exrId: -1, exrName: '전체'};
+const entire: Exr = {
+  exrId: -1,
+  exrName: '전체',
+  kgMax: 0,
+  kgMin: 0,
+  kgStart: 0,
+  kgUnit: 0,
+  repStart: 0,
+};
 
 </script>
 <template>

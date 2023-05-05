@@ -13,7 +13,10 @@ import CalendarCell, { type CalendarCellProps } from './CalendarCell.vue';
 import DateReport from './DateReport.vue';
 import { convertExr } from './workConverter';
 // selectedExr - start ====
-const selectedExr = ref<Exr>({exrId: -1, exrName: '전체'});
+const selectedExr = ref<Exr>({
+  exrId: -1,
+  exrName: '전체',
+});
 
 const showExcerciseSelector = ref(false);
 
@@ -149,13 +152,13 @@ onMounted(async () => {
       <JButton label="그래프로 보기 (준비중)" disabled />
     </div>
   </div>
-  <Teleport to="body">
+  <!-- <Teleport to="body">
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showExcerciseSelector === true">
       <template #body>
         <ExcerciseSelector v-model="selectedExr" :excercises="excercises" :use-entire="true" @cancel="showExcerciseSelector = false" @do-select="changeExcercise" />
       </template>
     </JBottomSheet>
-  </Teleport>
+  </Teleport> -->
   <Teleport to="body">
     <JBottomSheet class="text-3xl font-semibold text-gray-800" :show="showDateReport === true">
       <template #body>

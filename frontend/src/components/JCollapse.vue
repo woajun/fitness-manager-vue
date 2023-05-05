@@ -34,7 +34,6 @@ function toggle() {
 
 .collapse-enter-from,
 .collapse-leave-to {
-  transform: translateY(-100%);
-  opacity: 0;
+  margin-top: -100%;
 }
 </style>

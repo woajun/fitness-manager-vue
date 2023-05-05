@@ -81,11 +81,11 @@ const circleBackground = computed(() => {
 <template>
   <div class="timer">
     <div class="timer-header">
-      <div class="times">
-        <div class="status">
+      <div class="times fs-18">
+        <div>
           {{ (status === 'RUN' && runTime > 0) ? 'REST' : status }}
         </div>
-        <div class="current">
+        <div class="fs-22">
           {{ msToTimeText(runTime) }}
         </div>
         <div class="total">
@@ -152,16 +152,7 @@ const circleBackground = computed(() => {
   flex-direction: column;
 }
 
-.status {
-  font-size: 1.875rem;
-}
-
-.current {
-  font-size: 2.25rem;
-}
-
 .total {
-  font-size: 1.875rem;
   color: rgb(107 114 128);
 }
 

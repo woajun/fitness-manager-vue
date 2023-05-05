@@ -42,7 +42,7 @@ const sets = computed(() => {
 </script>
 <template>
   <div class="report-container">
-    <div class="report-header">
+    <div class="report-header fs-18">
       <div>{{ props.timeText }}</div>
       <div>{{ props.records.length }} 세트 / {{ props.records.reduce((t, c) => t + c.reps, 0) }} 회 </div>
     </div>
@@ -50,7 +50,7 @@ const sets = computed(() => {
       <template v-for="set in sets" :key="`exrID-${set.exrID}`">
         <JCollapse class="report-item">
           <template #header>
-            <div class="report-summary" @click="set.apple.value = !set.apple.value">
+            <div class="report-summary fs-12" @click="set.apple.value = !set.apple.value">
               <label class="report-summary-exr">
                 {{ set.exrName }}
               </label>
@@ -70,20 +70,20 @@ const sets = computed(() => {
               </div>
             </div>
           </template>
-          <table class="report-list">
+          <table class="report-list fs-10">
             <template v-for="(rep, i) in set.sets" :key="`kkk-${i}`">
               <div class="report-row">
                 <div class="report-el">
-                  {{ i + 1 }} <span class="font-sm">set</span>
+                  {{ i + 1 }} <span class="fs-8">set</span>
                 </div>
                 <div class="report-el">
-                  {{ rep.weight }} <span class="font-sm">kg</span>
+                  {{ rep.weight }} <span class="fs-8">kg</span>
                 </div>
                 <div class="report-el">
-                  {{ rep.reps }} <span class="font-sm">rep</span>
+                  {{ rep.reps }} <span class="fs-8">rep</span>
                 </div>
                 <div class="report-el">
-                  {{ msToTimeText(rep.totalMs) }} <span class="font-sm">sec</span>
+                  {{ msToTimeText(rep.totalMs) }} <span class="fs-8">sec</span>
                 </div>
               </div>
             </template>
@@ -92,10 +92,10 @@ const sets = computed(() => {
       </template>
     </div>
     <div class="report-footer">
-      <button class="report-btn bg-slate" @click="() => emit('cancel')">
+      <button class="report-btn fs-12 bg-slate" @click="() => emit('cancel')">
         뒤로
       </button>
-      <button v-if="showSubmit" class="report-btn bg-green" @click="() => emit('submit')">
+      <button v-if="showSubmit" class="report-btn fs-12 bg-green" @click="() => emit('submit')">
         운동종료
       </button>
     </div>
@@ -112,7 +112,6 @@ const sets = computed(() => {
 
 .report-header {
   flex: 0 0 0%;
-  font-size: 1.875rem;
   border-bottom-width: 4px;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -130,13 +129,11 @@ const sets = computed(() => {
 }
 
 .report-summary {
-  font-size: 1.25rem;
   line-height: 1.5rem;
 }
 
 .report-list {
   flex-grow: 1;
-  font-size: 1rem;
   background-color: azure;
   line-height: 1.5rem;
 }
@@ -153,10 +150,6 @@ const sets = computed(() => {
   align-items: baseline;
 }
 
-.font-sm {
-  font-size: 0.8rem;
-}
-
 .report-footer {
   flex: 0 0 0%;
   display: flex;
@@ -167,7 +160,6 @@ const sets = computed(() => {
   flex: 1 1 0%;
   color: rgb(248 250 252);
   border-radius: 0.5rem;
-  font-size: 1.25rem;
 }
 
 .bg-slate {

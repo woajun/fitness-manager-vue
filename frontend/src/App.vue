@@ -12,7 +12,7 @@ import NavBar from './pages/navigation/NavBar.vue';
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 .app-container {
   width: 100%;
   height: 100vh;
@@ -36,4 +36,30 @@ import NavBar from './pages/navigation/NavBar.vue';
 .footer {
   height: 30px;
 }
+</style>
+<style>
+.fs-25 {
+  font-size: 2.5rem;
+}
+
+.fs-22 {
+  font-size: 2.25rem;
+}
+
+.fs-18 {
+  font-size: 1.875rem;
+}
+
+.fs-12 {
+  font-size: 1.25rem;
+}
+
+.fs-10 {
+  font-size: 1rem;
+}
+
+.fs-8 {
+  font-size: 0.8rem;
+}
+
 </style>

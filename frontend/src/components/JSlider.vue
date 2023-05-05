@@ -82,7 +82,7 @@ onMounted(() => {
         :style="{ height: `${itemH}px` }"
         @click="() => setItemAndAutoMove(item)"
       >
-        {{ item }}
+        <span class="fs-25">{{ item }}</span>
       </li>
     </ul>
   </div>
@@ -109,7 +109,6 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   color: #c8c8c8;
-  font-size: 2.5rem;
   font-weight: 500;
   font-family: "SpoqaB", serif;
 }

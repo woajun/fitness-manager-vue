@@ -13,33 +13,28 @@ function toggle() {
     <div @click="toggle">
       <slot name="header" />
     </div>
-    <Transition name="collapse" mode="out-in">
-      <div v-if="collapsed" class="collapseDIV">
-        <slot />
-      </div>
-    </Transition>
+    <div class="collapse-container">
+      <Transition name="collapse" mode="out-in">
+        <div v-if="collapsed">
+          <slot />
+        </div>
+      </Transition>
+    </div>
   </div>
 </template>
 <style scoped>
-.collapseDIV {
-  transform-origin: top;
+.collapse-container {
+  overflow: hidden;
 }
 
-.collapse-enter-active {
-  animation: collapse reverse 500ms ease;
-}
+.collapse-enter-active,
 .collapse-leave-active {
-  animation: collapse 500ms ease;
+  transition: all .5s ease;
 }
 
-@keyframes collapse {
-  from {
-    transform: scaleY(1);
-    opacity: 1;
-  }
-  to {
-    transform: scaleY(0);
-    opacity: 0;
-  }
+.collapse-enter-from,
+.collapse-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
 }
 </style>

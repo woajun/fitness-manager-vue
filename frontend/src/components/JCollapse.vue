@@ -15,9 +15,9 @@ function toggle() {
     </div>
     <div class="collapse-container">
       <Transition name="collapse" mode="out-in">
-        <div v-if="collapsed">
+        <template v-if="collapsed">
           <slot />
-        </div>
+        </template>
       </Transition>
     </div>
   </div>
@@ -25,6 +25,7 @@ function toggle() {
 <style scoped>
 .collapse-container {
   overflow: hidden;
+  display: flex;
 }
 
 .collapse-enter-active,

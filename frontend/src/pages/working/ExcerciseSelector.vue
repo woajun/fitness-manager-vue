@@ -12,7 +12,6 @@ const emit = defineEmits<{
 const props = defineProps<{
   modelValue: Exr,
   excercises: Exr[],
-  useEntire?: boolean,
 }>();
 
 const selected = ref<Exr>(props.modelValue);
@@ -30,35 +29,57 @@ function search(e:any) {
   list.value = searcherSearch(e.target.value, props.excercises, 'label');
 }
 
-const entire: Exr = {
-  exrId: -1,
-  exrName: '전체',
-  kgMax: 0,
-  kgMin: 0,
-  kgStart: 0,
-  kgUnit: 0,
-  repStart: 0,
-};
-
 </script>
 <template>
-  <div class="flex-auto">
-    <input class="text-xl border-2 rounded-xl w-full h-12 px-3" @keyup="search">
+  <div class="search-container">
+    <input class="search fs-12" @keyup="search">
   </div>
-  <div class="flex-auto overflow-auto text-xl mt-5">
-    <div v-if="props.useEntire" class="border-b" @click="()=> select(entire)">
-      <span :class="{ 'text-green-500': selected.exrId === entire.exrId }">{{ entire.exrName }}</span>
-    </div>
+  <div class="list-container fs-12">
     <div v-for="exr in list" :key="exr.exrId" @click="()=> select(exr)">
-      <span :class="{ 'text-green-500': selected.exrId === exr.exrId }">{{ exr.exrName }}</span>
+      <span :class="{ 'txt-green': selected.exrId === exr.exrId }">{{ exr.exrName }}</span>
     </div>
   </div>
-  <div class="flex-auto grid gap-4 grid-cols-2 pt-5 my-3">
-    <button class="text-slate-50 rounded-lg bg-slate-700 h-14 text-xl" @click="emit('cancel')">
+  <div class="btn-container">
+    <button class="btn fs-12 bg-slate" @click="emit('cancel')">
       취소
     </button>
-    <button class="text-slate-50 rounded-lg bg-green-500 h-14 text-xl" @click="submit">
+    <button class="btn fs-12 bg-green" @click="submit">
       변경
     </button>
   </div>
 </template>
+<style scoped>
+  .search-container {
+    flex: 0;
+    padding-bottom: 1rem;
+  }
+
+  .search {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    border-width: 2px;
+    border-radius: 0.75rem;
+    width: 100%;
+    height: 3rem;
+  }
+
+  .list-container {
+    flex: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .btn-container {
+    padding-top: 1rem;
+    flex: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .btn {
+    flex: 1 0 0%;
+    color: rgb(248 250 252);
+    border-radius: 0.5rem;
+    height: 3rem;
+  }
+</style>

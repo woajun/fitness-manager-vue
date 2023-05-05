@@ -17,10 +17,6 @@ const props = defineProps<{
   showSubmit?: boolean,
 }>();
 
-function submit() {
-  emit('submit');
-}
-
 function getExrIDsWithExrOrder() {
   const exrIDs = props.records.map((e) => e.exrId);
   return exrIDs.filter((e, i) => exrIDs.indexOf(e) === i);
@@ -52,7 +48,7 @@ const sets = computed(() => {
     </div>
     <div class="report-body">
       <template v-for="set in sets" :key="`exrID-${set.exrID}`">
-        <JCollapse>
+        <JCollapse class="report-item">
           <template #header>
             <div class="report-summary" @click="set.apple.value = !set.apple.value">
               <label class="report-summary-exr">
@@ -96,10 +92,10 @@ const sets = computed(() => {
       </template>
     </div>
     <div class="report-footer">
-      <button class="text-slate-50 rounded-lg bg-slate-700 text-xl" @click="emit('cancel')">
+      <button class="report-btn bg-slate" @click="() => emit('cancel')">
         뒤로
       </button>
-      <button v-if="showSubmit" class="text-slate-50 rounded-lg bg-green-500 text-xl" @click="submit">
+      <button v-if="showSubmit" class="report-btn bg-green" @click="() => emit('submit')">
         운동종료
       </button>
     </div>
@@ -123,9 +119,14 @@ const sets = computed(() => {
 }
 
 .report-body {
-  flex: 0 0 70%;
+  padding-top: 1rem;
+  flex: 1 0 0%;
   overflow-x: hidden;
   overflow-y: scroll;
+}
+
+.report-item {
+  padding-bottom: 1rem;
 }
 
 .report-summary {
@@ -137,6 +138,7 @@ const sets = computed(() => {
   flex-grow: 1;
   font-size: 1rem;
   background-color: azure;
+  line-height: 1.5rem;
 }
 
 .report-row {
@@ -145,6 +147,10 @@ const sets = computed(() => {
 
 .report-el {
   flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: baseline;
 }
 
 .font-sm {
@@ -153,6 +159,23 @@ const sets = computed(() => {
 
 .report-footer {
   flex: 0 0 0%;
+  display: flex;
+  gap: 0.5rem
+}
+
+.report-btn {
+  flex: 1 1 0%;
+  color: rgb(248 250 252);
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.bg-slate {
+  background-color: rgb(51 65 85);
+}
+
+.bg-green {
+  background-color: rgb(34 197 94);
 }
 
 </style>

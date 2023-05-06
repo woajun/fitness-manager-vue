@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 
-const propsItemH = 40;
-const showItemNumber = ref(3);
-
 const props = defineProps<{
-  items: string[]
-  modelValue: string
+  items: string[],
+  modelValue: string,
+  itemH: number,
+  showItemNumber: number,
 }>();
 
 const emits = defineEmits<{
@@ -20,10 +19,13 @@ const startTop = ref(0);
 const startPos = ref(0);
 const itemHeight = ref(0);
 
+const maximumTop = ((props.showItemNumber - 1) / 2) * props.itemH;
+const minumumTop = -(props.items.length - ((1 + props.showItemNumber) / 2)) * props.itemH;
+
 function autoMove(item: string) {
   if (!ulEl.value) return;
   const itemH = itemHeight.value;
-  const order = props.items.indexOf(item) - ((showItemNumber.value - 1) / 2);
+  const order = props.items.indexOf(item) - ((props.showItemNumber - 1) / 2);
   ulEl.value.style.top = `${(order * -itemH)}px`;
 }
 
@@ -43,9 +45,6 @@ function handleStart(e: TouchEvent) {
   startPos.value = e.touches[0].pageY;
 }
 
-const maximumTop = ((showItemNumber.value - 1) / 2) * propsItemH;
-const minumumTop = -(props.items.length - (1 + (showItemNumber.value / 2))) * propsItemH;
-
 function handleMove(e: TouchEvent) {
   if (!ulEl.value) return;
   e.preventDefault();
@@ -53,9 +52,10 @@ function handleMove(e: TouchEvent) {
   const currentPos = e.touches[0].pageY;
   const btwnPos = currentPos - startPos.value;
   const newTop = Math.min(Math.max(startTop.value + btwnPos, minumumTop), maximumTop);
-  const indexH = propsItemH * ((showItemNumber.value - 1) / 2);
-  const newIdx = Number(((-newTop + indexH) / propsItemH).toFixed());
   ulEl.value.style.top = `${newTop.toFixed()}px`;
+
+  const centerTop = props.itemH * ((props.showItemNumber - 1) / 2);
+  const newIdx = Number(((centerTop - newTop) / props.itemH).toFixed());
   setItem(props.items[newIdx]);
 }
 
@@ -72,7 +72,7 @@ onMounted(() => {
 <template>
   <div
     class="slider-container"
-    :style="{ height: `${propsItemH * showItemNumber}px` }"
+    :style="{ height: `${itemH * showItemNumber}px` }"
   >
     <ul
       ref="ulEl"
@@ -87,9 +87,9 @@ onMounted(() => {
         ref="liEls"
         class="slider-item"
         :class="{ active: modelValue === item }"
-        :style="{ height: `${propsItemH}px` }"
+        :style="{ height: `${itemH}px` }"
       >
-        <span class="fs-25">{{ item }}</span>
+        <span>{{ item }}</span>
       </li>
     </ul>
   </div>
@@ -119,6 +119,7 @@ onMounted(() => {
   color: #c8c8c8;
   font-weight: 500;
   font-family: "SpoqaB", serif;
+  font-size: 1.5rem;
 }
 
 .slider-item.active {

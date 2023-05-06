@@ -34,7 +34,7 @@ import NavBar from './pages/navigation/NavBar.vue';
 }
 
 .footer {
-  flex: 0 0 60px;
+  flex: 0 0 120px;
 }
 </style>
 <style>

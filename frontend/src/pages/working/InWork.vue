@@ -13,6 +13,7 @@ import JScrollPicker from '../../components/JScrollPicker.vue';
 import JBottomRightSnackbar from '../../components/JBottomRightSnackbar.vue';
 import type { Exr, Set } from './interfaces';
 import MyTimer from './timer/MyTimer.vue';
+import JSliderContainer from '@/components/JSliderContainer.vue';
 
 const excercise = ref<Exr>(excercises[0]);
 
@@ -135,7 +136,7 @@ const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
         />
       </div>
       <div class="condition">
-        <JScrollPicker
+        <JSliderContainer
           v-model="sec"
           label="sec"
           :options="selectorOptions.sec"

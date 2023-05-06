@@ -2,14 +2,14 @@
 import { onMounted, ref } from 'vue';
 
 const props = defineProps<{
-  items: string[],
-  modelValue: string,
+  items: unknown[],
+  modelValue: unknown,
   itemH: number,
   showItemNumber: number,
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: string): void,
+  (e: 'update:modelValue', value: unknown): void,
 }>();
 
 const liEls = ref<HTMLLIElement[]>([]);
@@ -22,18 +22,18 @@ const itemHeight = ref(0);
 const maximumTop = ((props.showItemNumber - 1) / 2) * props.itemH;
 const minumumTop = -(props.items.length - ((1 + props.showItemNumber) / 2)) * props.itemH;
 
-function autoMove(item: string) {
+function autoMove(item: unknown) {
   if (!ulEl.value) return;
   const itemH = itemHeight.value;
   const order = props.items.indexOf(item) - ((props.showItemNumber - 1) / 2);
   ulEl.value.style.top = `${(order * -itemH)}px`;
 }
 
-function setItem(value: string) {
+function setItem(value: unknown) {
   emits('update:modelValue', value);
 }
 
-function setItemAndAutoMove(item: string) {
+function setItemAndAutoMove(item: unknown) {
   setItem(item);
   autoMove(item);
 }
@@ -83,7 +83,7 @@ onMounted(() => {
     >
       <li
         v-for="item in items"
-        :key="item"
+        :key="String(item)"
         ref="liEls"
         class="slider-item"
         :class="{ active: modelValue === item }"

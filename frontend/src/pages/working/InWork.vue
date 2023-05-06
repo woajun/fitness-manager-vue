@@ -110,10 +110,8 @@ const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
     </div>
 
     <div class="excercise-container">
-      <div class="excercise-input" @click="visibleExrModal = true">
-        <JInputText v-model="excercise.exrName" readonly />
-      </div>
-      <div class="excercise-current txt-gray">
+      <JInputText v-model="excercise.exrName" readonly @click="visibleExrModal = true" />
+      <div class="txt-gray">
         <span class="fs-15"> {{ nowExcerciseRep }} </span>
         <span class="fs-12">rep</span>
       </div>
@@ -186,14 +184,6 @@ const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.excercise-input {
-  flex: 1 0 0%;
-}
-
-.excercise-current {
-  flex: 0 1 0%;
 }
 
 .condition-container {

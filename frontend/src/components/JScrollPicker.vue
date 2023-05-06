@@ -40,8 +40,8 @@ const isBeingScolled = ref(false);
   <label>
     {{ label }}<br />
     <div
-      class="rounded-lg text-3xl flex items-center max-h-12 mt-1"
-      :class="isBeingScolled ? '' : 'truncate border-2'"
+      class="scroll"
+      :class="isBeingScolled ? '' : 'truncate'"
       @touchstart="() => { isBeingScolled = true }"
       @touchend="() => { isBeingScolled = false }"
     >
@@ -55,9 +55,29 @@ const isBeingScolled = ref(false);
 </template>
 <style src="vue-scroll-picker/lib/style.css"></style>
 <style>
+.scroll {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  border-width: 0px;
+  border-radius: 0.5rem;
+  align-items: center;
+  max-height: 3rem;
+  display: flex;
+  margin-top: 0.25rem;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-width: 2px;
+}
+
 .selected-color-red .vue-scroll-picker-item-selected {
   color: rgb(153 27 27 / var(--tw-text-opacity));
 }
+
 .selected-color-purple .vue-scroll-picker-item-selected {
   color: rgb(91 33 182 / var(--tw-text-opacity));
 }

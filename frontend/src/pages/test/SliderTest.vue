@@ -8,10 +8,29 @@ const sltItem = ref('40');
 </script>
 
 <template>
-  {{ sltItem }}
-  <JSlider
-    v-model="sltItem"
-    :items="items"
-    :item-h="40"
-  />
+  <div class="container">
+    <div>
+      {{ sltItem }}
+    </div>
+    <div class="center">
+      <JSlider
+        v-model="sltItem"
+        :items="items"
+        :item-h="40"
+      />
+    </div>
+  </div>
 </template>
+<style scoped>
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.center {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+</style>

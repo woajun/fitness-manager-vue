@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 
+const propsItemH = 40;
+const showItemNumber = ref(3);
+
 const props = defineProps<{
   items: string[]
   modelValue: string
-  itemH: number
 }>();
 
 const emits = defineEmits<{
@@ -21,7 +23,7 @@ const itemHeight = ref(0);
 function autoMove(item: string) {
   if (!ulEl.value) return;
   const itemH = itemHeight.value;
-  const order = props.items.indexOf(item) - 1;
+  const order = props.items.indexOf(item) - ((showItemNumber.value - 1) / 2);
   ulEl.value.style.top = `${(order * -itemH)}px`;
 }
 
@@ -35,18 +37,24 @@ function setItemAndAutoMove(item: string) {
 }
 
 function handleStart(e: TouchEvent) {
-  if (ulEl.value === null) return;
-  startTop.value = Number(ulEl.value.style.top.substring(0, ulEl.value.style.top.length - 2));
+  if (!ulEl.value) return;
+  const pxTxt = ulEl.value.style.top;
+  startTop.value = Number(pxTxt.substring(0, pxTxt.length - 2));
   startPos.value = e.touches[0].pageY;
 }
 
+const maximumTop = ((showItemNumber.value - 1) / 2) * propsItemH;
+const minumumTop = -(props.items.length - (1 + (showItemNumber.value / 2))) * propsItemH;
+
 function handleMove(e: TouchEvent) {
-  if (ulEl.value === null) return;
+  if (!ulEl.value) return;
   e.preventDefault();
-  const offset = e.touches[0].pageY - startPos.value;
-  const minOffset = -(props.items.length - 2) * props.itemH;
-  const newTop = Math.min(Math.max(startTop.value + offset, minOffset), props.itemH);
-  const newIdx = Number(((-newTop + props.itemH) / props.itemH).toFixed());
+
+  const currentPos = e.touches[0].pageY;
+  const btwnPos = currentPos - startPos.value;
+  const newTop = Math.min(Math.max(startTop.value + btwnPos, minumumTop), maximumTop);
+  const indexH = propsItemH * ((showItemNumber.value - 1) / 2);
+  const newIdx = Number(((-newTop + indexH) / propsItemH).toFixed());
   ulEl.value.style.top = `${newTop.toFixed()}px`;
   setItem(props.items[newIdx]);
 }
@@ -64,7 +72,7 @@ onMounted(() => {
 <template>
   <div
     class="slider-container"
-    :style="{ height: `${itemH * 3}px` }"
+    :style="{ height: `${propsItemH * showItemNumber}px` }"
   >
     <ul
       ref="ulEl"
@@ -79,8 +87,7 @@ onMounted(() => {
         ref="liEls"
         class="slider-item"
         :class="{ active: modelValue === item }"
-        :style="{ height: `${itemH}px` }"
-        @click="() => setItemAndAutoMove(item)"
+        :style="{ height: `${propsItemH}px` }"
       >
         <span class="fs-25">{{ item }}</span>
       </li>
@@ -92,6 +99,7 @@ onMounted(() => {
   flex-grow: 1;
   overflow: hidden;
   position: relative;
+  border-width: 2px;
 }
 .slider-items {
   width: 100%;

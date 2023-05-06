@@ -25,8 +25,10 @@ function submit() {
 }
 
 const list = ref<Exr[]>(props.excercises);
-function search(e:any) {
-  list.value = searcherSearch(e.target.value, props.excercises, 'label');
+
+function search(e:KeyboardEvent) {
+  const {value} = e.target as HTMLInputElement;
+  list.value = searcherSearch(value, props.excercises, 'label');
 }
 
 </script>

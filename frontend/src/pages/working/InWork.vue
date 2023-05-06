@@ -81,10 +81,13 @@ function onCheckedReport() {
 
 const nowExcerciseRep = computed(() => result.sets.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + c.reps : t), 0));
 const nowExcerciseSet = computed(() => result.sets.reduce((t, c) => (c.exrId === excercise.value.exrId ? t + 1 : t), 0));
+
+const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
+
 </script>
 <template>
   <MyTimer
-    :rest-sec="sec"
+    :rest-sec="restSec"
     @start="onTimerStart"
     @record="onTimerRecord"
     @finish="onTimerFinish"

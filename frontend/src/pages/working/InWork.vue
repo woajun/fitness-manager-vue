@@ -179,7 +179,6 @@ const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
 .chart-container {
   flex: 1 0 0%;
   border-width: 1px;
-  margin-top: 1.25rem;
 }
 
 .excercise-container {
@@ -187,7 +186,6 @@ const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding-top: 1rem;
 }
 
 .excercise-input {
@@ -203,7 +201,6 @@ const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
   display: flex;
   gap: 1rem;
   text-align: center;
-  padding-bottom: 1rem;
 }
 
 .condition {

@@ -21,7 +21,21 @@ const value = computed({
 <template>
   <input
     v-model="value"
-    class="w-full border-2 rounded-lg text-2xl py-1 pl-2 overflow-hidden break-all"
+    class="fs-15"
     type="text"
   >
 </template>
+<style scoped>
+input {
+    padding-left: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    border-width: 2px;
+    border-radius: 0.5rem;
+    word-break: break-all;
+    overflow: hidden;
+    width: 100%;
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+</style>

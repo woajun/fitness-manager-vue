@@ -160,7 +160,6 @@ const circleBackground = computed(() => {
   flex: 0 1 auto;
   color: rgb(255 255 255);
   text-align: center;
-  padding-top: 0.75rem;
   background-color: rgb(220 38 38);
   border-radius: 9999px;
   width: 7rem;

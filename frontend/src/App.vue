@@ -10,35 +10,38 @@ import NavBar from './pages/navigation/NavBar.vue';
     <div class="main">
       <RouterView />
     </div>
+    <div class="footer" />
   </div>
 </template>
 <style scoped>
 .app-container {
   width: 100%;
-  height: 85vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   position: fixed;
 }
 
 .header {
-  flex: 0 0 auto;
-  height: 60px;
+  flex: 0 0 60px;
 }
 
 .main {
-  flex: 1 1 auto;
-  display: flex;
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-bottom: 1rem;
+  flex: 1;
+  display: flex;
 }
 
 .footer {
-  height: 30px;
+  flex: 0 0 60px;
 }
 </style>
 <style>
+body {
+  margin: 0;
+}
+
 .fs-25 {
   font-size: 2.5rem;
 }
@@ -85,5 +88,9 @@ import NavBar from './pages/navigation/NavBar.vue';
 
 .bg-green {
   background-color: rgb(34 197 94);
+}
+
+.bg-red {
+  background-color: rgb(185 28 28);
 }
 </style>

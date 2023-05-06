@@ -9,22 +9,28 @@ const props = defineProps<{
 const style = computed(() => {
   switch (props.color) {
     case 'red':
-      return 'bg-red-700';
+      return 'bg-red';
     case 'green':
-      return 'bg-green-500';
+      return 'bg-green';
     default:
-      return 'bg-slate-700';
+      return 'bg-slate';
   }
 });
 </script>
 <template>
-  <button class="text-slate-50 rounded-lg text-xl" :class="style">
+  <button class="fs-12" :class="style">
     {{ props.label }}
     <slot />
   </button>
 </template>
-<style>
-button:disabled.bg-slate-700 {
+<style scoped>
+button:disabled {
   background-color: rgb(148 163 184);
+}
+
+button {
+  border-width: 0;
+  color: rgb(248 250 252);
+  border-radius: 0.5rem;
 }
 </style>

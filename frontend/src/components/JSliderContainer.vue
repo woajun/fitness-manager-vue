@@ -1,16 +1,14 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { VueScrollPicker } from 'vue-scroll-picker';
-import type { ScrollPickerOptionable } from 'vue-scroll-picker/lib/components/picker';
 import JSlider from './JSlider.vue';
 
 const props = defineProps<{
   label: string
-  modelValue: number
-  options: ScrollPickerOptionable[]
+  modelValue: unknown
+  items: unknown[]
   color?: 'red' | 'green' | 'purple'
 }>();
-const emit = defineEmits<{(e:'update:modelValue', modelValue: number): void;
+const emit = defineEmits<{(e:'update:modelValue', modelValue: unknown): void;
 }>();
 
 const value = computed({
@@ -22,19 +20,6 @@ const value = computed({
   },
 });
 
-const style = computed(() => {
-  switch (props.color) {
-    case 'red':
-      return 'selected-color-red';
-    case 'green':
-      return 'selected-color-green';
-    case 'purple':
-      return 'selected-color-purple';
-    default:
-      return '';
-  }
-});
-
 const isBeingScolled = ref(false);
 </script>
 <template>
@@ -42,48 +27,29 @@ const isBeingScolled = ref(false);
     {{ label }}<br />
     <div
       class="scroll"
-      :class="isBeingScolled ? '' : 'truncate'"
+      :class="isBeingScolled ? '' : 'apple'"
       @touchstart="() => { isBeingScolled = true }"
       @touchend="() => { isBeingScolled = false }"
     >
       <JSlider
         v-model="value"
         :item-h="40"
-        :items="props.options"
+        :items="items"
         :show-item-number="8"
       />
     </div>
   </label>
 </template>
-<style src="vue-scroll-picker/lib/style.css"></style>
-<style>
+<style scoped>
 .scroll {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  border-width: 0px;
-  border-radius: 0.5rem;
   align-items: center;
   max-height: 3rem;
   display: flex;
-  margin-top: 0.25rem;
-  border-style: solid;
-  border-color: #e5e7eb;
 }
-.truncate {
+.apple {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   border-width: 2px;
-}
-
-.selected-color-red .vue-scroll-picker-item-selected {
-  color: rgb(153 27 27 / var(--tw-text-opacity));
-}
-
-.selected-color-purple .vue-scroll-picker-item-selected {
-  color: rgb(91 33 182 / var(--tw-text-opacity));
-}
-.selected-color-green .vue-scroll-picker-item-selected {
-  color: rgb(22 101 52 / var(--tw-text-opacity));
 }
 </style>

@@ -9,7 +9,6 @@ import ExcerciseSelector from './ExcerciseSelector.vue';
 import RecordReport from './RecordReport.vue';
 import excercises from '../../data/excercises';
 import JInputText from '../../components/JInputText.vue';
-import JScrollPicker from '../../components/JScrollPicker.vue';
 import JBottomRightSnackbar from '../../components/JBottomRightSnackbar.vue';
 import type { Exr, Set } from './interfaces';
 import MyTimer from './timer/MyTimer.vue';
@@ -120,18 +119,18 @@ const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
 
     <div class="condition-container">
       <div class="condition">
-        <JScrollPicker
+        <JSliderContainer
           v-model="weight"
           label="kg"
-          :options="selectorOptions.weight"
+          :items="selectorOptions.weight"
           color="red"
         />
       </div>
       <div class="condition">
-        <JScrollPicker
+        <JSliderContainer
           v-model="rep"
           label="rep"
-          :options="selectorOptions.rep"
+          :items="selectorOptions.rep"
           color="purple"
         />
       </div>
@@ -139,7 +138,7 @@ const restSec = computed(() => (result.sets.length > 0 ? sec.value : 5));
         <JSliderContainer
           v-model="sec"
           label="sec"
-          :options="selectorOptions.sec"
+          :items="selectorOptions.sec"
           color="green"
         />
       </div>

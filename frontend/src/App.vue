@@ -34,6 +34,7 @@ import NavBar from './pages/navigation/NavBar.vue';
 }
 
 .footer {
+  background-color: black;
   flex: 0 0 120px;
 }
 </style>
@@ -80,6 +81,14 @@ body {
 
 .txt-green {
   color: rgb(34 197 94);
+}
+
+.txt-red {
+  color: rgb(153 27 27);
+}
+
+.txt-purple{
+  color: rgb(91 33 182);
 }
 
 .bg-slate {

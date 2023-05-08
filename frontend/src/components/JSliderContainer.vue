@@ -24,15 +24,16 @@ const isBeingScolled = ref(false);
 </script>
 <template>
   <label>
-    {{ label }}<br />
+    {{ label }}
     <div
       class="scroll"
-      :class="isBeingScolled ? '' : 'apple'"
+      :class="isBeingScolled ? '' : 'overflowHidden'"
       @touchstart="() => { isBeingScolled = true }"
       @touchend="() => { isBeingScolled = false }"
     >
       <JSlider
         v-model="value"
+        :class="isBeingScolled ? '' : 'border0px'"
         :item-h="40"
         :items="items"
         :show-item-number="8"
@@ -42,14 +43,18 @@ const isBeingScolled = ref(false);
 </template>
 <style scoped>
 .scroll {
-  align-items: center;
-  max-height: 3rem;
+  max-height: 40px;
   display: flex;
+  align-items: center;
+  border: 0;
+  border-radius: 0.5rem;
 }
-.apple {
+.overflowHidden {
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  border-width: 2px;
+  border: 2px solid #e5e7eb;
+}
+
+.border0px {
+  border: 0px
 }
 </style>

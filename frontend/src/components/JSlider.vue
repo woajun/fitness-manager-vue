@@ -99,7 +99,9 @@ onMounted(() => {
   flex-grow: 1;
   overflow: hidden;
   position: relative;
-  border-width: 2px;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: white;
 }
 .slider-items {
   width: 100%;
